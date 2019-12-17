@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * @author zhangyingbin
  */
-@EntityScan(value = "com.cxkj.framework.upms.entity")
+@EntityScan(value = "me.zyb.framework.upms.entity")
 @EnableJpaRepositories(value = {"me.zyb.framework.upms.repository"})
 @ComponentScan(value = {"me.zyb.framework.upms"})
 @Configuration
