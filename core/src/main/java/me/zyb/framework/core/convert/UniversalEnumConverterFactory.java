@@ -1,6 +1,6 @@
 package me.zyb.framework.core.convert;
 
-import me.zyb.framework.core.BaseEnum;
+import me.zyb.framework.core.base.BaseEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;

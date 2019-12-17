@@ -1,6 +1,7 @@
 package me.zyb.framework.core;
 
 import lombok.Getter;
+import me.zyb.framework.core.base.BaseEnum;
 
 /**
  * 返回码

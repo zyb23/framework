@@ -1,4 +1,4 @@
-package me.zyb.framework.core;
+package me.zyb.framework.core.base;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

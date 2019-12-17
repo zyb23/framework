@@ -1,5 +1,7 @@
-package me.zyb.framework.core;
+package me.zyb.framework.core.base;
 
+import me.zyb.framework.core.ReturnCode;
+import me.zyb.framework.core.ReturnData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 

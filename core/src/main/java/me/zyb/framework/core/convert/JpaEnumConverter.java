@@ -1,6 +1,6 @@
 package me.zyb.framework.core.convert;
 
-import me.zyb.framework.core.BaseEnum;
+import me.zyb.framework.core.base.BaseEnum;
 
 import javax.persistence.AttributeConverter;
 import java.lang.reflect.Method;

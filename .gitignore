@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/
+core/target/
+core/core.iml
+upms/upms-api/target/
+upms/upms-api/upms-api.iml
+upms/upms-service/target/
+upms/upms-service/upms-service.iml
+upms/upms-spring-boot-starter/target/
+upms/upms-spring-boot-starter/upms-spring-boot-starter.iml
+upms/upms.iml

@@ -17,6 +17,7 @@
 
     <modules>
         <module>core</module>
+        <module>upms</module>
     </modules>
 
     <properties>
@@ -83,9 +84,19 @@
             </dependency>
 
             <dependency>
+                <groupId>me.zyb.framework</groupId>
+                <artifactId>upms-api</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
                 <groupId>com.google.zxing</groupId>
                 <artifactId>core</artifactId>
                 <version>3.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>me.zyb.framework</groupId>
+                <artifactId>core</artifactId>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -96,6 +107,16 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
                 <version>4.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>1.4.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.crazycake</groupId>
+                <artifactId>shiro-redis</artifactId>
+                <version>3.2.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
