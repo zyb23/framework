@@ -14,6 +14,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>me.zyb.framework</groupId>
             <artifactId>upms-api</artifactId>
         </dependency>
