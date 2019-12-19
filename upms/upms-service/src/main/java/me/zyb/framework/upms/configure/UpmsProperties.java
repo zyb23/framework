@@ -29,7 +29,9 @@ public class UpmsProperties {
 	private Boolean switchConfirmPassword = true;
 	/** 是否需要图片验证码（例如登录时） */
 	private Boolean switchImageCaptcha = true;
-	/** 是否启用Shiro-Redis */
+	/** 是否开启Shiro拦截器，（为false，有注解权限校验的接口依然会拦截） */
+	private Boolean switchShiroAuthc = true;
+	/** 是否开启Shiro-Redis */
 	private Boolean switchShiroRedis = true;
 	/** 密码策略是否开启 */
 	private Boolean switchPasswordPolicy = true;

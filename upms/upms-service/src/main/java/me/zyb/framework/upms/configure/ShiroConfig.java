@@ -31,8 +31,10 @@ public class ShiroConfig {
 	private String password;
 	@Value("${spring.redis.database: 0}")
 	private int database;
-	@Value("${upms.shiroAnon: }")
+	@Value("${upms.shiro-anon: }")
 	private String shiroAnon;
+	@Value("${upms.switch-shiro-authc: true}")
+	private Boolean swichShiroAuthc;
 
 	@Bean
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
@@ -57,7 +59,9 @@ public class ShiroConfig {
 				filterChainDefinitionMap.put(anons[i], "anon");
 			}
 		}
-		filterChainDefinitionMap.put("/**", "authc");
+		if (swichShiroAuthc){
+			filterChainDefinitionMap.put("/**", "authc");
+		}
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
