@@ -31,7 +31,7 @@ public class ShiroConfig {
 	private String password;
 	@Value("${spring.redis.database: 0}")
 	private int database;
-	@Value("${upms.shiroAnon: ")
+	@Value("${upms.shiroAnon: }")
 	private String shiroAnon;
 
 	@Bean
