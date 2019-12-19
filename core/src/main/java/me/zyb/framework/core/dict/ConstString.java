@@ -13,8 +13,10 @@ public class ConstString {
 	public static final String ALGORITHM_MD5 = "MD5";
 	/** RSA */
 	public static final String ALGORIGHM_RSA = "RSA";
-	/** SHA */
+	/** SHA（SHA1、SHA-1） */
 	public static final String ALGORIGHM_SHA = "SHA";
+	/** SHA-256 */
+	public static final String ALGORIGHM_SHA256 = "SHA-256";
 
 	/** UTF-8 */
 	public static final String CHARACTER_UTF_8 = "UTF-8";
@@ -39,4 +41,9 @@ public class ConstString {
 	public static final String ORDER_ASC = "asc";
 	/** 降序 */
 	public static final String ORDER_DESC = "desc";
+
+	/** 分隔符-逗号 */
+	public static final String SEPARATOR_COMMA = ",";
+	/** 分隔符-点 */
+	public static final String SEPARATOR_DOT = ".";
 }

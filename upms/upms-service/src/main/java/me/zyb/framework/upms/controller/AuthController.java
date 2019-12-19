@@ -63,7 +63,7 @@ public class AuthController extends BaseController {
 			return rt(ReturnCode.USERNAME_PASSWORD_ERROR);
 		}
 		//校验验证码
-		if(upmsProperties.getSwitchValidateImageCaptcha()){
+		if(upmsProperties.getSwitchImageCaptcha()){
 			if(StringUtils.isBlank(captchaKey) || StringUtils.isBlank(captcha)){
 				log.error("参数错误：captchaKey|captcha");
 				return rt(ReturnCode.CAPTCHA_ERROR);

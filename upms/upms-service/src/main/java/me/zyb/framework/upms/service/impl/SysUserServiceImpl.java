@@ -12,6 +12,7 @@ import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.SysUserCondition;
 import me.zyb.framework.upms.configure.CustomizedShiroCredentialsMatcher;
 import me.zyb.framework.upms.configure.ShiroAuthHelper;
+import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.dict.PermissionType;
 import me.zyb.framework.upms.entity.SysPermission;
 import me.zyb.framework.upms.entity.SysRole;
@@ -61,6 +62,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysUserServiceImpl implements SysUserService {
+	@Autowired
+	private UpmsProperties upmsProperties;
 	@Autowired
 	private SysUserRepository sysUserRepository;
 	@Autowired
@@ -319,6 +322,7 @@ public class SysUserServiceImpl implements SysUserService {
 		String message;
 		try {
 			subject.login(token);
+			subject.getSession().setTimeout(upmsProperties.getSessionTimeOut());
 			returnData = new ReturnData(ReturnCode.SUCCESS.getValue(), "成功");
 		} catch (UnknownAccountException | IncorrectCredentialsException e) {
 			message = "用户名/密码错误";

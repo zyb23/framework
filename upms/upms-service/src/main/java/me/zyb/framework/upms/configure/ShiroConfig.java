@@ -1,5 +1,6 @@
 package me.zyb.framework.upms.configure;
 
+import me.zyb.framework.core.dict.ConstString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -30,8 +31,9 @@ public class ShiroConfig {
 	private String password;
 	@Value("${spring.redis.database: 0}")
 	private int database;
+	@Value("${upms.shiroAnon: ")
+	private String shiroAnon;
 
-	@ConditionalOnProperty(prefix = "upms", value = "switch-shiro", havingValue = "true", matchIfMissing = true)
 	@Bean
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -49,6 +51,12 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/auth/logout", "logout");
 		filterChainDefinitionMap.put("/captcha/**", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
+		if (StringUtils.isNotBlank(shiroAnon)){
+			String[] anons = shiroAnon.trim().split(ConstString.SEPARATOR_COMMA);
+			for (int i = 0; i < anons.length; i++){
+				filterChainDefinitionMap.put(anons[i], "anon");
+			}
+		}
 		filterChainDefinitionMap.put("/**", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

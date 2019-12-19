@@ -15,8 +15,6 @@ public final class ShiroAuthHelper {
 	public static final String SESSION_KEY_CAPTCHA_KEY = "SESSION_KEY_CAPTCHA_KEY";
 	/** Session中的验证码 */
 	public static final String SESSION_KEY_CAPTCHA = "SESSION_KEY_CAPTCHA";
-	/** Session超时时间（毫秒） */
-	public static final Long SESSION_TIME_OUT = 1000 * 60 * 60 * 1L;
 
     private ShiroAuthHelper() {
     }

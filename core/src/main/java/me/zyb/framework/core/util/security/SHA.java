@@ -74,7 +74,7 @@ public class SHA {
 		}
     	
     	try{
-        	MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        	MessageDigest sha = MessageDigest.getInstance(ConstString.ALGORIGHM_SHA256);
         	byte[] byteArray = str.getBytes(StandardCharsets.UTF_8);
             byte[] shaBytes = sha.digest(byteArray);
             

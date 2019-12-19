@@ -81,7 +81,7 @@ public class SysUserController extends BaseController {
 			throw new UpmsException("confirmPassword不能为空");
 		}
 		//密码强度策略
-		if(upmsProperties.getSwitchValidatePasswordPolicy()){
+		if(upmsProperties.getSwitchPasswordPolicy()){
 			if (!StringRegex.isAlphabetAndNumber(model.getLoginPassword())) {
 				log.warn("密码至少是数字和字母组合");
 				throw new UpmsException("密码至少是数字和字母组合");
