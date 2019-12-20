@@ -10,13 +10,13 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>upms</artifactId>
+    <artifactId>wechat</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>upms-api</module>
-        <module>upms-service</module>
-        <module>upms-spring-boot-starter</module>
+        <module>wechat-api</module>
+        <module>wechat-service</module>
+        <module>wechat-spring-boot-starter</module>
     </modules>
 
     <dependencies>

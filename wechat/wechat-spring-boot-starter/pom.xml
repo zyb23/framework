@@ -5,25 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>framework-all</artifactId>
+        <artifactId>wechat</artifactId>
         <groupId>me.zyb.framework</groupId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>upms</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>upms-api</module>
-        <module>upms-service</module>
-        <module>upms-spring-boot-starter</module>
-    </modules>
+    <artifactId>wechat-spring-boot-starter</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>me.zyb.framework</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>wechat-service</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
-
 </project>

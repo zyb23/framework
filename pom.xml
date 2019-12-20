@@ -18,6 +18,7 @@
     <modules>
         <module>core</module>
         <module>upms</module>
+        <module>wechat</module>
     </modules>
 
     <properties>
@@ -85,18 +86,23 @@
 
             <dependency>
                 <groupId>me.zyb.framework</groupId>
+                <artifactId>core</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>me.zyb.framework</groupId>
                 <artifactId>upms-api</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>me.zyb.framework</groupId>
+                <artifactId>wechat-api</artifactId>
                 <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.google.zxing</groupId>
                 <artifactId>core</artifactId>
                 <version>3.4.0</version>
-            </dependency>
-            <dependency>
-                <groupId>me.zyb.framework</groupId>
-                <artifactId>core</artifactId>
-                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
