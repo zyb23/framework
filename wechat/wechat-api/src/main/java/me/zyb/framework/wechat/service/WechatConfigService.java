@@ -31,10 +31,17 @@ public interface WechatConfigService {
 	/**
 	 * 根据状态查询
 	 * @param appKey    应用标识
-	 * @param isEnable  配置状态
+	 * @param isEnable  有效状态
 	 * @return List<WechatConfigModel>
 	 */
 	public List<WechatConfigModel> queryList(String appKey, Boolean isEnable);
+
+	/**
+	 * 查询生效的WechatConfig
+	 * @param appKey    应用标识
+	 * @return WechatConfigModel
+	 */
+	public WechatConfigModel queryValid(String appKey);
 	
 	/**
 	 * 根据ID删除

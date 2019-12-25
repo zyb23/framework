@@ -25,7 +25,7 @@ public interface WechatConfigRepository extends JpaRepository<WechatConfig, Long
 	/**
 	 * 根据appKey和状态查询
 	 * @param appKey    应用Key
-	 * @param isEnable  状态
+	 * @param isEnable  生效状态
 	 * @return List<WechatConfig>
 	 */
 	public List<WechatConfig> findByAppKeyAndIsEnable(String appKey, Boolean isEnable);

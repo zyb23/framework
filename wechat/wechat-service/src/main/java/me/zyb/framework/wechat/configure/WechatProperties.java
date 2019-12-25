@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 public class WechatProperties {
 	public static final String UPMS_PREFIX = "wechat";
 
-	/** 应用标识 */
+	/** 应用标识（自定义，跟WechatConfig中保存的appKey一致） */
 	private String appKey;
 }

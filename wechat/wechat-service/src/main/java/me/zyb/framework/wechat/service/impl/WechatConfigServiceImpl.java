@@ -69,13 +69,30 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		if(optional.isPresent()){
 			return EntityToModelUtil.entityToModel(optional.get());
 		}
-		throw new WechatException("微信开发配置不存在");
+		throw new WechatException("WechatConfig不存在");
 	}
 
 	@Override
 	public List<WechatConfigModel> queryList(String appKey, Boolean isEnable) {
 		List<WechatConfig> entityList = wechatConfigRepository.findByAppKeyAndIsEnable(appKey, isEnable);
 		return EntityToModelUtil.entityToModel(entityList);
+	}
+
+	@Override
+	public WechatConfigModel queryValid(String appKey) {
+		List<WechatConfig> enableList = wechatConfigRepository.findByAppKeyAndIsEnable(appKey, true);
+		String errmsg;
+		if(null == enableList || enableList.size() <= 0){
+			errmsg = "appKey：" + appKey + "，无有效的WechatConfig配置";
+			log.error(errmsg);
+			throw new WechatException(errmsg);
+		}
+		if(enableList.size() > 1){
+			errmsg = "appKey：" + appKey + "，只能有一条有效的WechatConfig配置";
+			log.error(errmsg);
+			throw new WechatException(errmsg);
+		}
+		return EntityToModelUtil.entityToModel(enableList.get(0));
 	}
 
 	@Override
