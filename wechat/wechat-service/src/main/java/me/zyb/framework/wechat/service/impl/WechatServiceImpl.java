@@ -15,6 +15,7 @@ import me.zyb.framework.wechat.service.WechatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 /**
@@ -54,10 +55,10 @@ public class WechatServiceImpl implements WechatService {
 	public WechatAccessToken refreshAccessToken(String appKey) {
 		WechatConfigModel wechatConfigModel = wechatConfigService.queryValid(appKey);
 
-		String url = WechatApi.GET_ACCESS_TOKEN
-				+ "?grant_type=" + GrantType.CLIENT_CREDENTIAL
-				+ "&appid=" + wechatConfigModel.getAppId()
-				+ "&secret=" + wechatConfigModel.getAppSecret();
+		String url = MessageFormat.format(WechatApi.GET_ACCESS_TOKEN,
+											GrantType.CLIENT_CREDENTIAL,
+											wechatConfigModel.getAppId(),
+											wechatConfigModel.getAppSecret());
 		String str = HttpUtil.doGet4String(url);
 		WechatAccessToken wechatAccessToken = JSON.parseObject(str, WechatAccessToken.class);
 		if(null == wechatAccessToken){
