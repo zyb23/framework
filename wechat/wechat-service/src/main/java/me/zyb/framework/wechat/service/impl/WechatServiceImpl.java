@@ -65,7 +65,7 @@ public class WechatServiceImpl implements WechatService {
 			throw new WechatException("请求微信access_token失败");
 		}
 		String accessToken = wechatAccessToken.getAccessToken();
-		log.info("access_token：", accessToken);
+		log.info("access_token：{}", accessToken);
 
 		wechatConfigService.updateAccessToken(wechatConfigModel.getId(), accessToken);
 
