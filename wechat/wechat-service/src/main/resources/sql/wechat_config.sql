@@ -1,4 +1,4 @@
-CREATE TABLE `t_wechat_config` (
+CREATE TABLE `wechat_config` (
   `id` bigint(20) NOT NULL,
   `app_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
