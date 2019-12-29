@@ -1,0 +1,45 @@
+CREATE TABLE `upms_permission` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `type` int(11) NOT NULL,
+  `action` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `sort` int(11) NOT NULL,
+  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `creator_id` bigint(20) NOT NULL,
+  `edit_time` datetime NOT NULL,
+  `editor_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_2vm98en2ouht0v15fvef2whp4` (`code`),
+  KEY `FKq4uf7xhrxa5dnbpf4a47rqvha` (`parent_id`),
+  CONSTRAINT `FKq4uf7xhrxa5dnbpf4a47rqvha` FOREIGN KEY (`parent_id`) REFERENCES `upms_permission` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (1, NULL, 'system:management', '系统管理', 0, NULL, 1, NULL, NULL, '系统管理', '2019-12-12 10:10:55', -1, '2019-12-12 10:11:18', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (2, 1, 'permission:management', '权限管理', 1, NULL, 1, NULL, NULL, '权限管理页面', '2019-12-12 10:27:44', -1, '2019-12-12 10:27:23', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (3, 1, 'role:management', '角色管理', 1, NULL, 2, NULL, NULL, '角色管理页面', '2019-12-12 10:42:13', -1, '2019-12-12 10:42:17', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (4, 1, 'user:management', '用户管理', 1, NULL, 3, NULL, NULL, '用户管理页面', '2019-12-12 10:51:52', -1, '2019-12-12 10:51:55', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (5, 2, 'permission:query', '查询', 2, '/upmsPermission/queryByCondition', 1, NULL, NULL, '权限查询', '2019-12-12 10:39:00', -1, '2019-12-12 10:39:00', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (6, 2, 'permission:add', '新增', 2, '/upmsPermission/add', 2, NULL, NULL, '权限新增', '2019-12-12 10:38:56', -1, '2019-12-12 10:38:56', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (7, 2, 'permission:edit', '编辑', 2, '/upmsPermission/edit', 3, NULL, NULL, '权限编辑', '2019-12-12 10:40:19', -1, '2019-12-12 10:40:19', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (8, 2, 'permission:delete', '删除', 2, '/upmsPermission/delete', 4, NULL, NULL, '权限删除', '2019-12-12 10:40:28', -1, '2019-12-12 10:40:28', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (9, 3, 'role:query', '查询', 2, '/upmsRole/queryByCondition', 1, NULL, NULL, '角色查询', '2019-12-12 10:44:14', -1, '2019-12-12 10:44:18', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (10, 3, 'role:add', '新增', 2, '/upmsRole/add', 2, NULL, NULL, '角色新增', '2019-12-12 10:45:32', -1, '2019-12-12 10:45:35', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (11, 3, 'role:edit', '编辑', 2, '/upmsRole/edit', 3, NULL, NULL, '角色编辑', '2019-12-12 10:47:13', -1, '2019-12-12 10:47:16', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (12, 3, 'role:delete', '删除', 2, '/upmsRole/delete', 4, NULL, NULL, '角色删除', '2019-12-12 10:48:01', -1, '2019-12-12 10:48:04', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (13, 3, 'role:savePermission', '保存权限', 2, '/upmsRole/savePermission', 5, NULL, NULL, '保存角色权限', '2019-12-12 10:49:32', -1, '2019-12-12 10:49:35', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (14, 3, 'role:deletePermission', '删除权限', 2, '/upmsRole/deletePermission', 6, NULL, NULL, '删除角色权限', '2019-12-12 10:50:28', -1, '2019-12-12 10:50:30', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (15, 4, 'user:query', '查询', 2, '/upmsUser/queryByCondition', 1, NULL, NULL, '用户查询', '2019-12-12 10:57:11', -1, '2019-12-12 10:57:13', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (16, 4, 'user:add', '新增', 2, '/upmsUser/add', 2, NULL, NULL, '用户新增', '2019-12-12 10:59:50', -1, '2019-12-12 10:59:53', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (17, 4, 'user:edit', '编辑', 2, '/upmsUser/edit', 3, NULL, NULL, '用户编辑', '2019-12-12 11:00:28', -1, '2019-12-12 11:00:32', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (18, 4, 'user:delete', '删除', 2, '/upmsUser/delete', 4, NULL, NULL, '用户删除', '2019-12-12 11:01:11', -1, '2019-12-12 11:01:14', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (19, 4, 'user:updateLoginPassword', '修改密码', 2, '/upmsUser/updateLoginPassword', 7, NULL, NULL, '修改用户密码密码', '2019-12-12 12:29:34', -1, '2019-12-12 12:29:37', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (20, 4, 'user:freeze', '冻结', 2, '/upmsUser/freeze', 5, NULL, NULL, '用户冻结', '2019-12-12 11:03:43', -1, '2019-12-12 11:03:45', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (21, 4, 'user:unfreeze', '解冻', 2, '/upmsUser/unfreeze', 6, NULL, NULL, '用户解冻', '2019-12-12 11:07:28', -1, '2019-12-12 11:07:31', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (22, 4, 'user:saveRole', '保存角色', 2, '/upmsUser/saveRole', 8, NULL, NULL, '保存用户角色', '2019-12-12 12:32:00', -1, '2019-12-12 12:32:02', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (23, 4, 'user:deleteRole', '删除角色', 2, '/upmsUser/deleteRole', 9, NULL, NULL, '删除用户角色', '2019-12-12 12:33:08', -1, '2019-12-12 12:33:11', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (24, 4, 'user:lock', '锁定', 2, '/upmsUser/lock', 10, NULL, NULL, '用户锁定', '2019-12-12 12:33:53', -1, '2019-12-12 12:33:55', -1);
+INSERT INTO `upms_permission`(`id`, `parent_id`, `code`, `name`, `type`, `action`, `sort`, `route`, `icon`, `description`, `create_time`, `creator_id`, `edit_time`, `editor_id`) VALUES (25, 4, 'user:unlock', '解锁', 2, '/upmsUser/unlock', 11, NULL, NULL, '用户解锁', '2019-12-12 12:34:37', -1, '2019-12-12 12:34:39', -1);

@@ -1,16 +1,14 @@
 package me.zyb.framework.wechat.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.zyb.framework.core.base.BaseEntity;
 import me.zyb.framework.wechat.dict.EncryptMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 
 /**
@@ -19,16 +17,11 @@ import java.util.Date;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "t_wechat_config")
-public class WechatConfig implements Serializable{
+@Table(name = "wechat_config")
+public class WechatConfig extends BaseEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	/** 主键ID */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private Long id;
 	
 	/** 开发者ID是公众号开发识别码，配合开发者密码可调用公众号的接口能力。 */
 	@Column(name = "app_id", nullable = false)
@@ -59,19 +52,7 @@ public class WechatConfig implements Serializable{
 	private String encryptMode = EncryptMode.PLAINTEXT;
 	
 	/** 应用标识 */
-	@Column(name = "app_key", nullable = false)
+	@Column(name = "app_key", nullable = false, unique = true)
 	private String appKey;
-	
-	/** 状态（只有一个状态为true） */
-	@Column(name = "is_enable")
-	private Boolean isEnable = true;
-	
-	/** 创建时间 */
-	@Column(name = "create_time", nullable = false, updatable = false)
-	private Date createTime = new Date();
-	
-	/** 修改时间 */
-	@Column(name = "edit_time", nullable = false, updatable = false)
-	private Date editTime = new Date();
 	
 }

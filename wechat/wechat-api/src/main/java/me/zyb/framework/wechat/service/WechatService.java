@@ -4,6 +4,7 @@ package me.zyb.framework.wechat.service;
 import me.zyb.framework.wechat.model.WechatAccessToken;
 
 /**
+ * 微信基本服务
  * @author zhangyingbin
  */
 public interface WechatService {

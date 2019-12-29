@@ -2,8 +2,8 @@ package me.zyb.framework.core.autoconfigure;
 
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.base.BaseException;
 import me.zyb.framework.core.ReturnCode;
+import me.zyb.framework.core.base.BaseException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 全局异常处理，使用时，实例化为bean到spring容器即可
  * @author zhangyingbin
  */
 @Slf4j

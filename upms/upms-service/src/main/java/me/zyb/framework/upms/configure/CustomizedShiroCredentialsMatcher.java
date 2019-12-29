@@ -1,6 +1,6 @@
 package me.zyb.framework.upms.configure;
 
-import me.zyb.framework.upms.entity.SysUser;
+import me.zyb.framework.upms.entity.UpmsUser;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -21,7 +21,7 @@ public class CustomizedShiroCredentialsMatcher extends SimpleCredentialsMatcher 
 	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info){
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		SimpleAuthenticationInfo saInfo = (SimpleAuthenticationInfo) info;
-		SysUser userEntity = (SysUser)saInfo.getPrincipals().getPrimaryPrincipal();
+		UpmsUser userEntity = (UpmsUser)saInfo.getPrincipals().getPrimaryPrincipal();
 
 		//用户输入的明文密码
 		String plaintext = String.valueOf(upToken.getPassword());

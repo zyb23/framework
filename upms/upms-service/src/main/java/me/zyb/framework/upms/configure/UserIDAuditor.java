@@ -1,18 +1,18 @@
 package me.zyb.framework.upms.configure;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 /**
  * @author zhangyingbin
  */
-@Configuration
+@Component
 public class UserIDAuditor implements AuditorAware<Long> {
 
 	@Override
 	public Optional<Long> getCurrentAuditor() {
-		return Optional.ofNullable(ShiroAuthHelper.getCurrentSysUserId());
+		return Optional.ofNullable(ShiroAuthHelper.getCurrentUpmsUserId());
 	}
 }

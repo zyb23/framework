@@ -31,7 +31,7 @@ public class WechatServiceImpl implements WechatService {
 
 	@Override
 	public boolean checkSignature(String appKey, String signature, String timestamp, String nonce) {
-		WechatConfigModel wechatConfigModel = wechatConfigService.queryValid(appKey);
+		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(appKey);
 		String token = wechatConfigModel.getToken();
 
 		String[] array = new String[]{token, timestamp, nonce};
@@ -53,7 +53,7 @@ public class WechatServiceImpl implements WechatService {
 
 	@Override
 	public WechatAccessToken refreshAccessToken(String appKey) {
-		WechatConfigModel wechatConfigModel = wechatConfigService.queryValid(appKey);
+		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(appKey);
 
 		String url = MessageFormat.format(WechatApi.GET_ACCESS_TOKEN,
 											GrantType.CLIENT_CREDENTIAL,

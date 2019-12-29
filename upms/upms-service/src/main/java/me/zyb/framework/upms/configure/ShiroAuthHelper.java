@@ -1,6 +1,6 @@
 package me.zyb.framework.upms.configure;
 
-import me.zyb.framework.upms.entity.SysUser;
+import me.zyb.framework.upms.entity.UpmsUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
@@ -51,15 +51,15 @@ public final class ShiroAuthHelper {
     /**
      * 获取当前登录用户
      */
-    public static SysUser getCurrentSysUser() {
-        return (SysUser) SecurityUtils.getSubject().getPrincipal();
+    public static UpmsUser getCurrentUpmsUser() {
+        return (UpmsUser) SecurityUtils.getSubject().getPrincipal();
     }
 
     /**
      * 获取当前登录用户ID
      */
-    public static Long getCurrentSysUserId() {
-	    SysUser userEntity = getCurrentSysUser();
+    public static Long getCurrentUpmsUserId() {
+	    UpmsUser userEntity = getCurrentUpmsUser();
         if (null != userEntity) {
             return userEntity.getId();
         }

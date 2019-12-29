@@ -16,7 +16,7 @@ import java.util.Date;
 
 /**
  * <p>基础实体类，包含[id、creatorId、createTime、editorId、editTime]</p>
- * <p>若实体继承此类，需写个类实现org.springframework.data.domain.AuditorAware用以支持@CreateBy等注解</p>
+ * <p>若实体继承此类，需写个类实现org.springframework.data.domain.AuditorAware用以支持@CreateBy等注解，且启动类需加上@EnableJpaAuditing</p>
  * @author zhangyingbin
  */
 @Data
@@ -29,7 +29,7 @@ public abstract class BaseEntity extends BaseIdEntity implements Serializable {
 	/** 创建人ID */
 	@CreatedBy
 	@Column(name = "creator_id", nullable = false, updatable = false)
-	protected Long creatorId;
+	protected Long creatorId = -1L;
 
 	/** 创建时间 */
 	@CreatedDate
@@ -39,7 +39,7 @@ public abstract class BaseEntity extends BaseIdEntity implements Serializable {
 	/** 修改人ID */
 	@LastModifiedBy
 	@Column(name = "editor_id", nullable = false)
-	protected Long editorId;
+	protected Long editorId = -1L;
 
 	/** 修改时间 */
 	@LastModifiedDate

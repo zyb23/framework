@@ -1,5 +1,4 @@
 # Auto Configure  
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 me.zyb.framework.upms.autoconfigure.AutoConfiguration,\
-me.zyb.framework.upms.configure.ShiroConfig,\
-me.zyb.framework.upms.configure.UserIDAuditor
+me.zyb.framework.upms.configure.ShiroConfig

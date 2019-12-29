@@ -1,10 +1,10 @@
 package me.zyb.framework.upms.configure;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.upms.entity.SysUser;
-import me.zyb.framework.upms.model.SysPermissionModel;
-import me.zyb.framework.upms.repository.SysUserRepository;
-import me.zyb.framework.upms.service.SysUserService;
+import me.zyb.framework.upms.entity.UpmsUser;
+import me.zyb.framework.upms.model.UpmsPermissionModel;
+import me.zyb.framework.upms.repository.UpmsUserRepository;
+import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CustomizedShiroRealm extends AuthorizingRealm {
 	@Autowired
-	private SysUserRepository sysUserRepository;
+	private UpmsUserRepository upmsUserRepository;
 	@Autowired
-	private SysUserService sysUserService;
+	private UpmsUserService upmsUserService;
 
 	public CustomizedShiroRealm(){
 		CustomizedShiroCredentialsMatcher sccm = new CustomizedShiroCredentialsMatcher();
@@ -49,7 +49,7 @@ public class CustomizedShiroRealm extends AuthorizingRealm {
 		//获取用户的输入的账号
 		UsernamePasswordToken upToken = (UsernamePasswordToken)token;
 		String loginName = upToken.getUsername();
-		SysUser userEntity = sysUserRepository.findByLoginName(loginName);
+		UpmsUser userEntity = upmsUserRepository.findByLoginName(loginName);
 		if (userEntity == null) {
 			throw new UnknownAccountException();
 		}
@@ -69,9 +69,9 @@ public class CustomizedShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		log.debug("----------------------- Shiro 授权 -----------------------");
 		SimpleAuthorizationInfo saInfo = new SimpleAuthorizationInfo();
-		SysUser userEntity = (SysUser) principals.getPrimaryPrincipal();
-		List<SysPermissionModel> permissionModelList = sysUserService.queryPermission(userEntity.getId(), null);
-		Set<String> permissionCodeSet = permissionModelList.stream().map(SysPermissionModel::getCode).collect(Collectors.toSet());
+		UpmsUser userEntity = (UpmsUser) principals.getPrimaryPrincipal();
+		List<UpmsPermissionModel> permissionModelList = upmsUserService.queryPermission(userEntity.getId(), null);
+		Set<String> permissionCodeSet = permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet());
 		saInfo.addStringPermissions(permissionCodeSet);
 		log.debug("----------------------- Shiro 授权成功 -----------------------");
 		return saInfo;

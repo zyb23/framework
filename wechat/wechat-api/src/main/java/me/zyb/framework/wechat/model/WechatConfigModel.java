@@ -45,7 +45,4 @@ public class WechatConfigModel implements Serializable {
 	/** 应用标识 */
 	@NotBlank(message = "应用标识不能为空")
 	private String appKey;
-
-	/** 状态（只有一个状态为true） */
-	private Boolean isEnable;
 }

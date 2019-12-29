@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.upms.configure.UpmsProperties;
-import me.zyb.framework.upms.model.SysUserModel;
+import me.zyb.framework.upms.model.UpmsUserModel;
 import me.zyb.framework.upms.service.CaptchaService;
-import me.zyb.framework.upms.service.SysUserService;
+import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ public class AuthController extends BaseController {
 	private UpmsProperties upmsProperties;
 
 	@Autowired
-	private SysUserService sysUserService;
+	private UpmsUserService upmsUserService;
 	@Autowired
 	private CaptchaService captchaService;
 
@@ -51,7 +51,7 @@ public class AuthController extends BaseController {
 	 * @return Object
 	 */
 	@PostMapping("/login")
-	public Object login(SysUserModel model, String captchaKey, String captcha){
+	public Object login(UpmsUserModel model, String captchaKey, String captcha){
 		if(null == model){
 			log.error("参数错误：model");
 			return rtParameterError();
@@ -73,7 +73,7 @@ public class AuthController extends BaseController {
 			}
 		}
 
-		return sysUserService.login(loginName, loginPassword);
+		return upmsUserService.login(loginName, loginPassword);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class AuthController extends BaseController {
 	 */
 	@RequestMapping(value = "/logout")
 	public Object logout() {
-		sysUserService.logout();
+		upmsUserService.logout();
 		return rtSuccess();
 	}
 }

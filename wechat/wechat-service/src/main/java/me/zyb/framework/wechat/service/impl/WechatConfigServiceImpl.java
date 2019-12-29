@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +30,9 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		WechatConfig entity = null;
 		if(null == model.getId()){
 			//新增
-			List<WechatConfig> list = wechatConfigRepository.findByAppKeyAndIsEnable(model.getAppKey(), true);
-			if(null != list && list.size() > 0){
-				throw new WechatException("应用已存在生效的配置");
+			entity = wechatConfigRepository.findByAppKey(model.getAppKey());
+			if(null != entity){
+				throw new WechatException("appKey已存在");
 			}else {
 				entity = new WechatConfig();
 			}
@@ -41,7 +42,7 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 			if(optional.isPresent()){
 				entity = optional.get();
 			}else {
-				throw new WechatException("微信开发者配置不存在");
+				throw new WechatException("WechatConfig不存在");
 			}
 		}
 		entity.setAppId(model.getAppId());
@@ -52,9 +53,6 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		entity.setAppId(model.getAppKey());
 		if (null != model.getEncryptMode()){
 			entity.setEncryptMode(model.getEncryptMode());
-		}
-		if (null != model.getIsEnable()){
-			entity.setIsEnable(model.getIsEnable());
 		}
 		wechatConfigRepository.save(entity);
 
@@ -73,31 +71,20 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 	}
 
 	@Override
-	public List<WechatConfigModel> queryList(String appKey, Boolean isEnable) {
-		List<WechatConfig> entityList = wechatConfigRepository.findByAppKeyAndIsEnable(appKey, isEnable);
-		return EntityToModelUtil.entityToModel(entityList);
-	}
-
-	@Override
-	public WechatConfigModel queryValid(String appKey) {
-		List<WechatConfig> enableList = wechatConfigRepository.findByAppKeyAndIsEnable(appKey, true);
+	public WechatConfigModel queryByAppKey(String appKey) {
+		WechatConfig entity = wechatConfigRepository.findByAppKey(appKey);
 		String errmsg;
-		if(null == enableList || enableList.size() <= 0){
-			errmsg = "appKey：" + appKey + "，无有效的WechatConfig配置";
+		if(null == entity){
+			errmsg = "appKey：" + appKey + "，无对应的WechatConfig";
 			log.error(errmsg);
 			throw new WechatException(errmsg);
 		}
-		if(enableList.size() > 1){
-			errmsg = "appKey：" + appKey + "，只能有一条有效的WechatConfig配置";
-			log.error(errmsg);
-			throw new WechatException(errmsg);
-		}
-		return EntityToModelUtil.entityToModel(enableList.get(0));
+		return EntityToModelUtil.entityToModel(entity);
 	}
 
 	@Override
-	public List<WechatConfigModel> queryList(String appKey) {
-		List<WechatConfig> entityList = wechatConfigRepository.findByAppKey(appKey);
+	public List<WechatConfigModel> queryList() {
+		List<WechatConfig> entityList = wechatConfigRepository.findAll();
 		return EntityToModelUtil.entityToModel(entityList);
 	}
 
@@ -112,6 +99,7 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		if (optional.isPresent()){
 			WechatConfig entity = optional.get();
 			entity.setAccessToken(accessToken);
+			entity.setEditTime(new Date());
 			wechatConfigRepository.save(entity);
 			return EntityToModelUtil.entityToModel(entity);
 		}

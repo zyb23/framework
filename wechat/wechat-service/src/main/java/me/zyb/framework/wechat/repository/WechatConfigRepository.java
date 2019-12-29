@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * @author zhangyingbin
  */
@@ -18,15 +16,7 @@ public interface WechatConfigRepository extends JpaRepository<WechatConfig, Long
 	/**
 	 * 根据appkey查询
 	 * @param appKey    应用标识
-	 * @return List<WechatConfig>
+	 * @return WechatConfig
 	 */
-	public List<WechatConfig> findByAppKey(String appKey);
-
-	/**
-	 * 根据appKey和状态查询
-	 * @param appKey    应用Key
-	 * @param isEnable  生效状态
-	 * @return List<WechatConfig>
-	 */
-	public List<WechatConfig> findByAppKeyAndIsEnable(String appKey, Boolean isEnable);
+	public WechatConfig findByAppKey(String appKey);
 }

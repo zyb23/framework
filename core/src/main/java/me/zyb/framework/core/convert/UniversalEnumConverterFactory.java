@@ -9,9 +9,12 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * <p>Web交互通用枚举转换工场</p>
- * <p>适用实现BaseEnum（implements BaseEnum）的枚举类</p>
- * <p>枚举实现多接口时，BaseEnum必须第一个</p>
+ * <pre>
+ *     Web交互通用枚举转换工场
+ *     适用实现BaseEnum（implements BaseEnum）的枚举类
+ *     枚举实现多接口时，BaseEnum必须第一个
+ *     使用时addConverterFactory(new UniversalEnumConverterFactory());
+ * </pre>>
  * @author zhangyingbin
  */
 public class UniversalEnumConverterFactory implements ConverterFactory<String, BaseEnum> {
