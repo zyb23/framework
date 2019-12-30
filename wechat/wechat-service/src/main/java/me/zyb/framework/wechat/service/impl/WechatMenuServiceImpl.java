@@ -10,6 +10,7 @@ import me.zyb.framework.wechat.repository.WechatMenuRepository;
 import me.zyb.framework.wechat.service.WechatMenuService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.Optional;
 /**
  * @author zhangyingbin
  */
+@Service
 public class WechatMenuServiceImpl implements WechatMenuService {
 	@Autowired
 	private WechatProperties wechatProperties;
@@ -86,7 +88,7 @@ public class WechatMenuServiceImpl implements WechatMenuService {
 			} else {
 				throw new WechatException("二级菜单必须选择一个一级菜单作为上级菜单");
 			}
-			List<WechatMenu> entityList = wechatMenuRepository.findBYAppKeyAndParent_Id(wechatProperties.getAppKey(), parentId);
+			List<WechatMenu> entityList = wechatMenuRepository.findByAppKeyAndParent_Id(wechatProperties.getAppKey(), parentId);
 			if (WechatMenuLevel.SECOND_MAX <= entityList.size()) {
 				throw new WechatException("二级级菜单每组最多5个");
 			}

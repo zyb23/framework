@@ -36,5 +36,5 @@ public interface WechatMenuRepository extends JpaRepository<WechatMenu, Long>, J
 	 * @param parentId  上级菜单ID
 	 * @return List<WechatMenu>
 	 */
-	public List<WechatMenu> findBYAppKeyAndParent_Id(String appKey, Long parentId);
+	public List<WechatMenu> findByAppKeyAndParent_Id(String appKey, Long parentId);
 }
