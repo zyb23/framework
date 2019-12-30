@@ -52,6 +52,21 @@ public class ShiroConfig {
 	}
 
 	/**
+	 * <pre>
+	 *     开启shiro aop注解支持（如@RequiresRoles，@RequiresPermissions）
+	 *     使用代理方式：所以需要开启代码支持
+	 *     DefaultAdvisorAutoProxyCreator(可选)
+	 * </pre>
+	 */
+	@ConditionalOnProperty(prefix = "upms", value = {"switch-shiro-aop", "switch-shiro-redis"}, havingValue = "true", matchIfMissing = true)
+	@Bean
+	public AuthorizationAttributeSourceAdvisor redisAuthorizationAttributeSourceAdvisor(SecurityManager redisSecurityManager) {
+		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+		authorizationAttributeSourceAdvisor.setSecurityManager(redisSecurityManager);
+		return authorizationAttributeSourceAdvisor;
+	}
+
+	/**
 	 * Shiro基础配置
 	 */
 	@Bean
@@ -104,10 +119,10 @@ public class ShiroConfig {
 	 */
 	@ConditionalOnProperty(prefix = "upms", value = "switch-shiro-redis", havingValue = "true", matchIfMissing = true)
 	@Bean
-	public SecurityManager redisSecurityManager(SessionManager sessionManager, RedisCacheManager redisCacheManager) {
+	public SecurityManager redisSecurityManager(SessionManager redisSessionManager, RedisCacheManager redisCacheManager) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setRealm(customizedShiroRealm());
-		securityManager.setSessionManager(sessionManager);
+		securityManager.setSessionManager(redisSessionManager);
 		securityManager.setCacheManager(redisCacheManager);
 		return securityManager;
 	}
