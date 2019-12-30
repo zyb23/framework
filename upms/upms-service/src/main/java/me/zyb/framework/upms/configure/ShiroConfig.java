@@ -37,9 +37,13 @@ public class ShiroConfig {
 	private Boolean swichShiroAuthc;
 
 	/**
-	 * 开启shiro aop注解支持
-	 * 使用代理方式：所以需要开启代码支持
+	 * <pre>
+	 *     开启shiro aop注解支持（如@RequiresRoles，@RequiresPermissions）
+	 *     使用代理方式：所以需要开启代码支持
+	 *     DefaultAdvisorAutoProxyCreator(可选)
+	 * </pre>
 	 */
+	@ConditionalOnProperty(prefix = "upms", value = "switch-shiro-aop", havingValue = "true", matchIfMissing = true)
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
 		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
