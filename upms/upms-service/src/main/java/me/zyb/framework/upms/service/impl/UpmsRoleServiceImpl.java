@@ -2,6 +2,7 @@ package me.zyb.framework.upms.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.util.StringUtil;
+import me.zyb.framework.core.util.regex.StringRegex;
 import me.zyb.framework.upms.EntityToModelUtil;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsRoleCondition;
@@ -55,12 +56,15 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 		UpmsRole entity = null;
 		if(null == model.getId()){
 			//新增
-			entity = upmsRoleRepository.findByName(model.getName());
+			if(!StringRegex.isAlphabetOrNumber(model.getCode())){
+				throw new UpmsException("角色编码只能是英文或数字");
+			}
+			entity = upmsRoleRepository.findByCode(model.getName());
 			if(null != entity){
-				throw new UpmsException("角色名已存在");
+				throw new UpmsException("角色编码已存在");
 			}else {
 				entity = new UpmsRole();
-				entity.setName(model.getName());
+				entity.setCode(model.getCode());
 			}
 		}else {
 			//修改
@@ -71,6 +75,7 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 				throw new UpmsException("角色不存在");
 			}
 		}
+		entity.setName(model.getName());
 		entity.setDescription(model.getDescription());
 
 		//设置角色的权限

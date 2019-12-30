@@ -2,8 +2,8 @@ package me.zyb.framework.wechat.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.wechat.WechatException;
-import me.zyb.framework.wechat.dict.EventType;
-import me.zyb.framework.wechat.dict.MsgType;
+import me.zyb.framework.wechat.dict.WechatEventType;
+import me.zyb.framework.wechat.dict.WechatMsgType;
 import me.zyb.framework.wechat.model.WechatMsg;
 import me.zyb.framework.wechat.service.WechatMsgService;
 import org.springframework.stereotype.Service;
@@ -19,30 +19,30 @@ public class WechatMsgServiceImpl implements WechatMsgService {
 		String msgType = msgRequest.getMsgType();
 		WechatMsg msgResponse = new WechatMsg();
 		switch (msgType){
-			case MsgType.EVENT:{
+			case WechatMsgType.EVENT:{
 				msgResponse = handleMsgEvent(msgRequest);
 				break;
 			}
-			case MsgType.IMAGE:{
+			case WechatMsgType.IMAGE:{
 				break;
 			}
-			case MsgType.LINK:{
+			case WechatMsgType.LINK:{
 				break;
 			}
-			case MsgType.LOCATION:{
+			case WechatMsgType.LOCATION:{
 				break;
 			}
-			case MsgType.SHORTVIDEO:{
+			case WechatMsgType.SHORTVIDEO:{
 				break;
 			}
-			case MsgType.TEXT:{
+			case WechatMsgType.TEXT:{
 				msgResponse = handleMsgText(msgRequest);
 				break;
 			}
-			case MsgType.VIDEO:{
+			case WechatMsgType.VIDEO:{
 				break;
 			}
-			case MsgType.VOICE:{
+			case WechatMsgType.VOICE:{
 				break;
 			}
 			default:{
@@ -58,24 +58,24 @@ public class WechatMsgServiceImpl implements WechatMsgService {
 		String event = msgRequest.getEvent();
 		WechatMsg msgResponse = buildMsgResponse(msgRequest);
 		switch (event){
-			case EventType.CLICK:{
+			case WechatEventType.CLICK:{
 				break;
 			}
-			case EventType.LOCATION:{
+			case WechatEventType.LOCATION:{
 				break;
 			}
-			case EventType.SCAN:{
+			case WechatEventType.SCAN:{
 				break;
 			}
-			case EventType.SUBSCRIBE:{
-				msgResponse.setMsgType(MsgType.TEXT);
+			case WechatEventType.SUBSCRIBE:{
+				msgResponse.setMsgType(WechatMsgType.TEXT);
 				msgResponse.setContent("亲爱的，终于等到你来啦！");
 				break;
 			}
-			case EventType.UNSUBSCRIBE:{
+			case WechatEventType.UNSUBSCRIBE:{
 				break;
 			}
-			case EventType.VIEW:{
+			case WechatEventType.VIEW:{
 				break;
 			}
 			default:{
@@ -103,7 +103,7 @@ public class WechatMsgServiceImpl implements WechatMsgService {
 	public WechatMsg handleMsgText(WechatMsg msgRequest) {
 		WechatMsg msgResponse = buildMsgResponse(msgRequest);
 		String content = msgRequest.getContent();
-		msgResponse.setMsgType(MsgType.TEXT);
+		msgResponse.setMsgType(WechatMsgType.TEXT);
 		if("我爱你".equals(content)){
 			msgResponse.setContent("I \uD83D\uDC96 You Too!!!");
 		}

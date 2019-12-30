@@ -31,13 +31,13 @@ import java.util.List;
 public class UpmsPermission extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/** 权限名称 */
-	@Column(name = "name", nullable = false)
-	private String name;
-
 	/** 权限编码 */
 	@Column(name = "code", unique = true, nullable = false, updatable = false)
 	private String code;
+
+	/** 权限名称 */
+	@Column(name = "name", nullable = false)
+	private String name;
 
 	/** 权限类型 */
 	@Column(name = "type", nullable = false, updatable = false)

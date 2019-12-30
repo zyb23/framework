@@ -3,7 +3,7 @@ package me.zyb.framework.wechat.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.base.BaseEntity;
-import me.zyb.framework.wechat.dict.EncryptMode;
+import me.zyb.framework.wechat.dict.WechatEncryptMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +49,7 @@ public class WechatConfig extends BaseEntity implements Serializable{
 	
 	/** 消息加密方式 */
 	@Column(name = "encrypt_mode", nullable = false)
-	private String encryptMode = EncryptMode.PLAINTEXT;
+	private String encryptMode = WechatEncryptMode.PLAINTEXT;
 	
 	/** 应用标识 */
 	@Column(name = "app_key", nullable = false, unique = true)

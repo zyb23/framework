@@ -20,13 +20,13 @@ public class UpmsPermissionModel implements Serializable {
 	/** ID主键 */
 	private Long id;
 
-	/** 权限名称 */
-	@NotBlank(message = "权限名称不能为空")
-	private String name;
-
 	/** 权限编码 */
 	@NotBlank(message = "权限编码不能为空")
 	private String code;
+
+	/** 权限名称 */
+	@NotBlank(message = "权限名称不能为空")
+	private String name;
 
 	/** 权限类型 */
 	@NotNull(message = "权限类型不能为空")

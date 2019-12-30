@@ -58,7 +58,7 @@ public class WechatParam {
 		/** 消息id，64位整型 */
 		public static final String MSG_ID = "MsgId";
 		/** 消息类型 */
-		public static final String MSG_TYPE = "MsgType";
+		public static final String MSG_TYPE = "WechatMsgType";
 		/** 图片链接（由系统生成） */
 		public static final String PIC_URL = "PicUrl";
 		/** 地理位置精度 */

@@ -45,4 +45,9 @@ public interface WechatService {
 	 * @return WechatAccessToken
 	 */
 	public WechatAccessToken refreshAccessToken();
+
+	/**
+	 * 创建菜单
+	 */
+	public void menuCreate();
 }

@@ -28,6 +28,10 @@ import java.util.List;
 public class UpmsRole extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/** 角色编码 */
+	@Column(name = "code", unique = true, nullable = false, updatable = false)
+	private String code;
+
 	/** 角色名称 */
 	@Column(name = "name", unique = true, nullable = false)
 	private String name;

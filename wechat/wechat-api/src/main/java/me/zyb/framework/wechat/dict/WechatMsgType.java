@@ -4,7 +4,7 @@ package me.zyb.framework.wechat.dict;
  * 微信消息类型
  * @author zhangyingbin
  */
-public class MsgType {
+public class WechatMsgType {
 	/** 事件推送 */
 	public static final String EVENT = "event";
 	/** 图片消息 */

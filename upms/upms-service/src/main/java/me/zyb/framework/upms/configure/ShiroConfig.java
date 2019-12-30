@@ -36,13 +36,27 @@ public class ShiroConfig {
 	@Value("${upms.switch-shiro-authc: true}")
 	private Boolean swichShiroAuthc;
 
+	/**
+	 * 开启shiro aop注解支持
+	 * 使用代理方式：所以需要开启代码支持
+	 */
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+		return authorizationAttributeSourceAdvisor;
+	}
+
+	/**
+	 * Shiro基础配置
+	 */
 	@Bean
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		//配置shiro默认登录界面地址（未登录会重定向到这），前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
 		shiroFilterFactoryBean.setLoginUrl("/auth/index");
-		//登录成功后要跳转的链接
+		//登录成功后要跳转的链接（前后端分离项目，由前端控制跳转）
 		shiroFilterFactoryBean.setSuccessUrl("/auth/home");
 		//未授权界面（然并卵）
 		shiroFilterFactoryBean.setUnauthorizedUrl("/auth/403");
@@ -150,30 +164,5 @@ public class ShiroConfig {
 		}
 		redisManager.setDatabase(database);
 		return redisManager;
-	}
-
-
-	/**
-	 * 开启shiro aop注解支持
-	 * 使用代理方式：所以需要开启代码支持
-	 */
-	@ConditionalOnProperty(prefix = "upms", value = "switch-shiro-redis", havingValue = "false")
-	@Bean
-	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
-		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-		return authorizationAttributeSourceAdvisor;
-	}
-
-	/**
-	 * 开启shiro aop注解支持
-	 * 使用代理方式：所以需要开启代码支持
-	 */
-	@ConditionalOnProperty(prefix = "upms", value = "switch-shiro-redis", havingValue = "true", matchIfMissing = true)
-	@Bean
-	public AuthorizationAttributeSourceAdvisor redisAuthorizationAttributeSourceAdvisor(SecurityManager redisSecurityManager) {
-		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-		authorizationAttributeSourceAdvisor.setSecurityManager(redisSecurityManager);
-		return authorizationAttributeSourceAdvisor;
 	}
 }

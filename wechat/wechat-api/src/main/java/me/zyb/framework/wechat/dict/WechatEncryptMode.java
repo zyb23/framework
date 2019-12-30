@@ -4,7 +4,7 @@ package me.zyb.framework.wechat.dict;
  * 消息加密方式
  * @author zhangyingbin
  */
-public class EncryptMode {
+public class WechatEncryptMode {
 	/**
 	 * <p>明文模式</p>
 	 * <p>明文模式下，不使用消息体加解密功能，安全系数较低</p>

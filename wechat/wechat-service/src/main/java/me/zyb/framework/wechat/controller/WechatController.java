@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.convert.JaxbUtil;
 import me.zyb.framework.wechat.dict.WechatParam;
+import me.zyb.framework.wechat.model.WechatAccessToken;
 import me.zyb.framework.wechat.model.WechatMsg;
 import me.zyb.framework.wechat.service.WechatMsgService;
 import me.zyb.framework.wechat.service.WechatService;
@@ -80,9 +81,21 @@ public class WechatController extends BaseController {
 
 	/**
 	 * 从微信获取access_token，并刷新数据库中WechatConfig的access_token
+	 * @return Object
 	 */
 	@GetMapping("/refreshAccessToken")
 	public Object refreshAccessToken(){
-		return wechatService.refreshAccessToken();
+		WechatAccessToken wechatAccessToken = wechatService.refreshAccessToken();
+		return rtSuccess(wechatAccessToken);
+	}
+
+	/**
+	 * 创建菜单
+	 * @return Object
+	 */
+	@PostMapping("/menu/create")
+	public Object menuCreate(){
+		wechatService.menuCreate();
+		return rtSuccess();
 	}
 }

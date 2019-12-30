@@ -11,4 +11,6 @@ public class WechatApi {
 	public static final String GET_IP_API_DOMAIN = "https://api.weixin.qq.com/cgi-bin/get_api_domain_ip?access_token={0}";
 	/** 获取微信callback IP地址（微信调用开发者服务器所使用的出口IP） */
 	public static final String GET_IP_CALLBACK = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token={0}";
+
+	public static final String MENU_CREATE = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}";
 }

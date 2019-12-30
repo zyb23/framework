@@ -1,22 +1,28 @@
 package me.zyb.framework.wechat.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.util.HttpUtil;
 import me.zyb.framework.core.util.security.SHA;
 import me.zyb.framework.wechat.WechatException;
 import me.zyb.framework.wechat.configure.WechatProperties;
-import me.zyb.framework.wechat.dict.GrantType;
 import me.zyb.framework.wechat.dict.WechatApi;
+import me.zyb.framework.wechat.dict.WechatGrantType;
 import me.zyb.framework.wechat.model.WechatAccessToken;
 import me.zyb.framework.wechat.model.WechatConfigModel;
+import me.zyb.framework.wechat.model.WechatMenuModel;
 import me.zyb.framework.wechat.service.WechatConfigService;
+import me.zyb.framework.wechat.service.WechatMenuService;
 import me.zyb.framework.wechat.service.WechatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangyingbin
@@ -28,6 +34,8 @@ public class WechatServiceImpl implements WechatService {
 	private WechatProperties wechatProperties;
 	@Autowired
 	private WechatConfigService wechatConfigService;
+	@Autowired
+	private WechatMenuService wechatMenuService;
 
 	@Override
 	public boolean checkSignature(String appKey, String signature, String timestamp, String nonce) {
@@ -54,9 +62,8 @@ public class WechatServiceImpl implements WechatService {
 	@Override
 	public WechatAccessToken refreshAccessToken(String appKey) {
 		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(appKey);
-
 		String url = MessageFormat.format(WechatApi.GET_ACCESS_TOKEN,
-											GrantType.CLIENT_CREDENTIAL,
+											WechatGrantType.CLIENT_CREDENTIAL,
 											wechatConfigModel.getAppId(),
 											wechatConfigModel.getAppSecret());
 		String str = HttpUtil.doGet4String(url);
@@ -75,5 +82,21 @@ public class WechatServiceImpl implements WechatService {
 	@Override
 	public WechatAccessToken refreshAccessToken() {
 		return refreshAccessToken(wechatProperties.getAppKey());
+	}
+
+	@Override
+	public void menuCreate() {
+		List<WechatMenuModel> menuList = wechatMenuService.queryTree(wechatProperties.getAppKey());
+		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(wechatProperties.getAppKey());
+		String url = MessageFormat.format(WechatApi.MENU_CREATE, wechatConfigModel.getAccessToken());
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("button", menuList);
+		JSONObject jsonObject = HttpUtil.doPost4Json(url, JSON.toJSONString(param));
+		int errcode = jsonObject.getInteger("errcode");
+		if(0 != errcode){
+			log.error(jsonObject.toJSONString());
+			throw new WechatException(jsonObject.getString("errmsg"));
+		}
 	}
 }

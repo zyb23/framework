@@ -4,7 +4,7 @@ package me.zyb.framework.wechat.dict;
  * 微信事件推送类型
  * @author zhangyingbin
  */
-public class EventType {
+public class WechatEventType {
 	/**
 	 * <pre>
 	 *     自定义菜单事件

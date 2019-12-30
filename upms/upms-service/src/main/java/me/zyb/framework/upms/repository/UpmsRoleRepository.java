@@ -15,11 +15,11 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public interface UpmsRoleRepository extends JpaRepository<UpmsRole, Long>, JpaSpecificationExecutor<UpmsRole> {
 	/**
-	 * 根据名称查询
-	 * @param name  角色名称
+	 * 根据编码查询
+	 * @param code  角色编码
 	 * @return UpmsRole
 	 */
-	public UpmsRole findByName(String name);
+	public UpmsRole findByCode(String code);
 
 	/**
 	 * 根据用户ID查询

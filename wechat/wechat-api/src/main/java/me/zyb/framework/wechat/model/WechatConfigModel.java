@@ -41,8 +41,4 @@ public class WechatConfigModel implements Serializable {
 
 	/** 消息加密方式 */
 	private String encryptMode;
-
-	/** 应用标识 */
-	@NotBlank(message = "应用标识不能为空")
-	private String appKey;
 }

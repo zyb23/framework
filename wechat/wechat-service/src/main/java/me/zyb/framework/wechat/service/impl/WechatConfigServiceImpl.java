@@ -3,6 +3,7 @@ package me.zyb.framework.wechat.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.wechat.EntityToModelUtil;
 import me.zyb.framework.wechat.WechatException;
+import me.zyb.framework.wechat.configure.WechatProperties;
 import me.zyb.framework.wechat.entity.WechatConfig;
 import me.zyb.framework.wechat.model.WechatConfigModel;
 import me.zyb.framework.wechat.repository.WechatConfigRepository;
@@ -21,6 +22,8 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class WechatConfigServiceImpl implements WechatConfigService {
+	@Autowired
+	private WechatProperties wechatProperties;
 	
 	@Autowired
 	private WechatConfigRepository wechatConfigRepository;
@@ -30,9 +33,9 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		WechatConfig entity = null;
 		if(null == model.getId()){
 			//新增
-			entity = wechatConfigRepository.findByAppKey(model.getAppKey());
+			entity = wechatConfigRepository.findByAppKey(wechatProperties.getAppKey());
 			if(null != entity){
-				throw new WechatException("appKey已存在");
+				throw new WechatException("微信开发者配置已存在");
 			}else {
 				entity = new WechatConfig();
 			}
@@ -42,7 +45,7 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 			if(optional.isPresent()){
 				entity = optional.get();
 			}else {
-				throw new WechatException("WechatConfig不存在");
+				throw new WechatException("微信开发者配置不存在");
 			}
 		}
 		entity.setAppId(model.getAppId());
@@ -50,7 +53,6 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		entity.setUrl(model.getUrl());
 		entity.setToken(model.getToken());
 		entity.setEncodingAesKey(model.getEncodingAesKey());
-		entity.setAppId(model.getAppKey());
 		if (null != model.getEncryptMode()){
 			entity.setEncryptMode(model.getEncryptMode());
 		}
@@ -67,7 +69,7 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		if(optional.isPresent()){
 			return EntityToModelUtil.entityToModel(optional.get());
 		}
-		throw new WechatException("WechatConfig不存在");
+		throw new WechatException("微信开发者配置不存在");
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		WechatConfig entity = wechatConfigRepository.findByAppKey(appKey);
 		String errmsg;
 		if(null == entity){
-			errmsg = "appKey：" + appKey + "，无对应的WechatConfig";
+			errmsg = "appKey：" + appKey + "，无对应的微信开发者配置";
 			log.error(errmsg);
 			throw new WechatException(errmsg);
 		}

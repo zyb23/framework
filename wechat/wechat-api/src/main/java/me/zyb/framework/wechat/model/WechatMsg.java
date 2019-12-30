@@ -71,7 +71,7 @@ public class WechatMsg implements Serializable {
 	@XmlElement(name = "MsgId")
 	private String msgId;
 	/** 消息类型 */
-	@XmlElement(name = "MsgType")
+	@XmlElement(name = "WechatMsgType")
 	private String msgType;
 	/** 图片链接（由系统生成） */
 	@XmlElement(name = "PicUrl")

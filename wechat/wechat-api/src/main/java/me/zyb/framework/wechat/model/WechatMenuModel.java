@@ -1,20 +1,13 @@
-package me.zyb.framework.wechat.entity;
+package me.zyb.framework.wechat.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import me.zyb.framework.core.base.BaseEntity;
 import me.zyb.framework.wechat.dict.WechatMenuLevel;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +21,21 @@ import java.util.List;
  * @author zhangyingbin
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Entity
-@Table(name = "wechat_menu")
-public class WechatMenu extends BaseEntity implements Serializable {
+public class WechatMenuModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/** 主键ID */
+	private Long id;
+
 	/** 菜单的响应动作类型 */
-	@Column(name = "type", nullable = false)
+	@NotBlank(message = "菜单类型不能为空")
 	private String type;
 
 	/** 菜单标题 */
-	@Column(name = "name", nullable = false)
+	@NotBlank(message = "菜单标题不能为空")
 	private String name;
 
 	/** 菜单KEY值，用于消息接口推送（click等点击类型必须） */
-	@Column(name = "key")
 	private String key;
 
 	/**
@@ -68,40 +60,18 @@ public class WechatMenu extends BaseEntity implements Serializable {
 	@Column(name = "pagepath")
 	private String pagepath;
 
-	/** 应用标识 */
-	@Column(name = "app_key", nullable = false)
-	private String appKey;
-
-	/** 菜单级别 */
-	@Column(name = "level")
-	@Convert(converter = WechatMenuLevel.Converter.class)
+	/** 菜单等级 */
+	@NotNull(message = "菜单等级不能为空")
 	private WechatMenuLevel level;
+
+	/** 上级菜单ID */
+	private Long parentId;
 
 	/** 上级菜单 */
 	@ToString.Exclude
-	@ManyToOne
-	@JoinColumn(name = "parent_id", updatable = false)
-	private WechatMenu parent = null;
+	private WechatMenuModel parent;
 
 	/** 下级菜单列表 */
-	@OneToMany(mappedBy = "parent")
-	private List<WechatMenu> children = new ArrayList<WechatMenu>();
-
-	/** 顶级菜单的上级菜单ID（并无实际数据存在） */
-	@Transient
-	@JsonIgnore
-	public static final Long TOP_PARENT_ID = null;
-
-	public WechatMenu(){
-		super();
-	}
-
-	private WechatMenu(Long id){
-		super();
-		this.id = id;
-	}
-
-	public void setParent(Long parentId){
-		this.parent = new WechatMenu(parentId);
-	}
+	@JSONField(name = "sub_button")
+	private List<WechatMenuModel> children = new ArrayList<WechatMenuModel>();
 }

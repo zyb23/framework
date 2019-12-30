@@ -3,6 +3,7 @@ package me.zyb.framework.upms.configure;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.upms.entity.UpmsUser;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
+import me.zyb.framework.upms.model.UpmsRoleModel;
 import me.zyb.framework.upms.repository.UpmsUserRepository;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.shiro.authc.AuthenticationException;
@@ -39,7 +40,7 @@ public class CustomizedShiroRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 认证
+	 * 认证（登录时的逻辑处理）
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -57,22 +58,36 @@ public class CustomizedShiroRealm extends AuthorizingRealm {
 		if (!userEntity.getIsEnable()) {
 			throw new DisabledAccountException();
 		}
+		//进行验证，shiro会自动验证密码
 		SimpleAuthenticationInfo saInfo = new SimpleAuthenticationInfo(userEntity, userEntity.getLoginPassword(), getName());
+
 		log.debug("----------------------- Shiro 认证成功 -----------------------");
 		return saInfo;
 	}
 
 	/**
-	 * 授权
+	 * <pre>
+	 *     授权（角色、权限）
+	 *     注：用户进行权限验证时，Shiro会去缓存中找，如果查不到数据，会执行doGetAuthorizationInfo这个方法去查权限，并放入缓存中
+	 * </pre>
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		log.debug("----------------------- Shiro 授权 -----------------------");
 		SimpleAuthorizationInfo saInfo = new SimpleAuthorizationInfo();
 		UpmsUser userEntity = (UpmsUser) principals.getPrimaryPrincipal();
+
+		//授予角色、权限
+		List<UpmsRoleModel> roleModelList = upmsUserService.queryRole(userEntity.getId());
+		Set<String> roleCodeSet = roleModelList.stream().map(UpmsRoleModel::getCode).collect(Collectors.toSet());
+		saInfo.setRoles(roleCodeSet);
 		List<UpmsPermissionModel> permissionModelList = upmsUserService.queryPermission(userEntity.getId(), null);
 		Set<String> permissionCodeSet = permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet());
-		saInfo.addStringPermissions(permissionCodeSet);
+		saInfo.setStringPermissions(permissionCodeSet);
+
+		//验证成功，踢人下线
+		clearCachedAuthorizationInfo(principals);
+
 		log.debug("----------------------- Shiro 授权成功 -----------------------");
 		return saInfo;
 	}

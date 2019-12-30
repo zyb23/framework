@@ -17,6 +17,10 @@ public class UpmsRoleModel implements Serializable {
 	/** ID主键 */
 	private Long id;
 
+	/** 角色编码 */
+	@NotBlank(message = "角色编码不能为空")
+	private String code;
+
 	/** 角色名称 */
 	@NotBlank(message = "角色名称不能为空")
 	private String name;
