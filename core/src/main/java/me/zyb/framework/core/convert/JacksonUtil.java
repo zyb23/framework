@@ -49,9 +49,9 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * javaBean转换为jsonString字符串
-	 * @param object
-	 * @return
+	 * java对象转换为jsonString字符串
+	 * @param object    java对象
+	 * @return String
 	 */
 	public static String toJsonString(Object object){
 		try{

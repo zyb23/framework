@@ -11,6 +11,8 @@ import java.util.List;
  * @author zhangyingbin
  */
 public class JpaJsonListConverter<T> implements AttributeConverter<List<T>, String> {
+
+	@SuppressWarnings("unchecked")
 	public Class<T> getTClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}

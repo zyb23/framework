@@ -1,6 +1,7 @@
 package me.zyb.framework.core.base;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 枚举基类
@@ -27,4 +28,77 @@ public interface BaseEnum<Y> {
 	 * @return String
 	 */
 	public String getName();
+
+	/**
+	 * 根据输入值转换成对应的枚举
+	 * @param source    输入值
+	 * @param enumType  枚举类的class
+	 * @param <T>       枚举类
+	 * @return Object
+	 */
+	public static <T extends BaseEnum> T getEnum(String source, Class<T> enumType){
+		if(StringUtils.isBlank(source)){
+			return null;
+		}
+		for(T enumObj : enumType.getEnumConstants()){
+			if(source.equals(String.valueOf(enumObj.getValue()))){
+				return enumObj;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 根据 value 值转换成对应的枚举
+	 * @param value     value值
+	 * @param enumType  枚举类的class
+	 * @return T
+	 */
+	public static <T extends BaseEnum> T getByValue(Object value, Class<T> enumType){
+		if(null == value){
+			return null;
+		}
+		for(T enumObj : enumType.getEnumConstants()){
+			if(value.equals(Integer.parseInt(String.valueOf(enumObj.getValue())))){
+				return enumObj;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 根据 code 值转换成对应的枚举
+	 * @param code      code值
+	 * @param enumType  枚举类的class
+	 * @return T
+	 */
+	public static <T extends BaseEnum> T getByCode(String code, Class<T> enumType){
+		if(null == code){
+			return null;
+		}
+		for(T enumObj : enumType.getEnumConstants()){
+			if(code.equals(enumObj.getName())){
+				return enumObj;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 根据 name 值转换成对应的枚举
+	 * @param name      name值
+	 * @param enumType  枚举类的class
+	 * @return T
+	 */
+	public static <T extends BaseEnum> T getByName(String name, Class<T> enumType){
+		if(null == name){
+			return null;
+		}
+		for(T enumObj : enumType.getEnumConstants()){
+			if(name.equals(enumObj.getName())){
+				return enumObj;
+			}
+		}
+		return null;
+	}
 }

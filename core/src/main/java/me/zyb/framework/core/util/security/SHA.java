@@ -8,7 +8,6 @@ import java.security.MessageDigest;
 
 /**
  * SHA加密
- * 
  * @author zhangyingbin
  *
  */

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseException;
+import me.zyb.framework.core.dict.ConstNumber;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +30,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 		ModelAndView mav = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
-		Map<String, Object> attributes = new HashMap<String, Object>();
+		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
 
 		log.error("执行异常：", e);
 		attributes.put("code", ReturnCode.SYSTEM_BUSY.getValue());
@@ -48,7 +49,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView handleBaseException(BaseException e) {
 		ModelAndView mav = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
-		Map<String, Object> attributes = new HashMap<String, Object>();
+		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
 
 		attributes.put("code", ReturnCode.FAILURE.getValue());
 		attributes.put("message", e.getMessage());
@@ -65,7 +66,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		ModelAndView mav = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
-		Map<String, Object> attributes = new HashMap<String, Object>();
+		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
 		BindingResult bindingResult = e.getBindingResult();
 		List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 		StringBuilder stringBuilder = new StringBuilder(fieldErrors.size() * 16);

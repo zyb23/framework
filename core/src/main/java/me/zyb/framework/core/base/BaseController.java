@@ -85,7 +85,7 @@ public class BaseController {
 	
 	/**
 	 * 返回数据，数据对象为null
-	 * @param returnCode
+	 * @param returnCode    返回码
 	 * @return ReturnData
 	 */
 	public ReturnData rt(ReturnCode returnCode) {

@@ -3,7 +3,7 @@ package me.zyb.framework.core.builder;
 import java.util.UUID;
 
 /**
- * 
+ * 生成去除“-”的UUID
  * @author zhangyingbin
  *
  */
@@ -18,21 +18,36 @@ public class UuidBuilder {
 		"H", "I", "J", "K", "L", "M", "N",
 		"O", "P", "Q", "R", "S", "T",
 		"U", "V", "W", "X", "Y", "Z" };
-	
+
+	/**
+	 * 将32位uuid拆分后当作16进制数，再作为index计算参数拾取CHARS
+	 * @param length    拾取位数（需能被32整除）
+	 * @return String
+	 */
+	private static String pickupChar(int length){
+		String uuid32 = generateUuid32();
+		//32
+		int maxLength = uuid32.length();
+		if(0 != (maxLength % length)){
+			throw new RuntimeException("length必须能被32整除");
+		}
+		int quotient = 32 / length;
+		StringBuilder shortBuffer = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			String str = uuid32.substring(i * quotient, i * quotient + quotient);
+			int x = Integer.parseInt(str, 16);
+			shortBuffer.append(CHARS[x % CHARS.length]);
+		}
+		return shortBuffer.toString();
+	}
+
 	/**
 	 * 生成8位字符
 	 * @author zhangyingbin
 	 * @return String
 	 */
 	public static String generateUuid8() {
-		StringBuilder shortBuffer = new StringBuilder();
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		for (int i = 0; i < 8; i++) {
-		    String str = uuid.substring(i * 4, i * 4 + 4);
-		    int x = Integer.parseInt(str, 16);
-		    shortBuffer.append(CHARS[x % CHARS.length]);
-		}
-		return shortBuffer.toString();
+		return pickupChar(8);
 	}
 	
 	/**
@@ -41,14 +56,7 @@ public class UuidBuilder {
 	 * @return String
 	 */
 	public static String generateUuid16() {
-		StringBuilder shortBuffer = new StringBuilder();
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		for (int i = 0; i < 16; i++) {
-		    String str = uuid.substring(i * 2, i * 2 + 2);
-		    int x = Integer.parseInt(str, 16);
-		    shortBuffer.append(CHARS[x % CHARS.length]);
-		}
-		return shortBuffer.toString();
+		return pickupChar(16);
 	}
 	
 	/**
@@ -57,19 +65,9 @@ public class UuidBuilder {
 	 * @return String
 	 */
 	public static String generateUuid24() {
-		StringBuilder shortBuffer = new StringBuilder();
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		for (int i = 0; i < 8; i++) {
-		    String str = uuid.substring(i * 4, i * 4 + 4);
-		    int x = Integer.parseInt(str, 16);
-		    shortBuffer.append(CHARS[x % CHARS.length]);
-		}
-		for (int i = 0; i < 16; i++) {
-		    String str = uuid.substring(i * 2, i * 2 + 2);
-		    int x = Integer.parseInt(str, 16);
-		    shortBuffer.append(CHARS[x % CHARS.length]);
-		}
-		return shortBuffer.toString();
+		String str8 = pickupChar(8);
+		String str16 = pickupChar(16);
+		return str8 + str16;
 	}
 	
 	/**
@@ -78,8 +76,6 @@ public class UuidBuilder {
 	 * @return String
 	 */
 	public static String generateUuid32() {
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		
-		return uuid;
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 }

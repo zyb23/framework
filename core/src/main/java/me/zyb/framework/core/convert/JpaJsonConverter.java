@@ -21,6 +21,7 @@ public class JpaJsonConverter<T> implements AttributeConverter<T, String> {
 		OBJECT_MAPPER.setDateFormat(sdf);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Class<T> getTClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}

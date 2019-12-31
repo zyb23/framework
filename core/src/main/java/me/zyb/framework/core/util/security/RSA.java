@@ -1,8 +1,7 @@
 package me.zyb.framework.core.util.security;
 
+import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.dict.ConstString;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
@@ -16,6 +15,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +24,7 @@ import java.util.Map;
  * @author zhangyingbin
  *
  */
+@Slf4j
 @SuppressWarnings("restriction")
 public class RSA {
 	private static final String KEY_PAIR_PUBLIC = "KeyPairPublic";
@@ -35,8 +36,6 @@ public class RSA {
 	
 	/**
 	 * 生成密钥对
-	 * @author zhangyingbin
-	 *
 	 */
 	public static Map<String, Object> generateKeyPair() throws Exception {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ConstString.ALGORIGHM_RSA);
@@ -55,7 +54,6 @@ public class RSA {
 	
 	/**
 	 * 获取公钥
-	 * @author zhangyingbin
 	 * @param keyMap    密钥对
 	 * @return String
 	 */
@@ -79,23 +77,20 @@ public class RSA {
 	
 	/**
 	 * BASE64编码
-	 * @author zhangyingbin
-	 * @param str   待编码字符
+	 * @param bytes   待编码字符
 	 * @return String
 	 */
-	public static String encryptBASE64(byte[] str) {
-		return (new BASE64Encoder()).encodeBuffer(str);
+	public static String encryptBASE64(byte[] bytes) {
+		return Base64.getEncoder().encodeToString(bytes);
 	}
 	
 	/**
 	 * BASE64解码
-	 * @author zhangyingbin
-	 *
 	 * @param str   待解码字符
 	 * @return byte[]
 	 */
-	public static byte[] decryptBASE64(String str) throws Exception {
-		return (new BASE64Decoder()).decodeBuffer(str);
+	public static byte[] decryptBASE64(String str) {
+		return Base64.getDecoder().decode(str);
 	}
 	
 	/**
@@ -141,28 +136,22 @@ public class RSA {
     	//对密文进行解密
     	Cipher cipher = Cipher.getInstance(factory.getAlgorithm());
     	cipher.init(Cipher.DECRYPT_MODE, privateKey);
-//    	byte[] bytes = decryptBASE64(str);
     	byte[] bytes = decode(str);
     	byte[] code = cipher.doFinal(bytes);
         
     	return new String(code);
     }
-    public static byte[] decode(String s) {  
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();  
-        try {  
-            decode(s, bos);  
-        } catch (IOException e) {  
-            throw new RuntimeException();  
-        }  
-        byte[] decodedBytes = bos.toByteArray();  
-        try {  
-            bos.close();  
-            bos = null;  
-        } catch (IOException ex) {  
-            System.err.println("Error while decoding BASE64: " + ex.toString());  
-        }  
-        return decodedBytes;  
+
+    public static byte[] decode(String s) {
+        try(ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            decode(s, bos);
+	        return bos.toByteArray();
+        } catch (IOException e) {
+        	log.error(e.getMessage());
+            throw new RuntimeException();
+        }
     }
+
     private static void decode(String s, OutputStream os) throws IOException {  
         int i = 0;  
         int len = s.length();  
@@ -189,6 +178,7 @@ public class RSA {
             i += 4;  
         }  
     }
+
     private static int decode(char c) {  
         if (c >= 'A' && c <= 'Z'){
 	        return ((int) c) - 65;

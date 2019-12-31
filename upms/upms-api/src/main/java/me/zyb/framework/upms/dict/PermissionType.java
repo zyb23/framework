@@ -27,16 +27,6 @@ public enum PermissionType implements BaseEnum<Integer> {
 		this.name = name;
 	}
 
-	public static PermissionType getByValue(Integer value) {
-		for(PermissionType en : PermissionType.values()) {
-			if(en.getValue().equals(value)) {
-				return en;
-			}
-		}
-
-		return null;
-	}
-
 	/**
 	 * 数据库实体转换器
 	 */

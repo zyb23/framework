@@ -3,7 +3,6 @@ package me.zyb.framework.core.autoconfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -16,12 +15,11 @@ import java.lang.reflect.Type;
  *
  */
 @Slf4j
-public class BeanHelper implements ApplicationContextAware {
+public class BeanHelper {
 
 	private static ApplicationContext applicationContext;
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
+	public BeanHelper(ApplicationContext applicationContext){
 		BeanHelper.applicationContext = applicationContext;
 	}
 
@@ -30,6 +28,7 @@ public class BeanHelper implements ApplicationContextAware {
 	 * @param beanName  bean的名称
 	 * @return bean的类型
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String beanName){
 		if(applicationContext.containsBean(beanName)){
 			return (T) applicationContext.getBean(beanName);
@@ -40,10 +39,8 @@ public class BeanHelper implements ApplicationContextAware {
    
 	/**
     * 获取父类的第一个范型参数类型
-    * @author zhangyingbin
-    *
-    * @param clazz
-    * @return
+    * @param clazz  类型
+    * @return Class<?>
     */
    public static Class<?> getSuperClassGenericType(Class<?> clazz){
        return getSuperClassGenericType(clazz, 0);
@@ -82,10 +79,8 @@ public class BeanHelper implements ApplicationContextAware {
 
    /**
     * 获取类定义的所有属性（递归获取超类中定义的属性）
-    * @author zhangyingbin
-    *
-    * @param clazz
-    * @return
+    * @param clazz  类型
+    * @return Field[]
     */
    public static Field[] getDeclaredFields(Class<?> clazz){
 	   Field[] fields = clazz.getDeclaredFields();
@@ -101,11 +96,9 @@ public class BeanHelper implements ApplicationContextAware {
    
    /**
     * 根据名称获取类定义的属性（递归追踪超类中定义的属性）
-    * @author zhangyingbin
-    *
-    * @param clazz
-    * @param name
-    * @return
+    * @param clazz  类型
+    * @param name   属性名
+    * @return Field
     */
    public static Field getDeclaredField(Class<?> clazz, String name){
 	   Field field = null;
@@ -125,9 +118,8 @@ public class BeanHelper implements ApplicationContextAware {
    
    /**
     * 比较两个对象是否相等
-    * @author zhangyingbin
-    * @param obj1
-    * @param obj2
+    * @param obj1   对象1
+    * @param obj2   对象2
     * @return boolean
     */
    public static boolean equals(Object obj1, Object obj2, String... ignores){
@@ -135,6 +127,7 @@ public class BeanHelper implements ApplicationContextAware {
 	   Field[] fields = getDeclaredFields(classObj1);
 	   for(Field field : fields){
 		   String fieldName = field.getName();
+		   //是否忽略
 		   boolean ig = false;
 		   for(String ignore : ignores){
 			   if(fieldName.equals(ignore)){
@@ -187,4 +180,12 @@ public class BeanHelper implements ApplicationContextAware {
 	   
 	   return null;
    }
+
+	public static ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public static void setApplicationContext(ApplicationContext applicationContext) {
+		BeanHelper.applicationContext = applicationContext;
+	}
 }

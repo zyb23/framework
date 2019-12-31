@@ -31,16 +31,6 @@ public enum WechatMenuLevel implements BaseEnum<Integer> {
 		this.name = name;
 	}
 
-	public static WechatMenuLevel getByValue(Integer value) {
-		for(WechatMenuLevel en : WechatMenuLevel.values()) {
-			if(en.getValue().equals(value)) {
-				return en;
-			}
-		}
-
-		return null;
-	}
-
 	/**
 	 * 数据库实体转换器
 	 */

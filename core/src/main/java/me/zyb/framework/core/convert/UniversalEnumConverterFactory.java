@@ -1,7 +1,6 @@
 package me.zyb.framework.core.convert;
 
 import me.zyb.framework.core.base.BaseEnum;
-import me.zyb.framework.core.util.EnumUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
@@ -43,7 +42,7 @@ public class UniversalEnumConverterFactory implements ConverterFactory<String, B
 		@SuppressWarnings("unchecked")
 		@Override
 		public T convert(String source) {
-			return (T) EnumUtil.getEnum(source, this.enumType);
+			return BaseEnum.getEnum(source, this.enumType);
 		}
 	}
 }

@@ -13,14 +13,10 @@ import java.lang.reflect.ParameterizedType;
  * @author zhangyingbin
  */
 public abstract class JpaEnumConverter<X extends BaseEnum<Y>, Y> implements AttributeConverter<BaseEnum<Y>, Y> {
-	/**
-	 * 枚举类的Class对象
-	 */
+	/** 枚举类的Class对象 */
 	private Class<X> xclazz;
 
-	/**
-	 * 枚举类的values静态方法
-	 */
+	/** 枚举类的values静态方法 */
 	private Method valuesMethod;
 
 	@SuppressWarnings("unchecked")

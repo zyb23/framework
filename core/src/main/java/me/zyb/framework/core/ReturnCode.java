@@ -44,36 +44,36 @@ public enum ReturnCode implements BaseEnum<String> {
 	private String code;
 	private String name;
 	
-	private ReturnCode(String value, String code, String name) {
+	ReturnCode(String value, String code, String name) {
 		this.value = value;
 		this.code = code;
 		this.name = name;
 	}
 
-	public static ReturnCode getByValue(String value){
-        for(ReturnCode en : ReturnCode.values()){
-            if(en.getValue().equals(value)){
-                return en;
-            }
-        }
-        return  null;
-    }
-
-	public static ReturnCode getByCode(String code) {
-		for(ReturnCode en : ReturnCode.values()) {
-			if(en.getCode().equals(code)) {
-				return en;
-			}
-		}
-		return null;
-	}
-
-	public static ReturnCode getByName(String name) {
-		for(ReturnCode en : ReturnCode.values()) {
-			if(en.getName().equals(name)) {
-				return en;
-			}
-		}
-		return null;
-	}
+//	public static ReturnCode getByValue(String value){
+//        for(ReturnCode en : ReturnCode.values()){
+//            if(en.getValue().equals(value)){
+//                return en;
+//            }
+//        }
+//        return  null;
+//    }
+//
+//	public static ReturnCode getByCode(String code) {
+//		for(ReturnCode en : ReturnCode.values()) {
+//			if(en.getCode().equals(code)) {
+//				return en;
+//			}
+//		}
+//		return null;
+//	}
+//
+//	public static ReturnCode getByName(String name) {
+//		for(ReturnCode en : ReturnCode.values()) {
+//			if(en.getName().equals(name)) {
+//				return en;
+//			}
+//		}
+//		return null;
+//	}
 }

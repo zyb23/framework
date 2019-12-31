@@ -38,7 +38,6 @@ public class MessageSourceHelper {
 		return messageSource.getMessage(resolvable, locale);
 	}
 
-
 	public static MessageSource getMessageSource() {
 		return messageSource;
 	}

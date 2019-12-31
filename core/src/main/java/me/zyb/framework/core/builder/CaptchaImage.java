@@ -41,7 +41,7 @@ public class CaptchaImage {
      */
     public static Object[] getCaptchaInfo() {
     	//验证码字符串
-        StringBuffer sb = new StringBuffer();
+	    StringBuilder sb = new StringBuilder();
         //1.创建空白图片
         BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         //2.获取图片画笔
@@ -90,7 +90,6 @@ public class CaptchaImage {
         int r = ran.nextInt(256) % 196 + 60;
         int g = ran.nextInt(256) % 196 + 60;
         int b = ran.nextInt(256) % 196 + 60;
-        Color color = new Color(r, g, b);
-        return color;
+        return new Color(r, g, b);
     }
 }

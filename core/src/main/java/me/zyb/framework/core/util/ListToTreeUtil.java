@@ -1,6 +1,7 @@
 package me.zyb.framework.core.util;
 
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.dict.ConstNumber;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -27,9 +28,10 @@ public class ListToTreeUtil {
 	 * @param <T>   范型
 	 * @return List<T>
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> List<T> listToTree(List<T> list, Class<T> clazz){
 		try {
-			Map<Object, T> mapTemp = new HashMap<Object, T>(16);
+			Map<Object, T> mapTemp = new HashMap<Object, T>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
 			Method getId = clazz.getMethod(GET_ID);
 			Method getParent = clazz.getMethod(GET_PARENT);
 			Method getParentId = clazz.getMethod(GET_PARENT_ID);

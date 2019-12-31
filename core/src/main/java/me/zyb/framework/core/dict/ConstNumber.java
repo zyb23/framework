@@ -5,11 +5,14 @@ package me.zyb.framework.core.dict;
  * @author zhangyingbin
  */
 public class ConstNumber {
+	/** 默认集合初始化容量大小 */
+	public static final Integer DEFAULT_INITIAL_CAPACITY = 16;
+
 	/** 默认分页页码 */
 	public static final Integer DEFAULT_PAGE_NO = 1;
 	/** 默认分页条数 */
 	public static final Integer DEFAULT_PAGE_SIZE = 20;
 
-	/** 默认Session超时时间（毫秒） */
-	public static final Long DEFAULT_SESSION_TIME_OUT = 1000 * 60 * 60 * 1L;
+	/** 默认Session超时时间（1小时-3600_000毫秒） */
+	public static final Long DEFAULT_SESSION_TIME_OUT = 3600_000L;
 }

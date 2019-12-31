@@ -7,6 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FormulaError;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,7 +30,7 @@ public class ExcelHandle {
 	 */
 	public static Object getCellValue(String filePath, int sheetIndex, int rowIndex, int cellIndex) throws Exception{
 		log.debug("get cell value...");
-		Object cellValue = null;
+		Object cellValue;
 		POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(filePath));
 		HSSFWorkbook wb = new HSSFWorkbook(fs);
 		HSSFSheet sheet = wb.getSheetAt(sheetIndex);
@@ -103,7 +104,7 @@ public class ExcelHandle {
 				break;
 			}
 			case ERROR: {
-				cell.setCellErrorValue((Byte)cellValue);
+				cell.setCellErrorValue(FormulaError.VALUE);
 				break;
 			}
 			default:{

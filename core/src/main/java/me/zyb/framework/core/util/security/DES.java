@@ -1,14 +1,13 @@
 package me.zyb.framework.core.util.security;
 
 import me.zyb.framework.core.dict.ConstString;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 /**
  * DES加密&解密
@@ -42,7 +41,7 @@ public class DES {
             Cipher cipher = Cipher.getInstance(ConstString.ALGORITHM_DES);
             cipher.init(Cipher.ENCRYPT_MODE, sk, sr);
             byte[] bytes = cipher.doFinal(str.getBytes());
-            strEncrypt = new BASE64Encoder().encodeBuffer(bytes);
+            strEncrypt = Base64.getEncoder().encodeToString(bytes);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +69,7 @@ public class DES {
             //解密对象  
             Cipher cipher = Cipher.getInstance("DES");
             cipher.init(Cipher.DECRYPT_MODE, sk, sr);
-            byte[] bytes = new BASE64Decoder().decodeBuffer(str);
+            byte[] bytes = Base64.getDecoder().decode(str);
             byte[] code = cipher.doFinal(bytes);
             strDecrypt = new String(code);
         }
@@ -83,8 +82,7 @@ public class DES {
 	
 	/**
 	 * 补足密钥长度为8的整数倍（末位补0）
-	 * @author zhangyingbin
-	 * @return
+	 * @return byte[]
 	 */
 	private static byte[] keyLengthMakeUp(String key){
 		byte[] keys = key.getBytes();

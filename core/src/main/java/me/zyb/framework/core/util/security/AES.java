@@ -1,14 +1,13 @@
 package me.zyb.framework.core.util.security;
 
 import me.zyb.framework.core.dict.ConstString;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 /** 
  * AES加密&解密
@@ -30,17 +29,17 @@ public class AES {
 	public static String encrypt(String str, String key){
 		String strEncrypt = null;
         try {
-        	KeyGenerator kg = KeyGenerator.getInstance(ConstString.ALGORITHM_AES);
-            kg.init(128, new SecureRandom(key.getBytes()));
-            SecretKey sk = kg.generateKey();
-            byte[] enCodeFormat = sk.getEncoded();
-            SecretKeySpec sks = new SecretKeySpec(enCodeFormat, ConstString.ALGORITHM_AES);
-            
-            //加密
-            Cipher cipher = Cipher.getInstance(ConstString.ALGORITHM_AES);
-            cipher.init(Cipher.ENCRYPT_MODE, sks);
-            byte[] bytes = cipher.doFinal(str.getBytes());
-            strEncrypt = new BASE64Encoder().encodeBuffer(bytes);
+	        KeyGenerator kg = KeyGenerator.getInstance(ConstString.ALGORITHM_AES);
+	        kg.init(128, new SecureRandom(key.getBytes()));
+	        SecretKey sk = kg.generateKey();
+	        byte[] enCodeFormat = sk.getEncoded();
+	        SecretKeySpec sks = new SecretKeySpec(enCodeFormat, ConstString.ALGORITHM_AES);
+
+	        //加密
+	        Cipher cipher = Cipher.getInstance(ConstString.ALGORITHM_AES);
+	        cipher.init(Cipher.ENCRYPT_MODE, sks);
+	        byte[] bytes = cipher.doFinal(str.getBytes());
+	        strEncrypt = Base64.getEncoder().encodeToString(bytes);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +67,7 @@ public class AES {
             //解密
             Cipher cipher = Cipher.getInstance(ConstString.ALGORITHM_AES);
             cipher.init(Cipher.DECRYPT_MODE, sks);
-            byte[] bytes = new BASE64Decoder().decodeBuffer(str);
+            byte[] bytes = Base64.getDecoder().decode(str);
             byte[] code = cipher.doFinal(bytes);
             strDecrypt = new String(code);
         }

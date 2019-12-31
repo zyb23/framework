@@ -22,9 +22,9 @@ import java.util.Random;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class QRCode {
 	/** 二维码尺寸 宽度 */
-	private static final int QRCODE_WIDTH = 300;
+	private static final int QR_CODE_WIDTH = 300;
 	/** 二维码尺寸 高度 */
-	private static final int QRCODE_HEIGHT = 300;
+	private static final int QR_CODE_HEIGHT = 300;
 	/** logo 压缩宽度 */
 	private static final int LOGO_WIDTH = 60;
 	/** logo 压缩高度 */
@@ -44,7 +44,7 @@ public class QRCode {
 		ht.put(EncodeHintType.CHARACTER_SET, ConstString.CHARACTER_UTF_8);
 		ht.put(EncodeHintType.MARGIN, 1);
 		
-		BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, QRCODE_WIDTH, QRCODE_HEIGHT, ht);
+		BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, QR_CODE_WIDTH, QR_CODE_HEIGHT, ht);
 		int width = bitMatrix.getWidth();
         int height = bitMatrix.getHeight();
         
@@ -102,8 +102,8 @@ public class QRCode {
         
         //插入logo
         Graphics2D graph = source.createGraphics();
-        int x = (QRCODE_WIDTH - width) / 2;
-        int y = (QRCODE_HEIGHT - height) / 2;
+        int x = (QR_CODE_WIDTH - width) / 2;
+        int y = (QR_CODE_HEIGHT - height) / 2;
         graph.drawImage(src, x, y, width, height, null);
         Shape shape = new RoundRectangle2D.Float(x, y, width, width, 6, 6);
         graph.setStroke(new BasicStroke(3f));
@@ -198,16 +198,11 @@ public class QRCode {
         if (image == null) {
             return null;
         }
-//		BufferedImageLuminanceSource source = new BufferedImageLuminanceSource(image);
-//		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-//		Hashtable ht = new Hashtable();
-//		ht.put(DecodeHintType.CHARACTER_SET, CHARSET);
-//		Result result = new MultiFormatReader().decode(bitmap, ht);
-//		String retStr = result.getText();
+        //TODO
         
         return "";
     }
-	
+
 	/**
 	 * 识别二维码
 	 * @author zhangyingbin
