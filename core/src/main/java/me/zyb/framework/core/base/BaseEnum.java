@@ -77,7 +77,7 @@ public interface BaseEnum<Y> {
 			return null;
 		}
 		for(T enumObj : enumType.getEnumConstants()){
-			if(code.equals(enumObj.getName())){
+			if(code.equals(enumObj.getCode())){
 				return enumObj;
 			}
 		}
