@@ -19,45 +19,7 @@ public class EnumUtil {
 			return null;
 		}
 		for(T enumObj : enumType.getEnumConstants()){
-			if(source.equals(enumObj.getValue())){
-				return enumObj;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * 根据输入值转换成对应的枚举
-	 * @param source    输入值
-	 * @param enumType  枚举类的class
-	 * @param <T>       枚举类
-	 * @return Object
-	 */
-	public static <T extends BaseEnum> Object getEnum(Long source, Class<T> enumType){
-		if(null == source){
-			return null;
-		}
-		for(T enumObj : enumType.getEnumConstants()){
-			if(source.equals(enumObj.getValue())){
-				return enumObj;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * 根据输入值转换成对应的枚举
-	 * @param source    输入值
-	 * @param enumType  枚举类的class
-	 * @param <T>       枚举类
-	 * @return Object
-	 */
-	public static <T extends BaseEnum> Object getEnum(Integer source, Class<T> enumType){
-		if(null == source){
-			return null;
-		}
-		for(T enumObj : enumType.getEnumConstants()){
-			if(source.equals(enumObj.getValue())){
+			if(source.equals(String.valueOf(enumObj.getValue()))){
 				return enumObj;
 			}
 		}
