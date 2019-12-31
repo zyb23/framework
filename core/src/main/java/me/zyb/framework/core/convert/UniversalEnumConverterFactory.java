@@ -5,8 +5,6 @@ import me.zyb.framework.core.util.EnumUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -27,55 +25,14 @@ public class UniversalEnumConverterFactory implements ConverterFactory<String, B
 	public <T extends BaseEnum> Converter<String, T> getConverter(Class<T> targetType) {
 		Converter converter = CLASS_CONVERTER_MAP.get(targetType);
 		if(null == converter){
-			//BaseEnum<Y>
-			ParameterizedType type = (ParameterizedType )targetType.getGenericInterfaces()[0];
-			//Y
-			Type genericType = type.getActualTypeArguments()[0];
-			if(Integer.class.getTypeName().equals(genericType.getTypeName())){
-				converter = new IntegerToEnum<>(targetType);
-			}
-			else if(Long.class.getTypeName().equals(genericType.getTypeName())){
-				converter = new LongToEnum<>(targetType);
-			}
-			else if(String.class.getTypeName().equals(genericType.getTypeName())){
-				converter = new StringToEnum<>(targetType);
-			}
+			//在Spring MVC和Spring Boot中，由于从客户端接收到的请求都被视为String类型，所以只能用String转枚举的converter
+			converter = new StringToEnum<>(targetType);
 			CLASS_CONVERTER_MAP.put(targetType, converter);
 		}
 		return converter;
 	}
 
-	private class IntegerToEnum<T extends BaseEnum<Integer>> implements Converter<Integer, T> {
-		/** 枚举类的class */
-		private Class<T> enumType;
-
-		private IntegerToEnum(Class<T> enumType) {
-			this.enumType = enumType;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public T convert(Integer source) {
-			return (T) EnumUtil.getEnum(source, this.enumType);
-		}
-	}
-
-	private class LongToEnum<T extends BaseEnum<Long>> implements Converter<Long, T> {
-		/** 枚举类的class */
-		private Class<T> enumType;
-
-		private LongToEnum(Class<T> enumType) {
-			this.enumType = enumType;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public T convert(Long source) {
-			return (T) EnumUtil.getEnum(source, this.enumType);
-		}
-	}
-
-	private static class StringToEnum<T extends BaseEnum<String>> implements Converter<String, T> {
+	private static class StringToEnum<T extends BaseEnum> implements Converter<String, T> {
 		/** 枚举类的class */
 		private Class<T> enumType;
 

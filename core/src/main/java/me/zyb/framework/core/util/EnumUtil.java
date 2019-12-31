@@ -14,7 +14,7 @@ public class EnumUtil {
 	 * @param <T>       枚举类
 	 * @return Object
 	 */
-	public static <T extends BaseEnum<String>> Object getEnum(String source, Class<T> enumType){
+	public static <T extends BaseEnum> Object getEnum(String source, Class<T> enumType){
 		if(StringUtils.isBlank(source)){
 			return null;
 		}
@@ -33,7 +33,7 @@ public class EnumUtil {
 	 * @param <T>       枚举类
 	 * @return Object
 	 */
-	public static <T extends BaseEnum<Long>> Object getEnum(Long source, Class<T> enumType){
+	public static <T extends BaseEnum> Object getEnum(Long source, Class<T> enumType){
 		if(null == source){
 			return null;
 		}
@@ -52,7 +52,7 @@ public class EnumUtil {
 	 * @param <T>       枚举类
 	 * @return Object
 	 */
-	public static <T extends BaseEnum<Integer>> Object getEnum(Integer source, Class<T> enumType){
+	public static <T extends BaseEnum> Object getEnum(Integer source, Class<T> enumType){
 		if(null == source){
 			return null;
 		}
