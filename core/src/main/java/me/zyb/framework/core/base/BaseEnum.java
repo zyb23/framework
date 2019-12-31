@@ -30,7 +30,7 @@ public interface BaseEnum<Y> {
 	public String getName();
 
 	/**
-	 * 根据输入值转换成对应的枚举
+	 * 根据前端输入值转换成对应的枚举
 	 * @param source    输入值
 	 * @param enumType  枚举类的class
 	 * @param <T>       枚举类
@@ -40,12 +40,7 @@ public interface BaseEnum<Y> {
 		if(StringUtils.isBlank(source)){
 			return null;
 		}
-		for(T enumObj : enumType.getEnumConstants()){
-			if(source.equals(String.valueOf(enumObj.getValue()))){
-				return enumObj;
-			}
-		}
-		return null;
+		return getByValue(source, enumType);
 	}
 
 	/**
@@ -59,7 +54,7 @@ public interface BaseEnum<Y> {
 			return null;
 		}
 		for(T enumObj : enumType.getEnumConstants()){
-			if(value.equals(Integer.parseInt(String.valueOf(enumObj.getValue())))){
+			if(String.valueOf(value).equals(String.valueOf(enumObj.getValue()))){
 				return enumObj;
 			}
 		}
