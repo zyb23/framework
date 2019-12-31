@@ -35,7 +35,7 @@ public class UniversalEnumConverterFactory implements ConverterFactory<String, B
 				converter = new IntegerToEnum<>(targetType);
 			}
 			else if(Long.class.getTypeName().equals(genericType.getTypeName())){
-				converter = new LongToEnum(targetType);
+				converter = new LongToEnum<>(targetType);
 			}
 			else if(String.class.getTypeName().equals(genericType.getTypeName())){
 				converter = new StringToEnum<>(targetType);
