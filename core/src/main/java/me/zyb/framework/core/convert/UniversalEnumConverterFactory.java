@@ -10,7 +10,7 @@ import java.util.WeakHashMap;
 
 /**
  * <pre>
- *     Web交互通用枚举转换工场
+ *     Web交互通用枚举转换工场（@RequestBody 注解的参数无法使用）
  *     适用实现BaseEnum（implements BaseEnum）的枚举类
  *     枚举实现多接口时，BaseEnum必须第一个
  *     使用时addConverterFactory(new UniversalEnumConverterFactory());

@@ -43,7 +43,7 @@ public class WechatMenu extends BaseEntity implements Serializable {
 	private String name;
 
 	/** 菜单KEY值，用于消息接口推送（click等点击类型必须） */
-	@Column(name = "key")
+	@Column(name = "_key")
 	private String key;
 
 	/**
