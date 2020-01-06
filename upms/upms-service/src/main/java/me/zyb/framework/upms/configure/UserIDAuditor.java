@@ -13,6 +13,6 @@ public class UserIDAuditor implements AuditorAware<Long> {
 
 	@Override
 	public Optional<Long> getCurrentAuditor() {
-		return Optional.ofNullable(ShiroAuthHelper.getCurrentUpmsUserId());
+		return Optional.ofNullable(ShiroAuthHelper.getCurrentUserId());
 	}
 }

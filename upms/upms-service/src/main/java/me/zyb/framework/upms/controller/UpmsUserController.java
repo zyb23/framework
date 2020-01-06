@@ -129,7 +129,7 @@ public class UpmsUserController extends BaseController {
 		    log.error(message);
 		    return rtParameterError(message);
 	    }
-        if (!userId.equals(ShiroAuthHelper.getCurrentUpmsUserId())) {
+        if (!userId.equals(ShiroAuthHelper.getCurrentUserId())) {
         	message = "本操作只能修改自己的信息";
             log.error(message);
             return rtFailure(message);
@@ -167,7 +167,7 @@ public class UpmsUserController extends BaseController {
      */
     @PostMapping("/updateSelfLoginPassword")
     public Object updateSelfLoginPassword(@RequestBody UpmsUserModel model) {
-        if (!ShiroAuthHelper.getCurrentUpmsUserId().equals(model.getId())) {
+        if (!ShiroAuthHelper.getCurrentUserId().equals(model.getId())) {
             log.error("本操作只能修改自己的密码");
             return rtFailure("本操作只能修改自己的登录密码");
         }
@@ -293,7 +293,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions(UpmsPermissionCode.USER_QUERY)
     @PostMapping("/childPermission")
     public Object childPermission(@RequestBody UpmsPermissionModel model) {
-        List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUpmsUserId(), model.getId());
+        List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUserId(), model.getId());
         return rtSuccess(result);
     }
 }

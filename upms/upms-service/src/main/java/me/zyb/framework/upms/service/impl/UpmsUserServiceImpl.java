@@ -1,6 +1,5 @@
 package me.zyb.framework.upms.service.impl;
 
-
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.ReturnData;
@@ -345,7 +344,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 			returnData = new ReturnData(ReturnCode.FAILURE.getValue(), "登录失败");
 		}
 
-		UpmsUser userEntity = ShiroAuthHelper.getCurrentUpmsUser();
+		UpmsUser userEntity = ShiroAuthHelper.getCurrentUser();
 		//返回Data
 		UpmsUserModel userModel = EntityToModelUtil.entityToModel(userEntity, true);
 

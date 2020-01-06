@@ -51,15 +51,15 @@ public final class ShiroAuthHelper {
     /**
      * 获取当前登录用户
      */
-    public static UpmsUser getCurrentUpmsUser() {
+    public static UpmsUser getCurrentUser() {
         return (UpmsUser) SecurityUtils.getSubject().getPrincipal();
     }
 
     /**
      * 获取当前登录用户ID
      */
-    public static Long getCurrentUpmsUserId() {
-	    UpmsUser userEntity = getCurrentUpmsUser();
+    public static Long getCurrentUserId() {
+	    UpmsUser userEntity = getCurrentUser();
         if (null != userEntity) {
             return userEntity.getId();
         }
