@@ -11,7 +11,7 @@ public class UpmsPermissionCode {
 	public static final String SYSTEM_MANAGEMENT = "system:management";
 
 	/** 权限管理 */
-	public static final String PERMISSON_MANAGEMENT = "permission:management";
+	public static final String PERMISSION_MANAGEMENT = "permission:management";
 	/** 权限查询 */
 	public static final String PERMISSION_QUERY = "permission:query";
 	/** 权限新增 */

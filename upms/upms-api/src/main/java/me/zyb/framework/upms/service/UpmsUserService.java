@@ -110,6 +110,7 @@ public interface UpmsUserService {
 	 * 用户登录（根据登录名和登录密码查询用户）
 	 * @param loginName     登录名
 	 * @param loginPassword 登录密码
+	 * @return ReturnData
 	 */
 	public ReturnData login(String loginName, String loginPassword);
 
