@@ -17,6 +17,10 @@
             <groupId>me.zyb.framework</groupId>
             <artifactId>core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>me.zyb.framework</groupId>
+            <artifactId>wechat-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

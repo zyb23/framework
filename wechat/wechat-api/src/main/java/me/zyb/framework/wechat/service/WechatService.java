@@ -2,6 +2,7 @@ package me.zyb.framework.wechat.service;
 
 
 import me.zyb.framework.wechat.model.WechatAccessToken;
+import me.zyb.framework.wechat.model.WechatLoginInfo;
 
 /**
  * 微信基本服务
@@ -50,4 +51,11 @@ public interface WechatService {
 	 * 创建菜单
 	 */
 	public void menuCreate();
+
+	/**
+	 * 登录凭证校验
+	 * @param code  登录时获取的code
+	 * @return WechatLoginInfo
+	 */
+	public WechatLoginInfo authCode2Session(String code);
 }

@@ -11,6 +11,7 @@ import me.zyb.framework.wechat.dict.WechatApi;
 import me.zyb.framework.wechat.dict.WechatGrantType;
 import me.zyb.framework.wechat.model.WechatAccessToken;
 import me.zyb.framework.wechat.model.WechatConfigModel;
+import me.zyb.framework.wechat.model.WechatLoginInfo;
 import me.zyb.framework.wechat.model.WechatMenuModel;
 import me.zyb.framework.wechat.service.WechatConfigService;
 import me.zyb.framework.wechat.service.WechatMenuService;
@@ -98,5 +99,22 @@ public class WechatServiceImpl implements WechatService {
 			log.error(jsonObject.toJSONString());
 			throw new WechatException(jsonObject.getString("errmsg"));
 		}
+	}
+
+	@Override
+	public WechatLoginInfo authCode2Session(String code) {
+		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(wechatProperties.getAppKey());
+		String url = MessageFormat.format(WechatApi.AUTH_CODE_2_SESSION,
+											WechatGrantType.AUTHORIZATION_CODE,
+											wechatConfigModel.getAppId(),
+											wechatConfigModel.getAppSecret(),
+											code);
+		String str = HttpUtil.doGet4String(url);
+		WechatLoginInfo wechatLoginInfo = JSON.parseObject(str, WechatLoginInfo.class);
+		if(null == wechatLoginInfo){
+			throw new WechatException("登录凭证校验失败");
+		}
+
+		return wechatLoginInfo;
 	}
 }

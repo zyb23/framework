@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.base.BaseEntity;
 import me.zyb.framework.usoa.dict.AccountState;
+import me.zyb.framework.wechat.model.WechatLoginInfo;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -44,4 +45,9 @@ public class UsoaAccount extends BaseEntity implements Serializable {
 	@Column(name = "state", nullable = false)
 	@Convert(converter = AccountState.Converter.class)
 	private AccountState state;
+
+	/** 微信登录信息 */
+	@Column(name = "wechat_login_info", columnDefinition = "text")
+	@Convert(converter = WechatLoginInfo.Converter.class)
+	private WechatLoginInfo wechatLoginInfo;
 }
