@@ -12,6 +12,12 @@
     <packaging>pom</packaging>
     <description>Uniform Systems Of Accounts</description>
 
+    <modules>
+        <module>usoa-api</module>
+        <module>usoa-service</module>
+        <module>usoa-spring-boot-starter</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>me.zyb.framework</groupId>

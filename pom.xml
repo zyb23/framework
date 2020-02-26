@@ -11,7 +11,7 @@
     </parent>
     <groupId>me.zyb.framework</groupId>
     <artifactId>framework-all</artifactId>
-    <version>${framework.version}</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -22,7 +22,6 @@
     </modules>
 
     <properties>
-        <framework.version>1.0.0</framework.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -87,17 +86,22 @@
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>core</artifactId>
-                <version>${framework.version}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>upms-api</artifactId>
-                <version>${framework.version}</version>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>me.zyb.framework</groupId>
+                <artifactId>usoa-api</artifactId>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>wechat-api</artifactId>
-                <version>${framework.version}</version>
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.google.zxing</groupId>
