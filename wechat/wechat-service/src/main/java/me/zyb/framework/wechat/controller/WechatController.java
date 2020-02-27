@@ -88,23 +88,4 @@ public class WechatController extends BaseController {
 		WechatAccessToken wechatAccessToken = wechatService.refreshAccessToken();
 		return rtSuccess(wechatAccessToken);
 	}
-
-	/**
-	 * 创建菜单
-	 * @return Object
-	 */
-	@PostMapping("/menu/create")
-	public Object menuCreate(){
-		wechatService.menuCreate();
-		return rtSuccess();
-	}
-
-	/**
-	 * 登录凭证校验
-	 * @param code  登录时获取的code
-	 * @return Object
-	 */
-	public Object authCode2Session(String code){
-		return rtSuccess(wechatService.authCode2Session(code));
-	}
 }

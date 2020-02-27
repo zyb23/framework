@@ -48,11 +48,6 @@ public interface WechatService {
 	public WechatAccessToken refreshAccessToken();
 
 	/**
-	 * 创建菜单
-	 */
-	public void menuCreate();
-
-	/**
 	 * 登录凭证校验
 	 * @param code  登录时获取的code
 	 * @return WechatLoginInfo

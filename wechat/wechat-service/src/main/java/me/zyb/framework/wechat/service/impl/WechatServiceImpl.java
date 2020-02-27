@@ -1,7 +1,6 @@
 package me.zyb.framework.wechat.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.util.HttpUtil;
 import me.zyb.framework.core.util.security.SHA;
@@ -12,7 +11,6 @@ import me.zyb.framework.wechat.dict.WechatGrantType;
 import me.zyb.framework.wechat.model.WechatAccessToken;
 import me.zyb.framework.wechat.model.WechatConfigModel;
 import me.zyb.framework.wechat.model.WechatLoginInfo;
-import me.zyb.framework.wechat.model.WechatMenuModel;
 import me.zyb.framework.wechat.service.WechatConfigService;
 import me.zyb.framework.wechat.service.WechatMenuService;
 import me.zyb.framework.wechat.service.WechatService;
@@ -21,9 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author zhangyingbin
@@ -86,22 +81,6 @@ public class WechatServiceImpl implements WechatService {
 	}
 
 	@Override
-	public void menuCreate() {
-		List<WechatMenuModel> menuList = wechatMenuService.queryTree(wechatProperties.getAppKey());
-		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(wechatProperties.getAppKey());
-		String url = MessageFormat.format(WechatApi.MENU_CREATE, wechatConfigModel.getAccessToken());
-
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("button", menuList);
-		JSONObject jsonObject = HttpUtil.doPost4Json(url, JSON.toJSONString(param));
-		int errcode = jsonObject.getInteger("errcode");
-		if(0 != errcode){
-			log.error(jsonObject.toJSONString());
-			throw new WechatException(jsonObject.getString("errmsg"));
-		}
-	}
-
-	@Override
 	public WechatLoginInfo authCode2Session(String code) {
 		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(wechatProperties.getAppKey());
 		String url = MessageFormat.format(WechatApi.AUTH_CODE_2_SESSION,
@@ -113,6 +92,8 @@ public class WechatServiceImpl implements WechatService {
 		WechatLoginInfo wechatLoginInfo = JSON.parseObject(str, WechatLoginInfo.class);
 		if(null == wechatLoginInfo){
 			throw new WechatException("登录凭证校验失败");
+		} else if(!wechatLoginInfo.isSuccess()){
+			throw new WechatException("errcode:" + wechatLoginInfo.getErrCode() + "errmsg:" + wechatLoginInfo.getErrMsg());
 		}
 
 		return wechatLoginInfo;

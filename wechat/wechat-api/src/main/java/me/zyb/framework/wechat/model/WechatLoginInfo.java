@@ -33,13 +33,22 @@ public class WechatLoginInfo implements Serializable{
 	private String sessionKey;
 	
 	/** 错误码 */
-	private String errcode;
+	@JSONField(name = "errcode")
+	private String errCode;
 	
 	/** 错误信息 */
-	private String errmsg;
+	@JSONField(name = "errmsg")
+	private String errMsg;
 
 	/**
 	 * 数据实体转换器
 	 */
 	public static class Converter extends JpaJsonConverter<WechatLoginInfo> {}
+
+	/** 请求微信信息成功时返回码 */
+	public static Integer ERR_CODE_OK = 0;
+
+	public boolean isSuccess(){
+		return this.errCode == null || ERR_CODE_OK.equals(errCode);
+	}
 }

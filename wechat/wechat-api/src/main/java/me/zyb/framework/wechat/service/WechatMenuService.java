@@ -22,4 +22,12 @@ public interface WechatMenuService {
 	 * @return List<WechatMenuModel>
 	 */
 	public List<WechatMenuModel> queryTree(String appKey);
+
+	/**
+	 * <pre>
+	 *     创建菜单
+	 *     调用微信接口给公众号创建菜单
+	 * </pre>
+	 */
+	public void menuCreate();
 }

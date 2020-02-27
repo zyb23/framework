@@ -32,4 +32,17 @@ public class WechatMenuController extends BaseController {
 		WechatMenuModel wechatMenuModel = wechatMenuService.save(model);
 		return rtSuccess(wechatMenuModel);
 	}
+
+	/**
+	 * <pre>
+	 *     创建菜单
+	 *     调用微信接口给公众号创建菜单
+	 * </pre>
+	 * @return Object
+	 */
+	@PostMapping("/create")
+	public Object create(){
+		wechatMenuService.menuCreate();
+		return rtSuccess();
+	}
 }

@@ -14,6 +14,12 @@ upms/upms-spring-boot-starter/target/
 upms/upms-spring-boot-starter/upms-spring-boot-starter.iml
 
 usoa/usoa.iml
+usoa/usoa-api/target/
+usoa/usoa-api/usoa-api.iml
+usoa/usoa-service/target/
+usoa/usoa-service/usoa-service.iml
+usoa/usoa-spring-boot-starter/target/
+usoa/usoa-spring-boot-starter/usoa-spring-boot-starter.iml
 
 wechat/wechat.iml
 wechat/wechat-api/target/

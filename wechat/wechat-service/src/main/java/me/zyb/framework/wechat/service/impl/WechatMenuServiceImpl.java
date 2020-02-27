@@ -1,29 +1,42 @@
 package me.zyb.framework.wechat.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.util.HttpUtil;
 import me.zyb.framework.wechat.EntityToModelUtil;
 import me.zyb.framework.wechat.WechatException;
 import me.zyb.framework.wechat.configure.WechatProperties;
+import me.zyb.framework.wechat.dict.WechatApi;
 import me.zyb.framework.wechat.dict.WechatMenuLevel;
 import me.zyb.framework.wechat.entity.WechatMenu;
+import me.zyb.framework.wechat.model.WechatConfigModel;
 import me.zyb.framework.wechat.model.WechatMenuModel;
 import me.zyb.framework.wechat.repository.WechatMenuRepository;
+import me.zyb.framework.wechat.service.WechatConfigService;
 import me.zyb.framework.wechat.service.WechatMenuService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * @author zhangyingbin
  */
+@Slf4j
 @Service
 public class WechatMenuServiceImpl implements WechatMenuService {
 	@Autowired
 	private WechatProperties wechatProperties;
 	@Autowired
 	private WechatMenuRepository wechatMenuRepository;
+	@Autowired
+	private WechatConfigService wechatConfigService;
 
 	@Override
 	public WechatMenuModel save(WechatMenuModel model) {
@@ -102,5 +115,22 @@ public class WechatMenuServiceImpl implements WechatMenuService {
 	public List<WechatMenuModel> queryTree(String appKey) {
 		List<WechatMenu> entityList = wechatMenuRepository.findByAppKeyAndLevel(appKey, WechatMenuLevel.FIRST);
 		return EntityToModelUtil.entityToModel(entityList, true, true);
+	}
+
+
+	@Override
+	public void menuCreate() {
+		List<WechatMenuModel> menuList = queryTree(wechatProperties.getAppKey());
+		WechatConfigModel wechatConfigModel = wechatConfigService.queryByAppKey(wechatProperties.getAppKey());
+		String url = MessageFormat.format(WechatApi.MENU_CREATE, wechatConfigModel.getAccessToken());
+
+		Map<String, Object> param = new HashMap<String, Object>(16);
+		param.put("button", menuList);
+		JSONObject jsonObject = HttpUtil.doPost4Json(url, JSON.toJSONString(param));
+		int errcode = jsonObject.getInteger("errcode");
+		if(0 != errcode){
+			log.error(jsonObject.toJSONString());
+			throw new WechatException(jsonObject.getString("errmsg"));
+		}
 	}
 }
