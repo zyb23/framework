@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>me.zyb.framework</groupId>
+        <artifactId>framework-all</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>gecs</artifactId>
+    <version>1.0.0</version>
+    <description>General Electronic Commerce System</description>
+
+    <modules>
+        <module>gecs-api</module>
+        <module>gecs-service</module>
+        <module>gecs-spring-boot-starter</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>me.zyb.framework</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>me.zyb.framework</groupId>
+            <artifactId>usoa-api</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
