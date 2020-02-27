@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>gecs</artifactId>
-    <version>1.0.0</version>
+    <packaging>pom</packaging>
     <description>General Electronic Commerce System</description>
 
     <modules>
@@ -26,6 +26,10 @@
         <dependency>
             <groupId>me.zyb.framework</groupId>
             <artifactId>usoa-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>me.zyb.framework</groupId>
+            <artifactId>wechat-api</artifactId>
         </dependency>
     </dependencies>
 

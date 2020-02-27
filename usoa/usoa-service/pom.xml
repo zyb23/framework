@@ -19,7 +19,6 @@
         <dependency>
             <groupId>me.zyb.framework</groupId>
             <artifactId>usoa-api</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

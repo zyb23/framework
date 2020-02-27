@@ -23,6 +23,7 @@
     </modules>
 
     <properties>
+        <framework.version>1.0.0</framework.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -87,22 +88,27 @@
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>core</artifactId>
-                <version>1.0.0</version>
+                <version>${framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>me.zyb.framework</groupId>
+                <artifactId>gecs-api</artifactId>
+                <version>${framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>upms-api</artifactId>
-                <version>1.0.0</version>
+                <version>${framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>usoa-api</artifactId>
-                <version>1.0.0</version>
+                <version>${framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>me.zyb.framework</groupId>
                 <artifactId>wechat-api</artifactId>
-                <version>1.0.0</version>
+                <version>${framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.zxing</groupId>
