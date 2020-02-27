@@ -16,6 +16,7 @@
 
     <modules>
         <module>core</module>
+        <module>gecs</module>
         <module>usoa</module>
         <module>upms</module>
         <module>wechat</module>

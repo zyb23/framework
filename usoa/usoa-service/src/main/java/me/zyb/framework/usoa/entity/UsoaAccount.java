@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * 用户登录账号基本信息-数据表
+ * 用户登录账号基本信息表
  * @author zhangyingbin
  */
 @Data
