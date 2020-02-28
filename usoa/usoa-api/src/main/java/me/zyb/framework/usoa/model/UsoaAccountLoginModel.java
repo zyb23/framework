@@ -2,7 +2,7 @@ package me.zyb.framework.usoa.model;
 
 import lombok.Data;
 import me.zyb.framework.usoa.dict.LoginMode;
-import me.zyb.framework.wechat.model.WechatLoginInfo;
+import me.zyb.framework.wechat.model.WechatAccountInfo;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -28,5 +28,5 @@ public class UsoaAccountLoginModel implements Serializable {
 	private String loginPassword;
 
 	/** 微信登录信息 */
-	private WechatLoginInfo wechatLoginInfo;
+	private WechatAccountInfo wechatAccountInfo;
 }

@@ -1,16 +1,18 @@
-package me.zyb.framework.wechat.model;
+package me.zyb.framework.wechat.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
 /**
- * 微信公众号access_token
+ * 微信公众号获取access_token返回值
  * @author zhangyingbin
  */
 @Data
-public class WechatAccessToken implements Serializable{
+@EqualsAndHashCode(callSuper = true)
+public class WXAccessToken extends WXBaseResponse implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	/** access_token */
@@ -20,11 +22,4 @@ public class WechatAccessToken implements Serializable{
 	/** 有效时间，单位：秒 */
 	@JSONField(name = "expires_in")
 	private Integer expiresIn;
-	
-	/** 错误码 */
-	private String errcode;
-	
-	/** 错误信息 */
-	private String errmsg;
-	
 }

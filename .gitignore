@@ -5,6 +5,14 @@
 core/target/
 core/core.iml
 
+gecs/gecs.iml
+gecs/gecs-api/target/
+gecs/gecs-api/gecs-api.iml
+gecs/gecs-service/target/
+gecs/gecs-service/gecs-service.iml
+gecs/gecs-spring-boot-starter/target/
+gecs/gecs-spring-boot-starter/gecs-spring-boot-starter.iml
+
 upms/upms.iml
 upms/upms-api/target/
 upms/upms-api/upms-api.iml

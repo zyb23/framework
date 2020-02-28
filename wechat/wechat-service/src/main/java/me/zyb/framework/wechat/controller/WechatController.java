@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.convert.JaxbUtil;
 import me.zyb.framework.wechat.dict.WechatParam;
-import me.zyb.framework.wechat.model.WechatAccessToken;
 import me.zyb.framework.wechat.model.WechatMsg;
+import me.zyb.framework.wechat.model.response.WXAccessToken;
+import me.zyb.framework.wechat.service.WXService;
 import me.zyb.framework.wechat.service.WechatMsgService;
-import me.zyb.framework.wechat.service.WechatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ import java.io.PrintWriter;
 @RequestMapping("/wechat")
 public class WechatController extends BaseController {
 	@Autowired
-	private WechatService wechatService;
+	private WXService wxService;
 	@Autowired
 	private WechatMsgService wechatMsgService;
 
@@ -37,7 +37,7 @@ public class WechatController extends BaseController {
 		String signature = request.getParameter(WechatParam.SIGNATURE);
 		String timestamp = request.getParameter(WechatParam.TIMESTAMP);
 		String nonce = request.getParameter(WechatParam.NONCE);
-		return wechatService.checkSignature(signature, timestamp, nonce);
+		return wxService.checkSignature(signature, timestamp, nonce);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class WechatController extends BaseController {
 	 */
 	@GetMapping("/refreshAccessToken")
 	public Object refreshAccessToken(){
-		WechatAccessToken wechatAccessToken = wechatService.refreshAccessToken();
-		return rtSuccess(wechatAccessToken);
+		WXAccessToken WXAccessToken = wxService.refreshAccessToken();
+		return rtSuccess(WXAccessToken);
 	}
 }
