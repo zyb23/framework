@@ -8,24 +8,12 @@ import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
 
-import java.util.UUID;
-
 /**
  * @author zhangyingbin
  */
 @Slf4j
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
-
-    @Override
-    public String generateCaptchaKey() {
-        String captchaKey = UUID.randomUUID().toString().replaceAll("-", "");
-        Session session = ShiroAuthHelper.getCurrentSession();
-        if (null != session) {
-            session.setAttribute(ShiroAuthHelper.SESSION_KEY_CAPTCHA_KEY, captchaKey);
-        }
-        return captchaKey;
-    }
 
     @Override
     public String[] generateCaptchaImage() {
@@ -37,7 +25,8 @@ public class CaptchaServiceImpl implements CaptchaService {
         log.debug("captcha：" + captcha);
         Session session = ShiroAuthHelper.getCurrentSession();
         if (null != session) {
-            session.setAttribute(ShiroAuthHelper.SESSION_KEY_CAPTCHA, captcha);
+        	//把验证码设置到session中
+            session.setAttribute(ShiroAuthHelper.SESSION_IMAGE_CAPTCHA, captcha);
         }
         byte[] bytes = (byte[]) captchaInfo[1];
         BASE64Encoder encoder = new BASE64Encoder();
@@ -45,21 +34,18 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
 	@Override
-	public Boolean checkCaptcha(String captchaKey, String captcha) {
+	public Boolean checkCaptcha(String captcha) {
 		Session session = ShiroAuthHelper.getCurrentSession();
 		if (session == null) {
 			return false;
 		}
-		String captchaKeySession = (String) session.getAttribute(ShiroAuthHelper.SESSION_KEY_CAPTCHA_KEY);
-		if (null == captchaKey || !captchaKey.equals(captchaKeySession)) {
-			return false;
-		}
-		String captchaSession = (String) session.getAttribute(ShiroAuthHelper.SESSION_KEY_CAPTCHA);
+		//获取session中的验证码，并与用户输入的验证码比对
+		String captchaSession = (String) session.getAttribute(ShiroAuthHelper.SESSION_IMAGE_CAPTCHA);
 		if (null == captcha || !captcha.toLowerCase().equals(null == captchaSession ? null : captchaSession.toLowerCase())) {
 			return false;
 		}
 		//校验成功，清空session中的验证码
-		session.setAttribute(ShiroAuthHelper.SESSION_KEY_CAPTCHA, null);
+		session.setAttribute(ShiroAuthHelper.SESSION_IMAGE_CAPTCHA, null);
 		return true;
 	}
 }

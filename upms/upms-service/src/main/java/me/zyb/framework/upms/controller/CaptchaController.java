@@ -26,23 +26,13 @@ public class CaptchaController extends BaseController {
     private CaptchaService captchaService;
 
     /**
-     * 生成captchaKey
-     * @return Object
-     */
-    @RequestMapping("/captchaKey")
-    public Object captchaKey() {
-        String captchaKey = captchaService.generateCaptchaKey();
-        return rtSuccess(captchaKey);
-    }
-
-    /**
      * 生成验证码图片
      * @return Object
      */
     @RequestMapping("/image")
     public Object image() {
         String[] captchaImage = captchaService.generateCaptchaImage();
-        Map<String, Object> retMap = new HashMap<String, Object>();
+        Map<String, Object> retMap = new HashMap<String, Object>(16);
         retMap.put("code", "prod".equals(active) ?  "****" : captchaImage[0]);
         retMap.put("image", captchaImage[1]);
         return rtSuccess(retMap);

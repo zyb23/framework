@@ -11,10 +11,8 @@ import org.apache.shiro.subject.PrincipalCollection;
  */
 public final class ShiroAuthHelper {
 
-	/** Session中检验验证码的Key */
-	public static final String SESSION_KEY_CAPTCHA_KEY = "SESSION_KEY_CAPTCHA_KEY";
-	/** Session中的验证码 */
-	public static final String SESSION_KEY_CAPTCHA = "SESSION_KEY_CAPTCHA";
+	/** Session中的图片验证码 */
+	public static final String SESSION_IMAGE_CAPTCHA = "SESSION_IMAGE_CAPTCHA";
 
     private ShiroAuthHelper() {
     }

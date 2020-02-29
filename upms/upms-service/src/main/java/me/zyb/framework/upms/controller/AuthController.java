@@ -46,12 +46,11 @@ public class AuthController extends BaseController {
 	/**
 	 * 用户登录
 	 * @param model         用户信息
-	 * @param captchaKey    验证码的Key
 	 * @param captcha       验证码
 	 * @return Object
 	 */
 	@PostMapping("/login")
-	public Object login(UpmsUserModel model, String captchaKey, String captcha){
+	public Object login(UpmsUserModel model, String captcha){
 		if(null == model){
 			log.error("参数错误：model");
 			return rtParameterError();
@@ -64,11 +63,11 @@ public class AuthController extends BaseController {
 		}
 		//校验验证码
 		if(upmsProperties.getSwitchImageCaptcha()){
-			if(StringUtils.isBlank(captchaKey) || StringUtils.isBlank(captcha)){
-				log.error("参数错误：captchaKey|captcha");
+			if(StringUtils.isBlank(captcha)){
+				log.error("参数错误：captcha");
 				return rt(ReturnCode.CAPTCHA_ERROR);
 			}
-			if(!captchaService.checkCaptcha(captchaKey, captcha)){
+			if(!captchaService.checkCaptcha(captcha)){
 				return rt(ReturnCode.CAPTCHA_ERROR);
 			}
 		}
