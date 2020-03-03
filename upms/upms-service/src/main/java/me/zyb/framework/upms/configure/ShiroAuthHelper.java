@@ -48,6 +48,7 @@ public final class ShiroAuthHelper {
 
     /**
      * 获取当前登录用户
+     * @return UpmsUser
      */
     public static UpmsUser getCurrentUser() {
         return (UpmsUser) SecurityUtils.getSubject().getPrincipal();
@@ -55,6 +56,7 @@ public final class ShiroAuthHelper {
 
     /**
      * 获取当前登录用户ID
+     * @return Long
      */
     public static Long getCurrentUserId() {
 	    UpmsUser userEntity = getCurrentUser();
@@ -66,9 +68,18 @@ public final class ShiroAuthHelper {
 
 	/**
 	 * 获取当前会话
+	 * @return Session
 	 */
 	public static Session getCurrentSession() {
         return SecurityUtils.getSubject().getSession(true);
+    }
+
+	/**
+	 * 获取当前用户token
+	 * @return String
+	 */
+	public static String getToken() {
+		return getCurrentSession().getId().toString();
     }
 
 }

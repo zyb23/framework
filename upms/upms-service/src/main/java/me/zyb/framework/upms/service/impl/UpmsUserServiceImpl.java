@@ -25,6 +25,13 @@ import me.zyb.framework.upms.repository.UpmsUserRoleRepository;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -306,8 +313,36 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	@Override
-	public UpmsUserModel login(String loginName, String loginPassword) {
+	public String login(String loginName, String loginPassword) {
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		try {
+			UsernamePasswordToken token = new UsernamePasswordToken(loginName, loginPassword);
+			subject.login(token);
+		} catch (UnknownAccountException | IncorrectCredentialsException e) {
+			throw new UpmsException("用户名/密码错误");
+		} catch (LockedAccountException e) {
+			throw new UpmsException("该用户被锁定");
+		} catch (DisabledAccountException e){
+			throw new UpmsException("该用户被冻结");
+		} catch (AuthenticationException e) {
+			throw new UpmsException("用户不存在");
+		} catch (Exception e) {
+			throw new UpmsException("登录失败");
+		}
+		session.setTimeout(upmsProperties.getSessionTimeout());
 
+		return session.getId().toString();
+	}
+
+	@Override
+	public UpmsUserModel getSelfInfo(String token) {
+		String _token = ShiroAuthHelper.getToken();
+		if(token != _token) {
+			log.warn("Token不正确，不是当前用户，强制退出登录");
+			logout();
+			return null;
+		}
 		UpmsUser userEntity = ShiroAuthHelper.getCurrentUser();
 		//返回Data
 		UpmsUserModel userModel = EntityToModelUtil.entityToModel(userEntity, true);

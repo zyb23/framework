@@ -112,9 +112,15 @@ public interface UpmsUserService {
 	 * 用户登录（根据登录名和登录密码查询用户）
 	 * @param loginName     登录名
 	 * @param loginPassword 登录密码
+	 * @return String：token（sessionId）
+	 */
+	public String login(String loginName, String loginPassword);
+
+	/**
+	 * 根据token（sessionId）获取自己的信息
 	 * @return UpmsUserModel
 	 */
-	public UpmsUserModel login(String loginName, String loginPassword);
+	public UpmsUserModel getSelfInfo(String token);
 
 	/**
 	 * 用户登出

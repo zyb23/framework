@@ -3,21 +3,11 @@ package me.zyb.framework.upms.controller;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseController;
-import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.model.UpmsUserModel;
 import me.zyb.framework.upms.service.CaptchaService;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,25 +93,9 @@ public class AuthController extends BaseController {
 		}
 
 		//登录校验
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		try {
-			UsernamePasswordToken token = new UsernamePasswordToken(loginName, loginPassword);
-			subject.login(token);
-		} catch (UnknownAccountException | IncorrectCredentialsException e) {
-			throw new UpmsException("用户名/密码错误");
-		} catch (LockedAccountException e) {
-			throw new UpmsException("该用户被锁定");
-		} catch (DisabledAccountException e){
-			throw new UpmsException("该用户被冻结");
-		} catch (AuthenticationException e) {
-			throw new UpmsException("用户不存在");
-		} catch (Exception e) {
-			throw new UpmsException("登录失败");
-		}
-		session.setTimeout(upmsProperties.getSessionTimeout());
+		String token = upmsUserService.login(loginName, loginPassword);
 
-		return rtSuccess(session.getId().toString());
+		return rtSuccess(token);
 	}
 
 	/**
