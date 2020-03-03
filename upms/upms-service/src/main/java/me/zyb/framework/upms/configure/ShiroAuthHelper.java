@@ -67,7 +67,10 @@ public final class ShiroAuthHelper {
     }
 
 	/**
-	 * 获取当前会话
+	 * <pre>
+	 *     获取当前会话
+	 *     在未登录的情况下（subject.login），shiro每次获取的session都不同
+	 * </pre>
 	 * @return Session
 	 */
 	public static Session getCurrentSession() {
@@ -75,7 +78,7 @@ public final class ShiroAuthHelper {
     }
 
 	/**
-	 * 获取当前用户token
+	 * 获取当前用户token（sessionId）
 	 * @return String
 	 */
 	public static String getToken() {

@@ -1,5 +1,6 @@
 package me.zyb.framework.upms.configure;
 
+import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.dict.ConstString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * 自己定义session管理
  * @author zhangyingbin
  */
+@Slf4j
 public class CustomizedShiroSessionManager extends DefaultWebSessionManager {
 
 	public CustomizedShiroSessionManager() {
