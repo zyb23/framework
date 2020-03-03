@@ -25,12 +25,6 @@ import me.zyb.framework.upms.repository.UpmsUserRoleRepository;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -313,29 +307,6 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 	@Override
 	public UpmsUserModel login(String loginName, String loginPassword) {
-		//用户身份校验
-		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(loginName, loginPassword);
-		String message;
-		try {
-			subject.login(token);
-			subject.getSession().setTimeout(upmsProperties.getSessionTimeOut());
-		} catch (UnknownAccountException | IncorrectCredentialsException e) {
-			message = "用户名/密码错误";
-			throw new UpmsException(message);
-		} catch (LockedAccountException e) {
-			message = "该用户被锁定";
-			throw new UpmsException(message);
-		} catch (DisabledAccountException e){
-			message = "该用户被冻结";
-			throw new UpmsException(message);
-		} catch (AuthenticationException e) {
-			message = "用户不存在";
-			throw new UpmsException(message);
-		} catch (Exception e) {
-			log.error("登录异常", e);
-			throw new UpmsException("登录失败");
-		}
 
 		UpmsUser userEntity = ShiroAuthHelper.getCurrentUser();
 		//返回Data

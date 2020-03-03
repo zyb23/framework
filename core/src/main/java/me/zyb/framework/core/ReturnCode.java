@@ -19,10 +19,10 @@ public enum ReturnCode implements BaseEnum<String> {
 
 	/** 验证码错误 */
 	CAPTCHA_ERROR("1000", "captcha.error", "验证码错误"),
-	/** 权限不足 */
-	PERMISSION_DENIED("1001", "permission.denied", "权限不足"),
 	/** 未登录/登录超时 */
-	LOGIN_TIMEOUT("1002", "login.not", "未登录/登录超时"),
+	LOGIN_TIMEOUT("1001", "login.not", "未登录/登录超时"),
+	/** 权限不足 */
+	PERMISSION_DENIED("1002", "permission.denied", "权限不足"),
 	/** 用户名/密码错误 */
 	USERNAME_PASSWORD_ERROR("1003", "username.password.error", "用户名/密码错误"),
 

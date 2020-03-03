@@ -14,5 +14,5 @@ public class ConstNumber {
 	public static final Integer DEFAULT_PAGE_SIZE = 20;
 
 	/** 默认Session超时时间（1小时-3600_000毫秒） */
-	public static final Long DEFAULT_SESSION_TIME_OUT = 3600_000L;
+	public static final Long DEFAULT_SESSION_TIMEOUT = 3600_000L;
 }

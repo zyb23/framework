@@ -20,7 +20,7 @@ public class UpmsProperties {
 	private int passwordPolicyShortest = 8;
 
 	/** session超时 */
-	private long sessionTimeOut = ConstNumber.DEFAULT_SESSION_TIME_OUT;
+	private long sessionTimeout = ConstNumber.DEFAULT_SESSION_TIMEOUT;
 
 	/** shiro不拦截路径，多个用逗号隔开 */
 	private String shiroAnon;

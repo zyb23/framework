@@ -15,7 +15,6 @@ import java.io.Serializable;
  */
 public class CustomizedShiroSessionManager extends DefaultWebSessionManager {
 	private static final String AUTHORIZATION = "Authorization";
-
 	private static final String COOKIE = "Cookie";
 
 	public CustomizedShiroSessionManager() {
