@@ -20,6 +20,15 @@ public class ConstString {
 
 	/** UTF-8 */
 	public static final String CHARACTER_UTF_8 = "UTF-8";
+	/** 创建时间 */
+	public static final String CREATE_TIME = "createTime";
+	/** 创建人ID */
+	public static final String CREATOR_ID = "creatorId";
+
+	/** 修改时间 */
+	public static final String EDIT_TIME = "editTime";
+	/** 修改人ID */
+	public static final String EDITOR_ID = "editorId";
 
 	/** jpg */
 	public static final String FILE_FORMAT_JPG = "jpg";
@@ -28,14 +37,12 @@ public class ConstString {
 	/** txt */
 	public static final String FILE_FORMAT_TXT = "txt";
 
-	/** 创建人ID */
-	public static final String CREATOR_ID = "creatorId";
-	/** 创建时间 */
-	public static final String CREATE_TIME = "createTime";
-	/** 修改人ID */
-	public static final String EDITOR_ID = "editorId";
-	/** 修改时间 */
-	public static final String EDIT_TIME = "editTime";
+	/** cookie key */
+	public static final String KEY_COOKIE = "Cookie";
+	/** session key */
+	public static final String KEY_SESSION = "Session";
+	/** token key */
+	public static final String KEY_TOKEN = "Token";
 
 	/** 升序 */
 	public static final String ORDER_ASC = "asc";

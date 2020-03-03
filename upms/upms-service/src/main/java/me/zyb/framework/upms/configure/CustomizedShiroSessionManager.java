@@ -1,5 +1,6 @@
 package me.zyb.framework.upms.configure;
 
+import me.zyb.framework.core.dict.ConstString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -14,8 +15,6 @@ import java.io.Serializable;
  * @author zhangyingbin
  */
 public class CustomizedShiroSessionManager extends DefaultWebSessionManager {
-	private static final String AUTHORIZATION = "Authorization";
-	private static final String COOKIE = "Cookie";
 
 	public CustomizedShiroSessionManager() {
 		super();
@@ -23,10 +22,10 @@ public class CustomizedShiroSessionManager extends DefaultWebSessionManager {
 
 	@Override
 	protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-		String sessionId = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
-		//如果请求头中有 Authorization 则其值为sessionId
+		String sessionId = WebUtils.toHttp(request).getHeader(ConstString.KEY_TOKEN);
+		//如果请求头中有 Token 则其值为sessionId
 		if (StringUtils.isNotEmpty(sessionId)) {
-			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, COOKIE);
+			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, ConstString.KEY_SESSION);
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, sessionId);
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
 			return sessionId;

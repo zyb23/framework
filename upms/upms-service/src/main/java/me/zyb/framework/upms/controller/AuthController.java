@@ -3,11 +3,13 @@ package me.zyb.framework.upms.controller;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseController;
+import me.zyb.framework.core.dict.ConstString;
 import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.model.UpmsUserModel;
 import me.zyb.framework.upms.service.CaptchaService;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,11 +93,16 @@ public class AuthController extends BaseController {
 				return rt(ReturnCode.CAPTCHA_ERROR);
 			}
 		}
-
 		//登录校验
 		String token = upmsUserService.login(loginName, loginPassword);
 
 		return rtSuccess(token);
+	}
+
+	@RequestMapping(value = "/getSelfInfo")
+	public Object getSelfInfo() {
+		String token = WebUtils.toHttp(request).getHeader(ConstString.KEY_TOKEN);
+		return rtSuccess(upmsUserService.getSelfInfo(token));
 	}
 
 	/**
