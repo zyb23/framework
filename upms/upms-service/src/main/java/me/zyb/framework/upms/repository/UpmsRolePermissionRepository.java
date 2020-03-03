@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zhangyingbin
@@ -23,18 +24,18 @@ public interface UpmsRolePermissionRepository extends JpaRepository<UpmsRolePerm
 
 	/**
 	 * 根据角色ID列表查询
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 * @return List<UpmsRolePermission>
 	 */
-	public List<UpmsRolePermission> findByRoleIdIn(List<Long> roleIdList);
+	public List<UpmsRolePermission> findByRoleIdIn(Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID、权限ID列表查询
 	 * @param roleId            角色ID
-	 * @param permissionIdList  权限ID列表
+	 * @param permissionIdSet   权限ID列表
 	 * @return List<UpmsRolePermission>
 	 */
-	public List<UpmsRolePermission> findByRoleIdAndPermissionIdIn(Long roleId, List<Long> permissionIdList);
+	public List<UpmsRolePermission> findByRoleIdAndPermissionIdIn(Long roleId, Set<Long> permissionIdSet);
 
 	/**
 	 * 根据权限ID查询
@@ -45,18 +46,18 @@ public interface UpmsRolePermissionRepository extends JpaRepository<UpmsRolePerm
 
 	/**
 	 * 根据权限ID列表查询
-	 * @param permissionIdList   权限ID列表
+	 * @param permissionIdSet   权限ID列表
 	 * @return List<UpmsRolePermission>
 	 */
-	public List<UpmsRolePermission> findByPermissionIdIn(List<Long> permissionIdList);
+	public List<UpmsRolePermission> findByPermissionIdIn(Set<Long> permissionIdSet);
 
 	/**
 	 * 根据权限ID、角色ID列表查询
 	 * @param permissionId  权限ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 * @return List<UpmsRolePermission>
 	 */
-	public List<UpmsRolePermission> findByPermissionIdAndRoleIdIn(Long permissionId, List<Long> roleIdList);
+	public List<UpmsRolePermission> findByPermissionIdAndRoleIdIn(Long permissionId, Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID删除
@@ -66,9 +67,9 @@ public interface UpmsRolePermissionRepository extends JpaRepository<UpmsRolePerm
 
 	/**
 	 * 根据角色ID列表删除
-	 * @param roleIdList    角色ID
+	 * @param roleIdSet     角色ID
 	 */
-	public void deleteByRoleIdIn(List<Long> roleIdList);
+	public void deleteByRoleIdIn(Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID、权限ID删除
@@ -80,9 +81,9 @@ public interface UpmsRolePermissionRepository extends JpaRepository<UpmsRolePerm
 	/**
 	 * 根据角色ID、权限ID列表删除
 	 * @param roleId            角色ID
-	 * @param permissionIdList  权限ID列表
+	 * @param permissionIdSet   权限ID列表
 	 */
-	public void deleteByRoleIdAndPermissionIdIn(Long roleId, List<Long> permissionIdList);
+	public void deleteByRoleIdAndPermissionIdIn(Long roleId, Set<Long> permissionIdSet);
 
 	/**
 	 * 根据权限ID删除
@@ -92,14 +93,14 @@ public interface UpmsRolePermissionRepository extends JpaRepository<UpmsRolePerm
 
 	/**
 	 * 根据权限ID列表删除
-	 * @param permissionIdList  权限ID列表
+	 * @param permissionIdSet   权限ID列表
 	 */
-	public void deleteByPermissionIdIn(List<Long> permissionIdList);
+	public void deleteByPermissionIdIn(Set<Long> permissionIdSet);
 
 	/**
 	 * 根据权限ID、角色ID列表删除
 	 * @param permissionId  权限ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 */
-	public void deleteByPermissionIdAndRoleIdIn(Long permissionId, List<Long> roleIdList);
+	public void deleteByPermissionIdAndRoleIdIn(Long permissionId, Set<Long> roleIdSet);
 }

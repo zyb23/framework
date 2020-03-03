@@ -30,6 +30,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -79,9 +80,9 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 		entity.setDescription(model.getDescription());
 
 		//设置角色的权限
-		List<Long> permissionIdList = model.getPermissionIdList();
-		if(null != permissionIdList && permissionIdList.size() > 0){
-			List<UpmsPermission> permissionList = upmsPermissionRepository.findAllById(permissionIdList);
+		Set<Long> permissionIdSet = model.getPermissionIdSet();
+		if(null != permissionIdSet && permissionIdSet.size() > 0){
+			List<UpmsPermission> permissionList = upmsPermissionRepository.findAllById(permissionIdSet);
 			entity.setPermissionList(permissionList);
 		}
 
@@ -138,13 +139,13 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 	public Page<UpmsRoleModel> queryByCondition(UpmsRoleCondition condition){
 		Page<UpmsRole> entityPage = findByCondition(condition);
 		List<UpmsRole> entityList = entityPage.getContent();
-		List<UpmsRoleModel> modelList = EntityToModelUtil.entityToModel(entityList, condition.getNeedPermissionList(), condition.getNeedPermissionIdList(), condition.getNeedPermissionCodeList());
+		List<UpmsRoleModel> modelList = EntityToModelUtil.entityToModel(entityList, condition.getNeedPermissionList(), condition.getNeedPermissionIdSet(), condition.getNeedPermissionCodeSet());
 		return new PageImpl<UpmsRoleModel>(modelList, entityPage.getPageable(), entityPage.getTotalElements());
 	}
 
 	@Override
-	public List<UpmsRoleModel> queryByIdList(List<Long> idList) {
-		List<UpmsRole> entityList = upmsRoleRepository.findAllById(idList);
+	public List<UpmsRoleModel> queryByIdSet(Set<Long> idSet) {
+		List<UpmsRole> entityList = upmsRoleRepository.findAllById(idSet);
 		return EntityToModelUtil.entityToModel4Role(entityList);
 	}
 
@@ -161,12 +162,12 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 	}
 
 	@Override
-	public void savePermission(Long roleId, List<Long> permissionIdList) {
+	public void savePermission(Long roleId, Set<Long> permissionIdSet) {
 		//roleId是否存在
 		Optional<UpmsRole> optional = upmsRoleRepository.findById(roleId);
 		if(optional.isPresent()){
 			UpmsRole upmsRole = optional.get();
-			List<UpmsPermission> upmsPermissionList = upmsPermissionRepository.findAllById(permissionIdList);
+			List<UpmsPermission> upmsPermissionList = upmsPermissionRepository.findAllById(permissionIdSet);
 			upmsRole.setPermissionList(upmsPermissionList);
 			upmsRoleRepository.save(upmsRole);
 		}else{
@@ -175,37 +176,39 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 	}
 
 	/**
-	 * <p>更新角色权限（中间表）</p>
-	 * <p>根据permissionIdList判断</p>
-	 * <p>1：用户已有permissionIdList中的角色，不作任何操作</p>
-	 * <p>2：用户没有permissionIdList中的角色，新增</p>
-	 * <p>3：用户现有角色不在permissionIdList中，删除</p>
+	 * <pre>
+	 *     更新角色权限（中间表）
+	 *     根据permissionIdSet判断
+	 *     1：用户已有permissionIdSet中的角色，不作任何操作
+	 *     2：用户没有permissionIdSet中的角色，新增
+	 *     3：用户现有角色不在permissionIdSet中，删除
+	 * </pre>
 	 * @param roleId            用户ID
-	 * @param permissionIdList  角色ID列表
+	 * @param permissionIdSet   角色ID列表
 	 */
-	private void saveRolePermission(Long roleId, List<Long> permissionIdList){
+	private void saveRolePermission(Long roleId, Set<Long> permissionIdSet){
 		//查询角色权限中间表
-		List<UpmsRolePermission> upmsRolePermissionList = upmsRolePermissionRepository.findByRoleIdAndPermissionIdIn(roleId, permissionIdList);
+		List<UpmsRolePermission> upmsRolePermissionList = upmsRolePermissionRepository.findByRoleIdAndPermissionIdIn(roleId, permissionIdSet);
 		//查询角色已有的权限
-		List<Long> alreadyHavePermissionIdList = upmsRolePermissionList.stream().map(UpmsRolePermission::getPermissionId).collect(Collectors.toList());
+		Set<Long> alreadyHavePermissionIdSet = upmsRolePermissionList.stream().map(UpmsRolePermission::getPermissionId).collect(Collectors.toSet());
 
 		//角色需要新增的权限
-		List<Long> addPermissionIdList = permissionIdList.stream().filter(permissionId -> !alreadyHavePermissionIdList.contains(permissionId)).collect(Collectors.toList());
-		addUpmsRolePermission(roleId, addPermissionIdList);
+		Set<Long> addPermissionIdSet = permissionIdSet.stream().filter(permissionId -> !alreadyHavePermissionIdSet.contains(permissionId)).collect(Collectors.toSet());
+		addUpmsRolePermission(roleId, addPermissionIdSet);
 		//角色需要删除的权限
-		List<Long> delPermissionIdList = alreadyHavePermissionIdList.stream().filter(permissionId -> !permissionIdList.contains(permissionId)).collect(Collectors.toList());
-		deleteUpmsRolePermission(roleId, delPermissionIdList);
+		Set<Long> delPermissionIdSet = alreadyHavePermissionIdSet.stream().filter(permissionId -> !permissionIdSet.contains(permissionId)).collect(Collectors.toSet());
+		deleteUpmsRolePermission(roleId, delPermissionIdSet);
 	}
 
 	/**
 	 * 新增角色权限（中间表）
 	 * @param roleId            角色ID
-	 * @param permissionIdList  权限ID列表
+	 * @param permissionIdSet   权限ID列表
 	 * @return List<UpmsRolePermission>
 	 */
-	public List<UpmsRolePermission> addUpmsRolePermission(Long roleId, List<Long> permissionIdList){
+	public List<UpmsRolePermission> addUpmsRolePermission(Long roleId, Set<Long> permissionIdSet){
 		List<UpmsRolePermission> upmsRolePermissionList = new ArrayList<UpmsRolePermission>();
-		for(Long permissionId : permissionIdList){
+		for(Long permissionId : permissionIdSet){
 			UpmsRolePermission upmsRolePermission = new UpmsRolePermission();
 			upmsRolePermission.setRoleId(roleId);
 			upmsRolePermission.setPermissionId(permissionId);
@@ -218,8 +221,8 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 	}
 
 	@Override
-	public void deleteUpmsRolePermission(Long roleId, List<Long> permissionIdList){
-		upmsRolePermissionRepository.deleteByRoleIdAndPermissionIdIn(roleId, permissionIdList);
+	public void deleteUpmsRolePermission(Long roleId, Set<Long> permissionIdSet){
+		upmsRolePermissionRepository.deleteByRoleIdAndPermissionIdIn(roleId, permissionIdSet);
 	}
 
 	@Override
@@ -235,7 +238,7 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 			UpmsRole roleEntity = optional.get();
 			UpmsRoleModel model = EntityToModelUtil.entityToModel(roleEntity, false, true, true);
 			List<UpmsPermissionModel> permissionTree = upmsPermissionService.queryTree(null, false, true);
-			markHave(model.getPermissionIdList(), permissionTree);
+			markHave(model.getPermissionIdSet(), permissionTree);
 			model.setPermissionTree(permissionTree);
 			return model;
 		}
@@ -244,12 +247,12 @@ public class UpmsRoleServiceImpl implements UpmsRoleService {
 
 	/**
 	 * 在所有权限的树形结构中，给角色拥有的权限打上标识
-	 * @param havePermissionIdList  角色拥有的所有权限ID列表
+	 * @param havePermissionIdSet   角色拥有的所有权限ID列表
 	 * @param permissionTree        所有权限的树形结构
 	 * @return List<UpmsPermissionModel>
 	 */
-	private List<UpmsPermissionModel> markHave(List<Long> havePermissionIdList, List<UpmsPermissionModel> permissionTree){
-		for(Long havePermissionId : havePermissionIdList){
+	private List<UpmsPermissionModel> markHave(Set<Long> havePermissionIdSet, List<UpmsPermissionModel> permissionTree){
+		for(Long havePermissionId : havePermissionIdSet){
 			markHave(havePermissionId, permissionTree);
 		}
 		return permissionTree;

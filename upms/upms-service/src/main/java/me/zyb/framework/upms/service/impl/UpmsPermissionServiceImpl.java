@@ -24,6 +24,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author zhangyingbin
@@ -136,8 +137,8 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 	}
 
 	@Override
-	public List<UpmsPermissionModel> queryByIdList(List<Long> idList) {
-		List<UpmsPermission> entityList = upmsPermissionRepository.findAllById(idList);
+	public List<UpmsPermissionModel> queryByIdSet(Set<Long> idSet) {
+		List<UpmsPermission> entityList = upmsPermissionRepository.findAllById(idSet);
 		return EntityToModelUtil.entityToModel4Permission(entityList);
 	}
 

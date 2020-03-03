@@ -1,8 +1,6 @@
 package me.zyb.framework.upms.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.ReturnCode;
-import me.zyb.framework.core.ReturnData;
 import me.zyb.framework.core.builder.UuidBuilder;
 import me.zyb.framework.core.util.ListToTreeUtil;
 import me.zyb.framework.core.util.StringUtil;
@@ -106,9 +104,9 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		}
 
 		//设置用户的角色
-		List<Long> roleIdList = model.getRoleIdList();
-		if(null != roleIdList && roleIdList.size() > 0){
-			List<UpmsRole> roleList = upmsRoleRepository.findAllById(model.getRoleIdList());
+		Set<Long> roleIdSet = model.getRoleIdSet();
+		if(null != roleIdSet && roleIdSet.size() > 0){
+			List<UpmsRole> roleList = upmsRoleRepository.findAllById(model.getRoleIdSet());
 			entity.setRoleList(roleList);
 		}
 
@@ -168,10 +166,10 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 			if(null != condition.getIsDisable()){
 				predicateList.add(criteriaBuilder.equal(root.get("isDisable").as(Boolean.class), condition.getIsDisable()));
 			}
-			if (null != condition.getRoleIdList() && condition.getRoleIdList().size() > 0){
+			if (null != condition.getRoleIdSet() && condition.getRoleIdSet().size() > 0){
 				Join<UpmsUser, UpmsRole> role = root.join(root.getModel().getList("roleList", UpmsRole.class));
 				CriteriaBuilder.In<Long> in = criteriaBuilder.in(role.get("id"));
-				for (Long roleId : condition.getRoleIdList()){
+				for (Long roleId : condition.getRoleIdSet()){
 					in.value(roleId);
 				}
 				predicateList.add(in);
@@ -206,12 +204,12 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	@Override
-	public void saveRole(Long userId, List<Long> roleIdList){
+	public void saveRole(Long userId, Set<Long> roleIdSet){
 		//userId是否存在
 		Optional<UpmsUser> optional = upmsUserRepository.findById(userId);
 		if(optional.isPresent()){
 			UpmsUser upmsUser = optional.get();
-			List<UpmsRole> upmsRoleList = upmsRoleRepository.findAllById(roleIdList);
+			List<UpmsRole> upmsRoleList = upmsRoleRepository.findAllById(roleIdSet);
 			upmsUser.setRoleList(upmsRoleList);
 			upmsUserRepository.save(upmsUser);
 		}else{
@@ -220,37 +218,38 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	/**
-	 * <p>更新用户角色（中间表）</p>
-	 * <p>根据roleIdList判断</p>
-	 * <p>1：用户已有roleIdList中的角色，不作任何操作</p>
-	 * <p>2：用户没有roleIdList中的角色，新增</p>
-	 * <p>3：用户现有角色不在roleIdList中，删除</p>
+	 * <pre>
+	 *     更新用户角色（中间表）
+	 *     根据roleIdSet判断
+	 *     1：用户已有roleIdSet中的角色，不作任何操作
+	 *     2：用户没有roleIdSet中的角色，新增
+	 *     3：用户现有角色不在roleIdSet中，删除
 	 * @param userId        用户ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 */
-	private void saveUserRole(Long userId, List<Long> roleIdList){
+	private void saveUserRole(Long userId, Set<Long> roleIdSet){
 		//查询用户角色中间表
-		List<UpmsUserRole> upmsUserRoleList = upmsUserRoleRepository.findByUserIdAndRoleIdIn(userId, roleIdList);
+		List<UpmsUserRole> upmsUserRoleList = upmsUserRoleRepository.findByUserIdAndRoleIdIn(userId, roleIdSet);
 		//查询用户已有的角色
-		List<Long> alreadyHaveRoleIdList = upmsUserRoleList.stream().map(UpmsUserRole::getRoleId).collect(Collectors.toList());
+		Set<Long> alreadyHaveRoleIdSet = upmsUserRoleList.stream().map(UpmsUserRole::getRoleId).collect(Collectors.toSet());
 
 		//用户需要新增的角色
-		List<Long> addRoleIdList = roleIdList.stream().filter(roleId -> !alreadyHaveRoleIdList.contains(roleId)).collect(Collectors.toList());
-		addUpmsUserRole(userId, addRoleIdList);
+		Set<Long> addRoleIdSet = roleIdSet.stream().filter(roleId -> !alreadyHaveRoleIdSet.contains(roleId)).collect(Collectors.toSet());
+		addUpmsUserRole(userId, addRoleIdSet);
 		//用户需要删除的角色
-		List<Long> delRoleIdList = alreadyHaveRoleIdList.stream().filter(roleId -> !roleIdList.contains(roleId)).collect(Collectors.toList());
-		deleteUpmsUserRole(userId, delRoleIdList);
+		Set<Long> delRoleIdSet = alreadyHaveRoleIdSet.stream().filter(roleId -> !roleIdSet.contains(roleId)).collect(Collectors.toSet());
+		deleteUpmsUserRole(userId, delRoleIdSet);
 	}
 
 	/**
 	 * 新增用户角色（中间表）
 	 * @param userId        用户ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 * @return List<UpmsUserRole>
 	 */
-	private List<UpmsUserRole> addUpmsUserRole(Long userId, List<Long> roleIdList){
+	private List<UpmsUserRole> addUpmsUserRole(Long userId, Set<Long> roleIdSet){
 		List<UpmsUserRole> upmsUserRoleList = new ArrayList<UpmsUserRole>();
-		for(Long roleId : roleIdList){
+		for(Long roleId : roleIdSet){
 			UpmsUserRole upmsUserRole = new UpmsUserRole();
 			upmsUserRole.setUserId(userId);
 			upmsUserRole.setRoleId(roleId);
@@ -263,8 +262,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	@Override
-	public void deleteUpmsUserRole(Long userId, List<Long> roleIdList){
-		upmsUserRoleRepository.deleteByUserIdAndRoleIdIn(userId, roleIdList);
+	public void deleteUpmsUserRole(Long userId, Set<Long> roleIdSet){
+		upmsUserRoleRepository.deleteByUserIdAndRoleIdIn(userId, roleIdSet);
 	}
 
 	@Override
@@ -313,35 +312,29 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	@Override
-	public ReturnData login(String loginName, String loginPassword) {
+	public UpmsUserModel login(String loginName, String loginPassword) {
 		//用户身份校验
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(loginName, loginPassword);
-		ReturnData returnData;
 		String message;
 		try {
 			subject.login(token);
 			subject.getSession().setTimeout(upmsProperties.getSessionTimeOut());
-			returnData = new ReturnData(ReturnCode.SUCCESS.getValue(), "成功");
 		} catch (UnknownAccountException | IncorrectCredentialsException e) {
 			message = "用户名/密码错误";
-			log.error(message);
-			returnData = new ReturnData(ReturnCode.FAILURE.getValue(), message);
+			throw new UpmsException(message);
 		} catch (LockedAccountException e) {
 			message = "该用户被锁定";
-			log.error(message);
-			returnData = new ReturnData(ReturnCode.FAILURE.getValue(), message);
+			throw new UpmsException(message);
 		} catch (DisabledAccountException e){
 			message = "该用户被冻结";
-			log.error(message);
-			returnData = new ReturnData(ReturnCode.FAILURE.getValue(), message);
+			throw new UpmsException(message);
 		} catch (AuthenticationException e) {
 			message = "用户不存在";
-			log.error(message);
-			returnData = new ReturnData(ReturnCode.FAILURE.getValue(), message);
+			throw new UpmsException(message);
 		} catch (Exception e) {
 			log.error("登录异常", e);
-			returnData = new ReturnData(ReturnCode.FAILURE.getValue(), "登录失败");
+			throw new UpmsException("登录失败");
 		}
 
 		UpmsUser userEntity = ShiroAuthHelper.getCurrentUser();
@@ -350,21 +343,21 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 		//获取登录用户的所有角色数据
 		List<UpmsRoleModel> roleModelList = queryRole(userEntity.getId());
-		userModel.setRoleIdList(roleModelList.stream().map(UpmsRoleModel::getId).collect(Collectors.toList()));
+		userModel.setRoleIdSet(roleModelList.stream().map(UpmsRoleModel::getId).collect(Collectors.toSet()));
+		userModel.setRoleCodeSet(roleModelList.stream().map(UpmsRoleModel::getCode).collect(Collectors.toSet()));
+		//userModel.setRoleList(roleModelList);
 
-		//获取登录用户的所有权限（列表形式）
+		//获取登录用户的所有权限数据
 		List<UpmsPermissionModel> permissionModelList = queryPermission(userEntity.getId(), null);
-//		userModel.setPermissionList(permissionModelList);
-		//获取登录用户的所有权限编码
-		Set<String> permissionCodeList = permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet());
-		userModel.setPermissionCodeList(permissionCodeList);
+		userModel.setPermissionIdSet(permissionModelList.stream().map(UpmsPermissionModel::getId).collect(Collectors.toSet()));
+		userModel.setPermissionCodeSet(permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet()));
+		//userModel.setPermissionList(permissionModelList);
+
 		//获取登录用户的所有菜单（树形）
-		List<UpmsPermissionModel> topTree = queryPermissionTree(userEntity.getId(), null, null);
+		List<UpmsPermissionModel> topTree = listToTree(permissionModelList, null);
 		userModel.setPermissionTree(topTree);
 
-		returnData.setData(userModel);
-
-		return returnData;
+		return userModel;
 	}
 
 	@Override
@@ -380,8 +373,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	@Override
-	public List<UpmsUserModel> queryByIdList(List<Long> idList) {
-		List<UpmsUser> entityList = upmsUserRepository.findAllById(idList);
+	public List<UpmsUserModel> queryByIdSet(Set<Long> idSet) {
+		List<UpmsUser> entityList = upmsUserRepository.findAllById(idSet);
 		return EntityToModelUtil.entityToModel4User(entityList);
 	}
 

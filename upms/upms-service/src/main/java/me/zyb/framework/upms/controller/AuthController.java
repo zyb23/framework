@@ -72,7 +72,7 @@ public class AuthController extends BaseController {
 			}
 		}
 
-		return upmsUserService.login(loginName, loginPassword);
+		return rtSuccess(upmsUserService.login(loginName, loginPassword));
 	}
 
 	/**

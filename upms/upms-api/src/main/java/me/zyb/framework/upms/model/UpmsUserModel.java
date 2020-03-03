@@ -31,6 +31,9 @@ public class UpmsUserModel implements Serializable {
 	/** 用户名 */
 	private String username;
 
+	/** 头像 */
+	private String icon;
+
 	/** 手机号 */
 	private String mobile;
 
@@ -44,19 +47,22 @@ public class UpmsUserModel implements Serializable {
 	private String roleNames;
 
 	/** 角色ID列表 */
-	private List<Long> roleIdList;
+	private Set<Long> roleIdSet;
+
+	/** 角色编码列表 */
+	private Set<String> roleCodeSet;
 
 	/** 角色列表 */
 	private List<UpmsRoleModel> roleList;
 
-	/** 权限列表 */
-	private List<UpmsPermissionModel> permissionList;
-
 	/** 权限ID列表 */
-	private Set<Long> permissionIdList;
+	private Set<Long> permissionIdSet;
 
 	/** 权限编码列表 */
-	private Set<String> permissionCodeList;
+	private Set<String> permissionCodeSet;
+
+	/** 权限列表 */
+	private List<UpmsPermissionModel> permissionList;
 
 	/** 树形权限列表 */
 	private List<UpmsPermissionModel> permissionTree;

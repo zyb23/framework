@@ -14,9 +14,9 @@ import java.io.Serializable;
  * @author zhangyingbin
  */
 public class CustomizedShiroSessionManager extends DefaultWebSessionManager {
-	private static final String TOKEN = "token";
+	private static final String AUTHORIZATION = "Authorization";
 
-	private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
+	private static final String COOKIE = "Cookie";
 
 	public CustomizedShiroSessionManager() {
 		super();
@@ -24,10 +24,10 @@ public class CustomizedShiroSessionManager extends DefaultWebSessionManager {
 
 	@Override
 	protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-		String sessionId = WebUtils.toHttp(request).getHeader(TOKEN);
+		String sessionId = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
 		//如果请求头中有 Authorization 则其值为sessionId
-		if (!StringUtils.isEmpty(sessionId)) {
-			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);
+		if (StringUtils.isNotEmpty(sessionId)) {
+			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, COOKIE);
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, sessionId);
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
 			return sessionId;

@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.query.BaseCondition;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 用户查询条件
@@ -29,5 +29,5 @@ public class UpmsUserCondition extends BaseCondition {
 	private Boolean isDisable;
 
 	/** 角色id */
-	private List<Long> roleIdList;
+	private Set<Long> roleIdSet;
 }

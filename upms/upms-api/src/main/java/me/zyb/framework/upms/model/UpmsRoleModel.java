@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色模型
@@ -32,10 +33,10 @@ public class UpmsRoleModel implements Serializable {
 	private List<UpmsPermissionModel> permissionList;
 
 	/** 权限ID列表 */
-	private List<Long> permissionIdList;
+	private Set<Long> permissionIdSet;
 
 	/** 权限编码列表 */
-	private List<String> permissionCodeList;
+	private Set<String> permissionCodeSet;
 
 	/** 树形展示所有权限，并标识出角色拥有的权限 */
 	private List<UpmsPermissionModel> permissionTree;

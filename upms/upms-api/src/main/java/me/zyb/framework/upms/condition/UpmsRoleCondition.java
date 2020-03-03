@@ -14,7 +14,7 @@ public class UpmsRoleCondition extends BaseCondition {
 	/** 是否要包含权限列表 */
 	private Boolean needPermissionList = false;
 	/** 是否要包含权限ID列表 */
-	private Boolean needPermissionIdList = false;
+	private Boolean needPermissionIdSet = false;
 	/** 是事要包含权限编码列表 */
-	private Boolean needPermissionCodeList = false;
+	private Boolean needPermissionCodeSet = false;
 }

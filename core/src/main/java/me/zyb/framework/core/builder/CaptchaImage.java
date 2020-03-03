@@ -44,19 +44,19 @@ public class CaptchaImage {
 	    StringBuilder sb = new StringBuilder();
         //1.创建空白图片
         BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        //2.获取图片画笔
+        //2.获取图片画框
         Graphics graphic = image.getGraphics();
-        //3.设置画笔颜色
+        //3.设置画框颜色
         graphic.setColor(Color.LIGHT_GRAY);
-        //4.绘制矩形背景
+        //4.填充画框背景色
         graphic.fillRect(0, 0, WIDTH, HEIGHT);
         //5.画随机字符
         Random ran = new Random();
         for (int i = 0; i < SIZE; i++) {
             //取随机字符索引
             int n = ran.nextInt(CHARS.length);
-            //设置随机颜色
-            graphic.setColor(getRandomColor());
+            //设置验证码颜色
+            graphic.setColor(getRandomColor4Captcha());
             //设置字体大小
             graphic.setFont(new Font(null, Font.BOLD + Font.ITALIC, FONT_SIZE));
             //画字符
@@ -66,8 +66,8 @@ public class CaptchaImage {
         }
         //6.画干扰线
         for (int i = 0; i < LINES; i++) {
-            //设置随机颜色
-            graphic.setColor(getRandomColor());
+            //设置干扰线颜色
+            graphic.setColor(getRandomColor4Line());
             //随机画线
             graphic.drawLine(ran.nextInt(WIDTH), ran.nextInt(HEIGHT), ran.nextInt(WIDTH), ran.nextInt(HEIGHT));
         }
@@ -83,13 +83,26 @@ public class CaptchaImage {
     }
 
     /**
-     * 随机取色
+     * 验证码随机取色（颜色更深）
+     * @return Color
      */
-    private static Color getRandomColor() {
+    private static Color getRandomColor4Captcha() {
         Random ran = new Random();
-        int r = ran.nextInt(256) % 196 + 60;
-        int g = ran.nextInt(256) % 196 + 60;
-        int b = ran.nextInt(256) % 196 + 60;
+        int r = ran.nextInt(256) % 200 + 56;
+        int g = ran.nextInt(256) % 200 + 56;
+        int b = ran.nextInt(256) % 200 + 56;
         return new Color(r, g, b);
+    }
+
+	/**
+	 * 干扰线随机取色（颜色更浅）
+	 * @return Color
+	 */
+	private static Color getRandomColor4Line() {
+		Random ran = new Random();
+		int r = ran.nextInt(256) % 100 + 156;
+		int g = ran.nextInt(256) % 100 + 156;
+		int b = ran.nextInt(256) % 100 + 156;
+		return new Color(r, g, b);
     }
 }

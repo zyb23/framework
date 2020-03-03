@@ -70,24 +70,24 @@ public class EntityToModelUtil {
 	 * 将UpmsRole转成UpmsRoleModel
 	 * @param entity                    角色实体对象
 	 * @param needPermissionList        是否要包含权限列表
-	 * @param needPermissionIdList      是否要包含权限ID列表
-	 * @param needPermissionCodeList    是事要包含权限编码列表
+	 * @param needPermissionIdSet       是否要包含权限ID列表
+	 * @param needPermissionCodeSet     是事要包含权限编码列表
 	 * @return UpmsRoleModel
 	 */
-	public static UpmsRoleModel entityToModel(UpmsRole entity, boolean needPermissionList, boolean needPermissionIdList, boolean needPermissionCodeList){
+	public static UpmsRoleModel entityToModel(UpmsRole entity, boolean needPermissionList, boolean needPermissionIdSet, boolean needPermissionCodeSet){
 		UpmsRoleModel model = new UpmsRoleModel();
 		BeanUtils.copyProperties(entity, model, "userList", "permissionList");
 		List<UpmsPermission> permissionEntityList = entity.getPermissionList();
 		if(needPermissionList){
 			model.setPermissionList(entityToModel(permissionEntityList, false, false));
 		}
-		if(needPermissionIdList){
-			List<Long> permissionIdList = permissionEntityList.stream().map(UpmsPermission::getId).collect(Collectors.toList());
-			model.setPermissionIdList(permissionIdList);
+		if(needPermissionIdSet){
+			Set<Long> permissionIdSet = permissionEntityList.stream().map(UpmsPermission::getId).collect(Collectors.toSet());
+			model.setPermissionIdSet(permissionIdSet);
 		}
-		if(needPermissionCodeList){
-			List<String> permissionCodeList = permissionEntityList.stream().map(UpmsPermission::getCode).collect(Collectors.toList());
-			model.setPermissionCodeList(permissionCodeList);
+		if(needPermissionCodeSet){
+			Set<String> permissionCodeSet = permissionEntityList.stream().map(UpmsPermission::getCode).collect(Collectors.toSet());
+			model.setPermissionCodeSet(permissionCodeSet);
 		}
 		return model;
 	}
@@ -105,14 +105,14 @@ public class EntityToModelUtil {
 	 * 将UpmsRole转成UpmsRoleModel
 	 * @param entityList                角色实体对象列表
 	 * @param needPermissionList        是否要包含权限列表
-	 * @param needPermissionIdList      是否要包含权限ID列表
-	 * @param needPermissionCodeList    是事要包含权限编码列表
+	 * @param needPermissionIdSet       是否要包含权限ID列表
+	 * @param needPermissionCodeSet     是事要包含权限编码列表
 	 * @return List<UpmsRoleModel>
 	 */
-	public static List<UpmsRoleModel> entityToModel(List<UpmsRole> entityList, boolean needPermissionList, boolean needPermissionIdList, boolean needPermissionCodeList){
+	public static List<UpmsRoleModel> entityToModel(List<UpmsRole> entityList, boolean needPermissionList, boolean needPermissionIdSet, boolean needPermissionCodeSet){
 		List<UpmsRoleModel> modelList = new ArrayList<UpmsRoleModel>();
 		for(UpmsRole entity : entityList){
-			modelList.add(entityToModel(entity, needPermissionList, needPermissionIdList, needPermissionCodeList));
+			modelList.add(entityToModel(entity, needPermissionList, needPermissionIdSet, needPermissionCodeSet));
 		}
 		return modelList;
 	}

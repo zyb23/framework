@@ -1,10 +1,11 @@
 package me.zyb.framework.upms.service;
 
-import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.condition.UpmsPermissionCondition;
+import me.zyb.framework.upms.model.UpmsPermissionModel;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zhangyingbin
@@ -46,10 +47,10 @@ public interface UpmsPermissionService {
 
 	/**
 	 * 根据ID查询所有权限
-	 * @param idList   权限ID列表
+	 * @param idSet     权限ID列表
 	 * @return List<UpmsPermissionModel>
 	 */
-	public List<UpmsPermissionModel> queryByIdList(List<Long> idList);
+	public List<UpmsPermissionModel> queryByIdSet(Set<Long> idSet);
 
 	/**
 	 * 根据角色ID查询该角色的所有权限

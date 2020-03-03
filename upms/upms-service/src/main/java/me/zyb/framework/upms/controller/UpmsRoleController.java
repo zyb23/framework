@@ -90,7 +90,7 @@ public class UpmsRoleController extends BaseController {
 	@RequiresPermissions(UpmsPermissionCode.ROLE_SAVE_PERMISSION)
 	@PostMapping("/savePermission")
 	public Object savePermission(@RequestBody UpmsRoleModel model){
-		upmsRoleService.savePermission(model.getId(), model.getPermissionIdList());
+		upmsRoleService.savePermission(model.getId(), model.getPermissionIdSet());
 		return rtSuccess();
 	}
 
@@ -102,7 +102,7 @@ public class UpmsRoleController extends BaseController {
 	@RequiresPermissions(UpmsPermissionCode.ROLE_DELETE_PERMISSION)
 	@PostMapping("/deletePermission")
 	public Object deletePermission(@RequestBody UpmsRoleModel model){
-		upmsRoleService.deleteUpmsRolePermission(model.getId(), model.getPermissionIdList());
+		upmsRoleService.deleteUpmsRolePermission(model.getId(), model.getPermissionIdSet());
 		return rtSuccess();
 	}
 

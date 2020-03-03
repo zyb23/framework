@@ -6,6 +6,7 @@ import me.zyb.framework.upms.model.UpmsRoleModel;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zhangyingbin
@@ -39,10 +40,10 @@ public interface UpmsRoleService {
 
 	/**
 	 * 根据ID列表查询
-	 * @param idList    ID列表
+	 * @param idSet     ID列表
 	 * @return List<UpmsRoleModel>
 	 */
-	public List<UpmsRoleModel> queryByIdList(List<Long> idList);
+	public List<UpmsRoleModel> queryByIdSet(Set<Long> idSet);
 	/**
 	 * 根据用户ID查询用户的角色
 	 * @param userId   用户ID
@@ -58,15 +59,15 @@ public interface UpmsRoleService {
 	public List<UpmsRoleModel> queryByPermissionId(Long permissionId);
 
 	/**
-	 * <p>角色保存权限（中间有）</p>
-	 * <p>根据permissionIdList判断</p>
-	 * <p>1：角色已有permissionIdList中的权限，不作任何操作</p>
-	 * <p>2：角色没有permissionIdList中的权限，新增</p>
-	 * <p>3：角色现有权限不在permissionIdList中，删除</p>
-	 * @param roleId        角色ID
-	 * @param permissionIdList   权限ID列表
+	 * <pre>
+	 *     角色保存权限（中间有）
+	 *     根据permissionIdSet判断
+	 *     1：角色已有permissionIdSet中的权限，不作任何操作
+	 *     2：角色没有permissionIdSet中的权限，新增
+	 *     3：角色现有权限不在permissionIdSet中，删除
+	 * </pre>
 	 */
-	public void savePermission(Long roleId, List<Long> permissionIdList);
+	public void savePermission(Long roleId, Set<Long> permissionIdSet);
 
 	/**
 	 * 查询角色拥有的所有权限
@@ -78,9 +79,9 @@ public interface UpmsRoleService {
 	/**
 	 * 删除角色权限（中间表）
 	 * @param roleId            角色ID
-	 * @param permissionIdList  权限ID列表
+	 * @param permissionIdSet   权限ID列表
 	 */
-	public void deleteUpmsRolePermission(Long roleId, List<Long> permissionIdList);
+	public void deleteUpmsRolePermission(Long roleId, Set<Long> permissionIdSet);
 
 	/**
 	 * 查询角色详情，树形展示所有权限，并标识角色已有权限

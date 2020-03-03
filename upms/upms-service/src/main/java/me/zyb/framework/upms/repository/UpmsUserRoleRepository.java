@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户角色关联
@@ -24,18 +25,18 @@ public interface UpmsUserRoleRepository extends JpaRepository<UpmsUserRole, Long
 
 	/**
 	 * 根据用户ID查询
-	 * @param userIdList    用户ID
+	 * @param userIdSet     用户ID
 	 * @return List<AdminUserRole>
 	 */
-	public List<UpmsUserRole> findByUserIdIn(List<Long> userIdList);
+	public List<UpmsUserRole> findByUserIdIn(Set<Long> userIdSet);
 
 	/**
 	 * 根据用户ID、角色ID列表查询
 	 * @param userId        用户ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 * @return List<UpmsUserRole>
 	 */
-	public List<UpmsUserRole> findByUserIdAndRoleIdIn(Long userId, List<Long> roleIdList);
+	public List<UpmsUserRole> findByUserIdAndRoleIdIn(Long userId, Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID查询
@@ -46,18 +47,18 @@ public interface UpmsUserRoleRepository extends JpaRepository<UpmsUserRole, Long
 
 	/**
 	 * 根据角色ID查询
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet    角色ID列表
 	 * @return List<UpmsUserRole>
 	 */
-	public List<UpmsUserRole> findByRoleIdIn(List<Long> roleIdList);
+	public List<UpmsUserRole> findByRoleIdIn(Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID、用户ID列表查询
 	 * @param roleId        角色ID
-	 * @param userIdList    用户ID列表
+	 * @param userIdSet     用户ID列表
 	 * @return List<UpmsUserRole>
 	 */
-	public List<UpmsUserRole> findByRoleIdAndUserIdIn(Long roleId, List<Long> userIdList);
+	public List<UpmsUserRole> findByRoleIdAndUserIdIn(Long roleId, Set<Long> userIdSet);
 
 	/**
 	 * 根据用户ID删除
@@ -67,9 +68,9 @@ public interface UpmsUserRoleRepository extends JpaRepository<UpmsUserRole, Long
 
 	/**
 	 * 根据用户ID列表删除
-	 * @param userIdList    用户ID列表
+	 * @param userIdSet    用户ID列表
 	 */
-	public void deleteByUserIdIn(List<Long> userIdList);
+	public void deleteByUserIdIn(Set<Long> userIdSet);
 
 	/**
 	 * 根据用户ID、角色ID删除
@@ -81,9 +82,9 @@ public interface UpmsUserRoleRepository extends JpaRepository<UpmsUserRole, Long
 	/**
 	 * 根据用户ID、角色ID列表删除
 	 * @param userId        用户ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 */
-	public void deleteByUserIdAndRoleIdIn(Long userId, List<Long> roleIdList);
+	public void deleteByUserIdAndRoleIdIn(Long userId, Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID删除
@@ -93,14 +94,14 @@ public interface UpmsUserRoleRepository extends JpaRepository<UpmsUserRole, Long
 
 	/**
 	 * 根据角色ID列表删除
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet 角色ID列表
 	 */
-	public void deleteByRoleIdIn(List<Long> roleIdList);
+	public void deleteByRoleIdIn(Set<Long> roleIdSet);
 
 	/**
 	 * 根据角色ID、用户ID列表删除
 	 * @param roleId        角色ID
-	 * @param userIdList    用户ID列表
+	 * @param userIdSet     用户ID列表
 	 */
-	public void deleteByRoleIdAndUserIdIn(Long roleId, List<Long> userIdList);
+	public void deleteByRoleIdAndUserIdIn(Long roleId, Set<Long> userIdSet);
 }

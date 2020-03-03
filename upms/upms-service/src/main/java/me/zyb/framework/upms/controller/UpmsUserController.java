@@ -269,7 +269,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions(UpmsPermissionCode.USER_SAVE_ROLE)
     @PostMapping("/saveRole")
     public Object saveRole(@RequestBody UpmsUserModel model) {
-	    upmsUserService.saveRole(model.getId(), model.getRoleIdList());
+	    upmsUserService.saveRole(model.getId(), model.getRoleIdSet());
         return rtSuccess();
     }
 
@@ -281,7 +281,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions(UpmsPermissionCode.USER_DELETE_ROLE)
     @PostMapping("/deleteRole")
     public Object deleteRole(@RequestBody UpmsUserModel model) {
-	    upmsUserService.deleteUpmsUserRole(model.getId(), model.getRoleIdList());
+	    upmsUserService.deleteUpmsUserRole(model.getId(), model.getRoleIdSet());
         return rtSuccess();
     }
 

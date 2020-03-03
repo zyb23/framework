@@ -1,6 +1,5 @@
 package me.zyb.framework.upms.service;
 
-import me.zyb.framework.core.ReturnData;
 import me.zyb.framework.upms.condition.UpmsUserCondition;
 import me.zyb.framework.upms.dict.PermissionType;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
@@ -9,6 +8,7 @@ import me.zyb.framework.upms.model.UpmsUserModel;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zhangyingbin
@@ -58,15 +58,17 @@ public interface UpmsUserService {
 	public UpmsUserModel queryByLoginName(String loginName);
 
 	/**
-	 * <p>用户保存角色（中间表）</p>
-	 * <p>根据roleIdList判断</p>
-	 * <p>1：用户已有roleIdList中的角色，不作任何操作</p>
-	 * <p>2：用户没有roleIdList中的角色，新增</p>
-	 * <p>3：用户现有角色不在roleIdList中，删除</p>
+	 * <pre>
+	 *     用户保存角色（中间表）
+	 *     根据roleIdSet判断
+	 *     1：用户已有roleIdSet中的角色，不作任何操作
+	 *     2：用户没有roleIdSet中的角色，新增
+	 *     3：用户现有角色不在roleIdSet中，删除
+	 * </pre>
 	 * @param userId        用户ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 */
-	public void saveRole(Long userId, List<Long> roleIdList);
+	public void saveRole(Long userId, Set<Long> roleIdSet);
 
 	/**
 	 * 查询用户的角色列表
@@ -78,9 +80,9 @@ public interface UpmsUserService {
 	/**
 	 * 删除用户角色（中间表）
 	 * @param userId        用户ID
-	 * @param roleIdList    角色ID列表
+	 * @param roleIdSet     角色ID列表
 	 */
-	public void deleteUpmsUserRole(Long userId, List<Long> roleIdList);
+	public void deleteUpmsUserRole(Long userId, Set<Long> roleIdSet);
 
 	/**
 	 * 查询用户的权限列表
@@ -110,9 +112,9 @@ public interface UpmsUserService {
 	 * 用户登录（根据登录名和登录密码查询用户）
 	 * @param loginName     登录名
 	 * @param loginPassword 登录密码
-	 * @return ReturnData
+	 * @return UpmsUserModel
 	 */
-	public ReturnData login(String loginName, String loginPassword);
+	public UpmsUserModel login(String loginName, String loginPassword);
 
 	/**
 	 * 用户登出
@@ -128,10 +130,10 @@ public interface UpmsUserService {
 
 	/**
 	 * 通过ID列表获取用户
-	 * @param idList    ID列表
+	 * @param idSet     ID列表
 	 * @return List<UpmsUserModel>
 	 */
-	public List<UpmsUserModel> queryByIdList(List<Long> idList);
+	public List<UpmsUserModel> queryByIdSet(Set<Long> idSet);
 
 	/**
 	 * <p>根据ID锁定用户</p>
