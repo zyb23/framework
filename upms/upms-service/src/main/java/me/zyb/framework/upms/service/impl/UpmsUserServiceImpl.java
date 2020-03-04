@@ -1,6 +1,7 @@
 package me.zyb.framework.upms.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.builder.UuidBuilder;
 import me.zyb.framework.core.util.ListToTreeUtil;
 import me.zyb.framework.core.util.StringUtil;
@@ -337,11 +338,12 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 	@Override
 	public UpmsUserModel getSelfInfo(String token) {
-		String _token = ShiroAuthHelper.getToken();
-		if(token != _token) {
-			log.warn("Token不正确，不是当前用户，强制退出登录");
+		String sessionId = ShiroAuthHelper.getCurrentSessionId();
+		if(sessionId.equals(token)) {
+			log.warn("Token不正确，不是当前用户，强制退出登录，返回超时信息");
 			logout();
-			return null;
+			ReturnCode errCode = ReturnCode.LOGIN_TIMEOUT;
+			throw new UpmsException(errCode.getValue(), errCode.getName());
 		}
 		UpmsUser userEntity = ShiroAuthHelper.getCurrentUser();
 		//返回Data

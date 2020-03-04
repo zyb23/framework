@@ -1,11 +1,17 @@
 package me.zyb.framework.usoa;
 
+import me.zyb.framework.core.base.BaseException;
+
 /**
  * @author zhangyingbin
  */
-public class UsoaException extends RuntimeException {
+public class UsoaException extends BaseException {
 	public UsoaException(){
 		super();
+	}
+
+	public UsoaException(String code, String message){
+		super(code, message);
 	}
 
 	public UsoaException(String message){

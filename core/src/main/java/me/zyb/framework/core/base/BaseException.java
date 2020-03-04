@@ -16,11 +16,17 @@ public class BaseException extends RuntimeException {
 	/**
 	 * 异常返回编码
 	 */
-	protected String code = "-1";
+	protected String code = null;
 
 	public BaseException(){
 		super();
 		log.error(this.getMessage());
+	}
+
+	public BaseException(String code, String message){
+		super(message);
+		this.code = code;
+		log.error("code:{}, message:{}", message);
 	}
 
 	public BaseException(String message){

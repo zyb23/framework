@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseException;
 import me.zyb.framework.core.dict.ConstNumber;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -51,7 +52,11 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 		FastJsonJsonView view = new FastJsonJsonView();
 		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
 
-		attributes.put("code", ReturnCode.FAILURE.getValue());
+		if(StringUtils.isNotBlank(e.getCode())){
+			attributes.put("code", e.getCode());
+		} else {
+			attributes.put("code", ReturnCode.FAILURE.getValue());
+		}
 		attributes.put("message", e.getMessage());
 		view.setAttributesMap(attributes);
 		mav.setView(view);

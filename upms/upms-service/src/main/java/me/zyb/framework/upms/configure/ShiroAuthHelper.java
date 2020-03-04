@@ -78,10 +78,10 @@ public final class ShiroAuthHelper {
     }
 
 	/**
-	 * 获取当前用户token（sessionId）
+	 * 获取当前用户sessionId
 	 * @return String
 	 */
-	public static String getToken() {
+	public static String getCurrentSessionId() {
 		return getCurrentSession().getId().toString();
     }
 

@@ -1,11 +1,17 @@
 package me.zyb.framework.upms;
 
+import me.zyb.framework.core.base.BaseException;
+
 /**
  * @author zhangyingbin
  */
-public class UpmsException extends RuntimeException {
+public class UpmsException extends BaseException {
 	public UpmsException(){
 		super();
+	}
+
+	public UpmsException(String code, String message){
+		super(code, message);
 	}
 
 	public UpmsException(String message){
