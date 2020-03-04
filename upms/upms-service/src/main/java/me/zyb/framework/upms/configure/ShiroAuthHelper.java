@@ -47,7 +47,10 @@ public final class ShiroAuthHelper {
     }
 
     /**
-     * 获取当前登录用户
+     * <pre>
+     *     获取当前登录用户
+     *     注：获取到的用户没有关联数据（角色、权限）
+     * </pre>
      * @return UpmsUser
      */
     public static UpmsUser getCurrentUser() {

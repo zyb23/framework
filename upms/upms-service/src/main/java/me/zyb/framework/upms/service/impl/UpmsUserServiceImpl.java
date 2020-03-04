@@ -345,7 +345,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 			ReturnCode errCode = ReturnCode.LOGIN_TIMEOUT;
 			throw new UpmsException(errCode.getValue(), errCode.getName());
 		}
-		UpmsUser userEntity = ShiroAuthHelper.getCurrentUser();
+		UpmsUser currentUser = ShiroAuthHelper.getCurrentUser();
+		UpmsUser userEntity = upmsUserRepository.findByLoginName(currentUser.getLoginName());
 		//返回Data
 		UpmsUserModel userModel = EntityToModelUtil.entityToModel(userEntity, true);
 
@@ -362,7 +363,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		//userModel.setPermissionList(permissionModelList);
 
 		//获取登录用户的所有菜单（树形）
-		List<UpmsPermissionModel> topTree = listToTree(permissionModelList, null);
+		List<UpmsPermissionModel> topTree = listToTree(permissionModelList, PermissionType.MENU);
 		userModel.setPermissionTree(topTree);
 
 		return userModel;
