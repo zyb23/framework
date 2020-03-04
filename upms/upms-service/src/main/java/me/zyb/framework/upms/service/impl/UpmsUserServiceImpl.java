@@ -339,7 +339,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	@Override
 	public UpmsUserModel getSelfInfo(String token) {
 		String sessionId = ShiroAuthHelper.getCurrentSessionId();
-		if(sessionId.equals(token)) {
+		if(!sessionId.equals(token)) {
 			log.warn("Token不正确，不是当前用户，强制退出登录，返回超时信息");
 			logout();
 			ReturnCode errCode = ReturnCode.LOGIN_TIMEOUT;
