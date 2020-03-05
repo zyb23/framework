@@ -21,40 +21,40 @@ import java.util.List;
 @Data
 public class BaseCondition implements Serializable {
 	/** ID主键 */
-	private Long id;
+	protected Long id;
 	/** 编码 */
-	private String code;
+	protected String code;
 	/** 名称 */
-	private String name;
+	protected String name;
 
 	/** 创建人ID */
-	private Long creatorId;
+	protected Long creatorId;
 	/** 创建时间开始 */
-	private Date createTimeStart;
+	protected Date createTimeStart;
 	/** 创建时间结束 */
-	private Date createTimeEnd;
+	protected Date createTimeEnd;
 	/** 修改人ID */
-	private Long editorId;
+	protected Long editorId;
 	/** 修改时间开始 */
-	private Date editTimeStart;
+	protected Date editTimeStart;
 	/** 修改时间结束 */
-	private Date editTimeEnd;
+	protected Date editTimeEnd;
 
 	/** 页码 */
 	@NotNull(message = "页码不能为空")
-	private Integer pageNo = ConstNumber.DEFAULT_PAGE_NO;
+	protected Integer pageNo = ConstNumber.DEFAULT_PAGE_NO;
 	/** 每页条数 */
 	@NotNull(message = "每页条数不能为空")
-	private Integer pageSize = ConstNumber.DEFAULT_PAGE_SIZE;
+	protected Integer pageSize = ConstNumber.DEFAULT_PAGE_SIZE;
 	/**
 	 * <p>排序条件</p>
 	 * <p>例：{"code":"asc", "name": "desc"}</p>
 	 */
-	private LinkedHashMap<String, String> orderBy = new LinkedHashMap<String, String>();
+	protected LinkedHashMap<String, String> orderBy = new LinkedHashMap<String, String>();
 
 	/** 排序Sort对象 */
 	@JsonIgnore
-	private Sort sort;
+	protected Sort sort;
 
 	/**
 	 * <p>获取分页对象</p>
