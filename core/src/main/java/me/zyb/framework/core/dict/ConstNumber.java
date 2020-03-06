@@ -11,7 +11,7 @@ public class ConstNumber {
 	/** 默认分页页码 */
 	public static final Integer DEFAULT_PAGE_NO = 1;
 	/** 默认分页条数 */
-	public static final Integer DEFAULT_PAGE_SIZE = 20;
+	public static final Integer DEFAULT_PAGE_SIZE = 10;
 
 	/** 默认Session超时时间（1小时-3600_000毫秒） */
 	public static final Long DEFAULT_SESSION_TIMEOUT = 3600_000L;

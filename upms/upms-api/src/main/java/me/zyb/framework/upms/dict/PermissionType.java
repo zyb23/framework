@@ -10,11 +10,11 @@ import me.zyb.framework.core.convert.JpaEnumConverter;
  */
 @Getter
 public enum PermissionType implements BaseEnum<Integer> {
-	/** 目录（导航项） */
-	CATALOG(0, "catalog", "目录"),
+	/** 目录/导航项 */
+	CATALOG(0, "catalog", "目录/导航项"),
 	/** 菜单	 */
 	MENU(1, "menu", "菜单"),
-	/** 按钮 */
+	/** 按钮/操作 */
 	BUTTON(2, "button", "按钮/操作");
 
 	private Integer value;
