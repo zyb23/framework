@@ -66,4 +66,7 @@ public class UpmsUserModel implements Serializable {
 
 	/** 树形权限列表 */
 	private List<UpmsPermissionModel> permissionTree;
+
+	/** token（sessionId） */
+	private String token;
 }

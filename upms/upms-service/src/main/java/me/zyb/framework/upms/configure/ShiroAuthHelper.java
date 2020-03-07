@@ -49,7 +49,7 @@ public final class ShiroAuthHelper {
     /**
      * <pre>
      *     获取当前登录用户
-     *     注：获取到的用户没有关联数据（角色、权限）
+     *     注：当前session如果不是跟设置shiro用户信息时同一个session（即登录），没有关联数据（角色、权限），若去获取关联字段，会抛出jpa懒加载异常
      * </pre>
      * @return UpmsUser
      */

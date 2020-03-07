@@ -6,6 +6,7 @@ import me.zyb.framework.core.util.regex.StringRegex;
 import me.zyb.framework.upms.EntityToModelUtil;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsPermissionCondition;
+import me.zyb.framework.upms.dict.PermissionType;
 import me.zyb.framework.upms.entity.UpmsPermission;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.repository.UpmsPermissionRepository;
@@ -114,6 +115,9 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 			}
 			if(StringUtils.isNotBlank(condition.getName())){
 				predicateList.add(criteriaBuilder.like(root.get("name").as(String.class), StringUtil.like(condition.getName())));
+			}
+			if (null != condition.getType()){
+				predicateList.add(criteriaBuilder.equal(root.get("type").as(PermissionType.class), condition.getType()));
 			}
 			if (null != condition.getParentId()){
 				Join<UpmsPermission, UpmsPermission> parent = root.join("parent");

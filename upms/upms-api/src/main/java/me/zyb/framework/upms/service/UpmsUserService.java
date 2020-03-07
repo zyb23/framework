@@ -109,12 +109,12 @@ public interface UpmsUserService {
 	public List<UpmsPermissionModel> queryPermissionTree(Long userId, Long parentPermissionId, PermissionType permissionType);
 
 	/**
-	 * 用户登录（根据登录名和登录密码查询用户）
+	 * 用户登录，并返回用户相关信息（根据登录名和登录密码查询用户）
 	 * @param loginName     登录名
 	 * @param loginPassword 登录密码
-	 * @return String：token（sessionId）
+	 * @return UpmsUserModel
 	 */
-	public String login(String loginName, String loginPassword);
+	public UpmsUserModel login(String loginName, String loginPassword);
 
 	/**
 	 * 根据token（sessionId）获取自己的信息

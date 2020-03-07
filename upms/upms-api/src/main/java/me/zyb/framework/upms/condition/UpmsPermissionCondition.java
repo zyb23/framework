@@ -3,6 +3,7 @@ package me.zyb.framework.upms.condition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.query.BaseCondition;
+import me.zyb.framework.upms.dict.PermissionType;
 
 /**
  * 用户查询条件
@@ -17,4 +18,7 @@ public class UpmsPermissionCondition extends BaseCondition {
 	private Boolean needParent = false;
 	/** 是事要包含权子级权限列表 */
 	private Boolean needChildren = false;
+
+	/** 类型 */
+	private PermissionType type;
 }

@@ -314,7 +314,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	}
 
 	@Override
-	public String login(String loginName, String loginPassword) {
+	public UpmsUserModel login(String loginName, String loginPassword) {
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession();
 		try {
@@ -333,7 +333,30 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		}
 		session.setTimeout(upmsProperties.getSessionTimeout());
 
-		return session.getId().toString();
+		UpmsUser currentUser = ShiroAuthHelper.getCurrentUser();
+		//返回Data
+		UpmsUserModel userModel = EntityToModelUtil.entityToModel(currentUser, true);
+
+		//获取登录用户的所有角色数据
+		List<UpmsRoleModel> roleModelList = queryRole(currentUser.getId());
+		userModel.setRoleIdSet(roleModelList.stream().map(UpmsRoleModel::getId).collect(Collectors.toSet()));
+		userModel.setRoleCodeSet(roleModelList.stream().map(UpmsRoleModel::getCode).collect(Collectors.toSet()));
+		//userModel.setRoleList(roleModelList);
+
+		//获取登录用户的所有权限数据
+		List<UpmsPermissionModel> permissionModelList = queryPermission(currentUser.getId(), null);
+		userModel.setPermissionIdSet(permissionModelList.stream().map(UpmsPermissionModel::getId).collect(Collectors.toSet()));
+		userModel.setPermissionCodeSet(permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet()));
+		//userModel.setPermissionList(permissionModelList);
+
+		//获取登录用户的所有菜单（树形）
+		List<UpmsPermissionModel> topTree = listToTree(permissionModelList, PermissionType.MENU);
+		userModel.setPermissionTree(topTree);
+
+		//登录返回token
+		userModel.setToken(session.getId().toString());
+
+		return userModel;
 	}
 
 	@Override

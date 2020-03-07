@@ -38,11 +38,11 @@ public class ConstString {
 	public static final String FILE_FORMAT_TXT = "txt";
 
 	/** cookie key */
-	public static final String KEY_COOKIE = "Cookie";
+	public static final String KEY_COOKIE = "cookie";
 	/** session key */
-	public static final String KEY_SESSION = "Session";
+	public static final String KEY_SESSION = "session";
 	/** token key */
-	public static final String KEY_TOKEN = "Token";
+	public static final String KEY_TOKEN = "token";
 
 	/** 升序 */
 	public static final String ORDER_ASC = "asc";

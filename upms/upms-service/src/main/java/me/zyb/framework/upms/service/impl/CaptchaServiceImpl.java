@@ -6,7 +6,8 @@ import me.zyb.framework.upms.configure.ShiroAuthHelper;
 import me.zyb.framework.upms.service.CaptchaService;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Encoder;
+
+import java.util.Base64;
 
 /**
  * @author zhangyingbin
@@ -29,8 +30,8 @@ public class CaptchaServiceImpl implements CaptchaService {
             session.setAttribute(ShiroAuthHelper.SESSION_IMAGE_CAPTCHA, captcha);
         }
         byte[] bytes = (byte[]) captchaInfo[1];
-        BASE64Encoder encoder = new BASE64Encoder();
-        return new String[]{captcha, encoder.encode(bytes)};
+        Base64.Encoder encoder = Base64.getEncoder();
+        return new String[]{captcha, encoder.encodeToString(bytes)};
     }
 
 	@Override

@@ -93,12 +93,16 @@ public class AuthController extends BaseController {
 				return rt(ReturnCode.CAPTCHA_ERROR);
 			}
 		}
-		//登录校验
-		String token = upmsUserService.login(loginName, loginPassword);
+		//登录
+		UpmsUserModel userInfo = upmsUserService.login(loginName, loginPassword);
 
-		return rtSuccess(token);
+		return rtSuccess(userInfo);
 	}
 
+	/**
+	 * 根据token获取用户信息
+	 * @return Object
+	 */
 	@RequestMapping(value = "/getSelfInfo")
 	public Object getSelfInfo() {
 		String token = WebUtils.toHttp(request).getHeader(ConstString.KEY_TOKEN);
