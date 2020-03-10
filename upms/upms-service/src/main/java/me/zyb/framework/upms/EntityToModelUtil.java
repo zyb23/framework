@@ -142,7 +142,7 @@ public class EntityToModelUtil {
 			//有父级权限时，父级权限ID默认展示
 			model.setParentId(parentEntity.getId());
 			if(needParent){
-				//父级对象只向下，不再向下，不然会死循环
+				//父级对象只向下，不再向上，不然会死循环
 				model.setParent(entityToModel(parentEntity, true, false));
 			}
 		}

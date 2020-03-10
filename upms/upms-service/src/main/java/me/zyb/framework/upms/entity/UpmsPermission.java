@@ -92,7 +92,7 @@ public class UpmsPermission extends BaseEntity implements Serializable {
 		this.id = id;
 	}
 
-	public void setParent(Long parentId){
-		this.parent = new UpmsPermission(parentId);
-	}
+//	public void setParent(Long parentId){
+//		this.parent = new UpmsPermission(parentId);
+//	}
 }

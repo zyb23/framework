@@ -50,7 +50,12 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 				throw new UpmsException("权限编码已存在");
 			}else {
 				entity = new UpmsPermission();
-				entity.setParent(null != model.getParentId() ? model.getParentId() : UpmsPermission.TOP_PARENT_ID);
+				if(null != model.getParentId()) {
+					Optional<UpmsPermission> parent = upmsPermissionRepository.findById(model.getParentId());
+					if(parent.isPresent()) {
+						entity.setParent(parent.get());
+					}
+				}
 				entity.setCode(model.getCode());
 				entity.setType(model.getType());
 			}
