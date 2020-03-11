@@ -26,7 +26,7 @@ public class UpmsUserCondition extends BaseCondition {
 	private String email;
 
 	/** 是否禁用 */
-	private Boolean isDisable;
+	private Boolean isEnable;
 
 	/** 角色id */
 	private Set<Long> roleIdSet;

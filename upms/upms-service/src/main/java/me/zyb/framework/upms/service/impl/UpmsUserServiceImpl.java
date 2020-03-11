@@ -165,8 +165,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 			if(StringUtils.isNotBlank(condition.getEmail())){
 				predicateList.add(criteriaBuilder.like(root.get("email").as(String.class), StringUtil.like(condition.getEmail())));
 			}
-			if(null != condition.getIsDisable()){
-				predicateList.add(criteriaBuilder.equal(root.get("isDisable").as(Boolean.class), condition.getIsDisable()));
+			if(null != condition.getIsEnable()){
+				predicateList.add(criteriaBuilder.equal(root.get("isEnable").as(Boolean.class), condition.getIsEnable()));
 			}
 			if (null != condition.getRoleIdSet() && condition.getRoleIdSet().size() > 0){
 				Join<UpmsUser, UpmsRole> role = root.join(root.getModel().getList("roleList", UpmsRole.class));
