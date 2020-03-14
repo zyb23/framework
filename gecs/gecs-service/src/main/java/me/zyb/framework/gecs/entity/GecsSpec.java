@@ -21,7 +21,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "gecs_goods_property")
-public class GecsGoodsProperty extends BaseEntity implements Serializable {
+public class GecsSpec extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 属性名称 */

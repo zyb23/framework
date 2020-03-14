@@ -27,20 +27,20 @@ public class UsoaAccountAddress extends BaseEntity implements Serializable {
 	private String accountId;
 
 	/** 收件人姓名 */
-	@Column(name = "consignee_name", nullable = false)
-	private String consigneeName;
+	@Column(name = "receiver_name", nullable = false)
+	private String receiverName;
 
 	/** 收件人手机 */
-	@Column(name = "consignee_mobile", nullable = false)
-	private String consigneeMobile;
+	@Column(name = "receiver_mobile", nullable = false)
+	private String receiverMobile;
 
 	/** 洲 */
 	@Column(name = "continent")
 	private String continent;
 
 	/** 国家 */
-	@Column(name = "country")
-	private String country;
+	@Column(name = "nation")
+	private String nation;
 
 	/** 省 */
 	@Column(name = "province", nullable = false)
@@ -50,9 +50,9 @@ public class UsoaAccountAddress extends BaseEntity implements Serializable {
 	@Column(name = "city", nullable = false)
 	private String city;
 
-	/** 县 */
-	@Column(name = "county", nullable = false)
-	private String county;
+	/** 区/县 */
+	@Column(name = "district", nullable = false)
+	private String district;
 
 	/** 乡镇 */
 	@Column(name = "town")

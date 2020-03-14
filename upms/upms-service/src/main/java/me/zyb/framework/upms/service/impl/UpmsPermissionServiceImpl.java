@@ -50,14 +50,7 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 				throw new UpmsException("权限编码已存在");
 			}else {
 				entity = new UpmsPermission();
-				if(null != model.getParentId()) {
-					Optional<UpmsPermission> parent = upmsPermissionRepository.findById(model.getParentId());
-					if(parent.isPresent()) {
-						entity.setParent(parent.get());
-					}
-				}
 				entity.setCode(model.getCode());
-				entity.setType(model.getType());
 			}
 		}else {
 			//修改
@@ -68,6 +61,13 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 				throw new UpmsException("权限不存在");
 			}
 		}
+		if(null != model.getParentId()) {
+			Optional<UpmsPermission> parent = upmsPermissionRepository.findById(model.getParentId());
+			if(parent.isPresent()) {
+				entity.setParent(parent.get());
+			}
+		}
+		entity.setType(model.getType());
 		entity.setName(model.getName());
 		entity.setAction(model.getAction());
 		entity.setRoute(model.getRoute());

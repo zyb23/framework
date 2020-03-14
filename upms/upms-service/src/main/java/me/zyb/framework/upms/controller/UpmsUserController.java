@@ -1,8 +1,9 @@
 package me.zyb.framework.upms.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.ReturnCode;
+import me.zyb.framework.core.base.BaseController;
+import me.zyb.framework.core.dict.ConstNumber;
 import me.zyb.framework.core.util.regex.StringRegex;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsUserCondition;
@@ -10,7 +11,9 @@ import me.zyb.framework.upms.configure.ShiroAuthHelper;
 import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.dict.UpmsPermissionCode;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
+import me.zyb.framework.upms.model.UpmsRoleModel;
 import me.zyb.framework.upms.model.UpmsUserModel;
+import me.zyb.framework.upms.service.UpmsRoleService;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -23,7 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangyingbin
@@ -36,6 +43,8 @@ public class UpmsUserController extends BaseController {
 	private UpmsProperties upmsProperties;
     @Autowired
     private UpmsUserService upmsUserService;
+    @Autowired
+    private UpmsRoleService upmsRoleService;
 
     /**
      * 分页数据
@@ -295,5 +304,25 @@ public class UpmsUserController extends BaseController {
     public Object childPermission(@RequestBody UpmsPermissionModel model) {
         List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUserId(), model.getId());
         return rtSuccess(result);
+    }
+
+	/**
+	 * 查询用户角色和所有角色
+	 * @param model     用户信息（只要用户ID）
+	 * @return Object
+	 */
+	@RequiresPermissions(UpmsPermissionCode.USER_QUERY)
+	@PostMapping("/roleConfig")
+	public Object roleConfig(@RequestBody UpmsUserModel model) {
+    	List<UpmsRoleModel> userRoleList = upmsUserService.queryRole(model.getId());
+		Set<Long> userRoleIdSet = userRoleList.stream().map(UpmsRoleModel::getId).collect(Collectors.toSet());
+    	List<UpmsRoleModel> allRoleList = upmsRoleService.queryAll();
+
+    	Map<String, Object> retMap = new HashMap<>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
+    	retMap.put("userRoleList", userRoleList);
+    	retMap.put("userRoleIdSet", userRoleIdSet);
+    	retMap.put("allRoleList", allRoleList);
+
+    	return rtSuccess(retMap);
     }
 }

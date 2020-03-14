@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 角色权限关系
@@ -29,12 +28,4 @@ public class UpmsRolePermission extends BaseIdEntity implements Serializable {
 	/** 权限ID */
 	@Column(name = "permission_id", nullable = false)
 	private Long permissionId;
-
-	/** 创建人ID */
-	@Column(name = "creator_id", nullable = false, updatable = false)
-	private Long creatorId;
-
-	/** 创建时间 */
-	@Column(name = "create_time", nullable = false, updatable = false)
-	private Date createTime = new Date();
 }
