@@ -3,9 +3,10 @@ package me.zyb.framework.gecs.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.base.BaseEntity;
-import org.hibernate.annotations.Type;
+import me.zyb.framework.core.convert.StringListConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -57,14 +58,14 @@ public class GecsSpu extends BaseEntity implements Serializable {
 	@Column(name = "description")
 	private String description;
 
-	/** 全部规格参数，JSON */
-	@Type(type = "json")
-	@Column(name = "spec", columnDefinition = "json")
+	/** 全部规格参数 */
+	@Column(name = "spec")
+	@Convert(converter = StringListConverter.class)
 	private String spec;
 
 	/** 特有规格参数及可选值信息 */
-	@Type(type = "json")
-	@Column(name = "spec_template", columnDefinition = "json")
+	@Column(name = "spec_template")
+	@Convert(converter = StringListConverter.class)
 	private String specTemplate;
 
 	/** 包装清单 */

@@ -3,9 +3,10 @@ package me.zyb.framework.gecs.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.base.BaseEntity;
-import org.hibernate.annotations.Type;
+import me.zyb.framework.core.convert.StringListConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -33,8 +34,8 @@ public class GecsSku extends BaseEntity implements Serializable {
 	private Long title;
 
 	/** 商品的图片 */
-	@Type(type = "json")
-	@Column(name = "image", columnDefinition = "json")
+	@Column(name = "image")
+	@Convert(converter = StringListConverter.class)
 	private Set<String> imageSet;
 
 	/** 销售价格 */
