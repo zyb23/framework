@@ -1,37 +1,31 @@
-# Created by .ignore support plugin (hsz.mobi)
-.idea/
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
 
-core/target/
-core/core.iml
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-gecs/gecs.iml
-gecs/gecs-api/target/
-gecs/gecs-api/gecs-api.iml
-gecs/gecs-service/target/
-gecs/gecs-service/gecs-service.iml
-gecs/gecs-spring-boot-starter/target/
-gecs/gecs-spring-boot-starter/gecs-spring-boot-starter.iml
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-upms/upms.iml
-upms/upms-api/target/
-upms/upms-api/upms-api.iml
-upms/upms-service/target/
-upms/upms-service/upms-service.iml
-upms/upms-spring-boot-starter/target/
-upms/upms-spring-boot-starter/upms-spring-boot-starter.iml
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
 
-usoa/usoa.iml
-usoa/usoa-api/target/
-usoa/usoa-api/usoa-api.iml
-usoa/usoa-service/target/
-usoa/usoa-service/usoa-service.iml
-usoa/usoa-spring-boot-starter/target/
-usoa/usoa-spring-boot-starter/usoa-spring-boot-starter.iml
-
-wechat/wechat.iml
-wechat/wechat-api/target/
-wechat/wechat-api/wechat-api.iml
-wechat/wechat-service/target/
-wechat/wechat-service/wechat-service.iml
-wechat/wechat-spring-boot-starter/target/
-wechat/wechat-spring-boot-starter/wechat-spring-boot-starter.iml
+### VS Code ###
+.vscode/
