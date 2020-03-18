@@ -27,7 +27,7 @@ public class GecsSku extends BaseEntity implements Serializable {
 
 	/** 标准产品 */
 	@Column(name = "spu_id", nullable = false, updatable = false)
-	private String spuId;
+	private Long spuId;
 
 	/** 商品标题 */
 	@Column(name = "title", nullable = false)
@@ -46,8 +46,8 @@ public class GecsSku extends BaseEntity implements Serializable {
 	@Column(name = "index", nullable = false)
 	private String index;
 
-	/** 特有规格参数，json，反序列化时应使用linkedHashMap，保证有序 */
-	@Column(name = "spu_id", nullable = false)
+	/** 特有规格参数，json，反序列化时应使用LinkedHashMap，保证有序 */
+	@Column(name = "spec", nullable = false)
 	private LinkedHashMap spec;
 
 	/** 库存数量 */
