@@ -4,11 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.dict.ConstString;
 import me.zyb.framework.core.util.AddressUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
-import sun.misc.CRC16;
 
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.UUID;
+import java.util.zip.CRC32;
 
 /**
  * 订单编码生成工具
@@ -21,7 +21,7 @@ public class OrderBuilder {
 	private static FastDateFormat fdfSSS = FastDateFormat.getInstance("yyyyMMddHHmmssSSS");
 
 	/**
-	 * 获取4位机器码（CRC16校验码高4位）
+	 * 获取4位机器码（CRC32校验码高4位）
 	 * @return String
 	 */
 	private static String getMachineCode() {
@@ -30,11 +30,11 @@ public class OrderBuilder {
 			return "0000";
 		}
 		byte[] data = macAddress.getBytes(Charset.forName(ConstString.CHARACTER_UTF_8));
-		CRC16 crc16 = new CRC16();
+		CRC32 crc32 = new CRC32();
 		for(byte b : data) {
-			crc16.update(b);
+			crc32.update(b);
 		}
-		return String.valueOf(crc16.value).substring(0, 4);
+		return String.valueOf(crc32.getValue()).substring(0, 4);
 	}
 
 	/**
@@ -79,9 +79,5 @@ public class OrderBuilder {
 	public static String generateOrderCodeWithSuffix(String suffix) {
 		String code = generateOrderCode();
 		return code + suffix;
-	}
-
-	public static void main(String[] args) {
-		log.info(generateOrderCode());
 	}
 }
