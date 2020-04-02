@@ -1,8 +1,10 @@
 package me.zyb.framework.upms;
 
+import me.zyb.framework.upms.entity.UpmsLog;
 import me.zyb.framework.upms.entity.UpmsPermission;
 import me.zyb.framework.upms.entity.UpmsRole;
 import me.zyb.framework.upms.entity.UpmsUser;
+import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.model.UpmsRoleModel;
 import me.zyb.framework.upms.model.UpmsUserModel;
@@ -189,5 +191,30 @@ public class EntityToModelUtil {
 	 */
 	public static List<UpmsPermissionModel> entityToModel4Permission(List<UpmsPermission> entityList){
 		return entityToModel(entityList, false, false);
+	}
+
+	/**
+	 * 将UpmsLog转成UpmsLogModel
+	 * @param entity        权限实体对象
+	 * @return UpmsLogModel
+	 */
+	public static UpmsLogModel entityToModel(UpmsLog entity){
+		UpmsLogModel model = new UpmsLogModel();
+		BeanUtils.copyProperties(entity, model);
+
+		return model;
+	}
+
+	/**
+	 * 将UpmsLog转成UpmsLogModel
+	 * @param entityList        权限实体对象列表
+	 * @return List<UpmsLogModel>
+	 */
+	public static List<UpmsLogModel> entityToModel4Log(List<UpmsLog> entityList){
+		List<UpmsLogModel> modelList = new ArrayList<UpmsLogModel>();
+		for(UpmsLog entity : entityList){
+			modelList.add(entityToModel(entity));
+		}
+		return modelList;
 	}
 }
