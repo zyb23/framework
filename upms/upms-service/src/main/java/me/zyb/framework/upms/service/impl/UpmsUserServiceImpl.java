@@ -34,7 +34,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -112,7 +111,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 		upmsUserRepository.save(entity);
 
-		BeanUtils.copyProperties(entity, model);
+		model = EntityToModelUtil.entityToModel(entity);
 
 		return model;
 	}

@@ -8,7 +8,6 @@ import me.zyb.framework.wechat.entity.WechatConfig;
 import me.zyb.framework.wechat.model.WechatConfigModel;
 import me.zyb.framework.wechat.repository.WechatConfigRepository;
 import me.zyb.framework.wechat.service.WechatConfigService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +57,7 @@ public class WechatConfigServiceImpl implements WechatConfigService {
 		}
 		wechatConfigRepository.save(entity);
 
-		BeanUtils.copyProperties(entity, model);
+		model = EntityToModelUtil.entityToModel(entity);
 
 		return model;
 	}

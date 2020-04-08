@@ -15,7 +15,6 @@ import me.zyb.framework.wechat.model.WechatMenuModel;
 import me.zyb.framework.wechat.repository.WechatMenuRepository;
 import me.zyb.framework.wechat.service.WechatConfigService;
 import me.zyb.framework.wechat.service.WechatMenuService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,7 +71,7 @@ public class WechatMenuServiceImpl implements WechatMenuService {
 
 		wechatMenuRepository.save(entity);
 
-		BeanUtils.copyProperties(entity, model);
+		model = EntityToModelUtil.entityToModel(entity);
 
 		return model;
 	}

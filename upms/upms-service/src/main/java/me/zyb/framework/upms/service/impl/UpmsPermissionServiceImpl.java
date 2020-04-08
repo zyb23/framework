@@ -12,7 +12,6 @@ import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.repository.UpmsPermissionRepository;
 import me.zyb.framework.upms.service.UpmsPermissionService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -77,7 +76,7 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 
 		upmsPermissionRepository.save(entity);
 
-		BeanUtils.copyProperties(entity, model);
+		model = EntityToModelUtil.entityToModel(entity);
 
 		return model;
 	}

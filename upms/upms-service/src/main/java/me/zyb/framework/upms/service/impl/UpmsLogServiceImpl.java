@@ -11,7 +11,6 @@ import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.repository.UpmsLogRepository;
 import me.zyb.framework.upms.service.UpmsLogService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -61,7 +60,7 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 
 		upmsLogRepository.save(entity);
 
-		BeanUtils.copyProperties(entity, model);
+		model = EntityToModelUtil.entityToModel(entity);
 
 		return model;
 	}
