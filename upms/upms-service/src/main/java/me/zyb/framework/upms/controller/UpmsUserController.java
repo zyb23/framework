@@ -159,10 +159,6 @@ public class UpmsUserController extends BaseController {
         if (null == model.getId() || StringUtils.isBlank(model.getLoginPassword())) {
             return rtParameterError();
         }
-	    if(upmsProperties.getSwitchConfirmPassword() && StringUtils.isBlank(model.getConfirmPassword())){
-		    log.warn("confirmPassword不能为空");
-		    return rtParameterError("confirmPassword不能为空");
-	    }
 	    validatePassword(model);
         upmsUserService.updateLoginPassword(model.getId(), model.getLoginPassword());
 

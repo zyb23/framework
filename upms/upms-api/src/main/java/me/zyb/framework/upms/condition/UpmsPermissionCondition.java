@@ -21,4 +21,7 @@ public class UpmsPermissionCondition extends BaseCondition {
 
 	/** 类型 */
 	private PermissionType type;
+
+	/** 级别 */
+	private Integer level;
 }

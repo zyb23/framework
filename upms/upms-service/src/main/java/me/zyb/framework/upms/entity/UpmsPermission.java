@@ -44,6 +44,10 @@ public class UpmsPermission extends BaseEntity implements Serializable {
 	@Convert(converter = PermissionType.Converter.class)
 	private PermissionType type;
 
+	/** 权限级别 */
+	@Column(name = "level", nullable = false)
+	private Integer level = 1;
+
 	/** 操作/页面（后端接口地址） */
 	@Column(name = "action")
 	private String action;

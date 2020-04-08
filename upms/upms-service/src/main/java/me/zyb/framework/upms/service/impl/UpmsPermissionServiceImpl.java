@@ -65,6 +65,7 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 			Optional<UpmsPermission> parent = upmsPermissionRepository.findById(model.getParentId());
 			if(parent.isPresent()) {
 				entity.setParent(parent.get());
+				entity.setLevel(parent.get().getLevel() + 1);
 			}
 		}
 		entity.setType(model.getType());
@@ -123,6 +124,9 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 			}
 			if (null != condition.getType()){
 				predicateList.add(criteriaBuilder.equal(root.get("type").as(PermissionType.class), condition.getType()));
+			}
+			if (null != condition.getLevel()){
+				predicateList.add(criteriaBuilder.equal(root.get("level").as(Integer.class), condition.getLevel()));
 			}
 			if (null != condition.getParentId()){
 				Join<UpmsPermission, UpmsPermission> parent = root.join("parent");

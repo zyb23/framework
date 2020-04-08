@@ -32,6 +32,9 @@ public class UpmsPermissionModel implements Serializable {
 	@NotNull(message = "权限类型不能为空")
 	private PermissionType type;
 
+	/** 权限级别 */
+	private Integer level = 1;
+
 	/** 顺序（默认升序） */
 	private Integer sort = 0;
 
