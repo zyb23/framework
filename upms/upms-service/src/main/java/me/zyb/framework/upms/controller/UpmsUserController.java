@@ -6,6 +6,7 @@ import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.dict.ConstNumber;
 import me.zyb.framework.core.util.regex.StringRegex;
 import me.zyb.framework.upms.UpmsException;
+import me.zyb.framework.upms.condition.UpmsPermissionCondition;
 import me.zyb.framework.upms.condition.UpmsUserCondition;
 import me.zyb.framework.upms.configure.ShiroAuthHelper;
 import me.zyb.framework.upms.configure.UpmsProperties;
@@ -292,25 +293,25 @@ public class UpmsUserController extends BaseController {
 
     /**
      * 查询用户子级权限
-     * @param model     权限信息
+     * @param condition     权限信息
      * @return Object
      */
     @RequiresPermissions(UpmsPermissionCode.USER_QUERY)
     @PostMapping("/childPermission")
-    public Object childPermission(@RequestBody UpmsPermissionModel model) {
-        List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUserId(), model.getParentId());
+    public Object childPermission(@RequestBody UpmsPermissionCondition condition) {
+        List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUserId(), condition.getParentId());
         return rtSuccess(result);
     }
 
 	/**
 	 * 查询用户子级权限
-	 * @param model     权限信息
+	 * @param condition     权限信息
 	 * @return Object
 	 */
 	@RequiresPermissions(UpmsPermissionCode.USER_QUERY)
-	@PostMapping("/permissionTree")
-	public Object permissionTree(@RequestBody UpmsPermissionModel model) {
-		List<UpmsPermissionModel> result = upmsUserService.queryPermissionTree(ShiroAuthHelper.getCurrentUserId(), model.getParentId(), model.getType());
+	@PostMapping("/selfPermissionTree")
+	public Object selfPermissionTree(@RequestBody UpmsPermissionCondition condition) {
+		List<UpmsPermissionModel> result = upmsUserService.queryPermissionTree(ShiroAuthHelper.getCurrentUserId(), condition.getParentId(), condition.getType());
 		return rtSuccess(result);
 	}
 
