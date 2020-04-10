@@ -112,7 +112,7 @@ public class UpmsPermissionController extends BaseController {
 	@RequiresPermissions(UpmsPermissionCode.PERMISSION_QUERY)
 	@PostMapping("/tree")
 	public Object tree(@RequestBody UpmsPermissionCondition condition){
-		List<UpmsPermissionModel> permissionModelTree = upmsPermissionService.queryTree(condition.getId(), true, true);
+		List<UpmsPermissionModel> permissionModelTree = upmsPermissionService.queryTree(condition.getParentId(), true, true);
 		return rtSuccess(permissionModelTree);
 	}
 

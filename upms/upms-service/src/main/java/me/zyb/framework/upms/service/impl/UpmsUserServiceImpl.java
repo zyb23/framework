@@ -298,8 +298,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	/**
 	 * 用户权限列表转化为树形
 	 * @param permissionModelList   用户所有权限
-	 * @param permissionType        权限类型（为空时，所有类型）
-	 * @return List<AdminRightModel>
+	 * @param permissionType        权限类型（为null时，所有类型）
+	 * @return List<UpmsPermissionModel>
 	 */
 	private List<UpmsPermissionModel> listToTree(List<UpmsPermissionModel> permissionModelList, PermissionType permissionType){
 		if(null == permissionType){

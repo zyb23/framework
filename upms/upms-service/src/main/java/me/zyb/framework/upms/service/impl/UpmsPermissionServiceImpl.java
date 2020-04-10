@@ -70,6 +70,7 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 		entity.setType(model.getType());
 		entity.setName(model.getName());
 		entity.setAction(model.getAction());
+		entity.setIcon(model.getIcon());
 		entity.setRoute(model.getRoute());
 		entity.setDescription(model.getDescription());
 		entity.setSort(model.getSort());
@@ -162,7 +163,7 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 
 	@Override
 	public List<UpmsPermissionModel> queryTree(Long parentId, boolean needParent, boolean needChildren) {
-		List<UpmsPermission> adminRightList = upmsPermissionRepository.findByParent_IdOrderBySortAsc(parentId);
-		return EntityToModelUtil.entityToModel(adminRightList, needParent, needChildren);
+		List<UpmsPermission> upmsPermissionList = upmsPermissionRepository.findByParent_IdOrderBySortAsc(parentId);
+		return EntityToModelUtil.entityToModel(upmsPermissionList, needParent, needChildren);
 	}
 }

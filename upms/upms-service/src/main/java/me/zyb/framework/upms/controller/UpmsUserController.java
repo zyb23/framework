@@ -298,9 +298,21 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions(UpmsPermissionCode.USER_QUERY)
     @PostMapping("/childPermission")
     public Object childPermission(@RequestBody UpmsPermissionModel model) {
-        List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUserId(), model.getId());
+        List<UpmsPermissionModel> result = upmsUserService.queryPermission(ShiroAuthHelper.getCurrentUserId(), model.getParentId());
         return rtSuccess(result);
     }
+
+	/**
+	 * 查询用户子级权限
+	 * @param model     权限信息
+	 * @return Object
+	 */
+	@RequiresPermissions(UpmsPermissionCode.USER_QUERY)
+	@PostMapping("/permissionTree")
+	public Object permissionTree(@RequestBody UpmsPermissionModel model) {
+		List<UpmsPermissionModel> result = upmsUserService.queryPermissionTree(ShiroAuthHelper.getCurrentUserId(), model.getParentId(), model.getType());
+		return rtSuccess(result);
+	}
 
 	/**
 	 * 查询用户角色和所有角色

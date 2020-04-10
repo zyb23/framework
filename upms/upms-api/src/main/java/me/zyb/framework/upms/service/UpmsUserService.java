@@ -87,7 +87,7 @@ public interface UpmsUserService {
 	/**
 	 * 查询用户的权限列表
 	 * @param userId                用户ID
-	 * @param parentPermissionId    父级权限ID（为null时，从顶级权限开始查询）
+	 * @param parentPermissionId    父级权限ID（为null时，查询所有）
 	 * @return List<UpmsPermissionModel>
 	 */
 	public List<UpmsPermissionModel> queryPermission(Long userId, Long parentPermissionId);

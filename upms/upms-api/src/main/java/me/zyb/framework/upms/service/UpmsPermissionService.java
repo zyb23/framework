@@ -61,9 +61,9 @@ public interface UpmsPermissionService {
 
 	/**
 	 * 树形查询所有子级权限（附带parentId）
-	 * @param parentId      父级权限ID（为null时，从顶级权限开始查询）
-	 * @param needParent    是否要包含父级权限
-	 * @param needChildren  是事要包含子级权限列表
+	 * @param parentId          父级权限ID（为null时，从顶级权限开始查询）
+	 * @param needParent        是否要包含父级权限
+	 * @param needChildren      是否要包含子级权限列表
 	 * @return List<UpmsPermissionModel>
 	 */
 	public List<UpmsPermissionModel> queryTree(Long parentId, boolean needParent, boolean needChildren);
