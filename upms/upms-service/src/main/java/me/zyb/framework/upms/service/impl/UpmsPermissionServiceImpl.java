@@ -145,7 +145,7 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 	public Page<UpmsPermissionModel> queryByCondition(UpmsPermissionCondition condition) {
 		Page<UpmsPermission> entityPage = findByCondition(condition);
 		List<UpmsPermission> entityList = entityPage.getContent();
-		List<UpmsPermissionModel> modelList = EntityToModelUtil.entityToModel(entityList, condition.getNeedParent(), condition.getNeedChildren());
+		List<UpmsPermissionModel> modelList = EntityToModelUtil.entityToModel4Permission(entityList, condition.getNeedParent(), condition.getNeedChildren());
 		return new PageImpl<UpmsPermissionModel>(modelList, entityPage.getPageable(), entityPage.getTotalElements());
 	}
 
@@ -164,6 +164,6 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 	@Override
 	public List<UpmsPermissionModel> queryTree(Long parentId, boolean needParent, boolean needChildren) {
 		List<UpmsPermission> upmsPermissionList = upmsPermissionRepository.findByParent_IdOrderBySortAsc(parentId);
-		return EntityToModelUtil.entityToModel(upmsPermissionList, needParent, needChildren);
+		return EntityToModelUtil.entityToModel4Permission(upmsPermissionList, needParent, needChildren);
 	}
 }

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.query.BaseCondition;
 
 /**
- * 用户查询条件
+ * 角色查询条件
  * @author zhangyingbin
  */
 @Data

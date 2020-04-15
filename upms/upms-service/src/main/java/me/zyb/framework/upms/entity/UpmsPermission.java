@@ -74,11 +74,13 @@ public class UpmsPermission extends BaseEntity implements Serializable {
 
 	/** 下级权限列表 */
 	@ToString.Exclude
+	@JsonIgnore
 	@OneToMany(mappedBy = "parent")
 	private List<UpmsPermission> children = new ArrayList<UpmsPermission>();
 
 	/** 角色列表 */
 	@ToString.Exclude
+	@JsonIgnore
 	@ManyToMany(mappedBy = "permissionList")
 	private List<UpmsRole> roleList = new ArrayList<UpmsRole>();
 

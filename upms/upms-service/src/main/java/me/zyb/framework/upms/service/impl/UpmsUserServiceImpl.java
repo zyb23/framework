@@ -12,6 +12,7 @@ import me.zyb.framework.upms.configure.CustomizedShiroCredentialsMatcher;
 import me.zyb.framework.upms.configure.ShiroAuthHelper;
 import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.dict.PermissionType;
+import me.zyb.framework.upms.entity.UpmsDept;
 import me.zyb.framework.upms.entity.UpmsPermission;
 import me.zyb.framework.upms.entity.UpmsRole;
 import me.zyb.framework.upms.entity.UpmsUser;
@@ -19,6 +20,7 @@ import me.zyb.framework.upms.entity.UpmsUserRole;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.model.UpmsRoleModel;
 import me.zyb.framework.upms.model.UpmsUserModel;
+import me.zyb.framework.upms.repository.UpmsDeptRepository;
 import me.zyb.framework.upms.repository.UpmsPermissionRepository;
 import me.zyb.framework.upms.repository.UpmsRoleRepository;
 import me.zyb.framework.upms.repository.UpmsUserRepository;
@@ -68,6 +70,8 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 	private UpmsUserRoleRepository upmsUserRoleRepository;
 	@Autowired
 	private UpmsPermissionRepository upmsPermissionRepository;
+	@Autowired
+	private UpmsDeptRepository upmsDeptRepository;
 
 	@Override
 	public UpmsUserModel save(UpmsUserModel model) {
@@ -107,6 +111,15 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		if(null != roleIdSet && roleIdSet.size() > 0){
 			List<UpmsRole> roleList = upmsRoleRepository.findAllById(model.getRoleIdSet());
 			entity.setRoleList(roleList);
+		}
+
+		//设置部门
+		Long deptId = model.getDeptId();
+		if(null != deptId) {
+			Optional<UpmsDept> dept = upmsDeptRepository.findById(deptId);
+			if(dept.isPresent()) {
+				entity.setDept(dept.get());
+			}
 		}
 
 		upmsUserRepository.save(entity);

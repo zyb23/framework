@@ -17,12 +17,14 @@ public interface UpmsPermissionRepository extends JpaRepository<UpmsPermission, 
 	/**
 	 * 根据权限编码查询权限
 	 * @param code 权限编码
+	 * @return UpmsPermission
 	 */
 	public UpmsPermission findByCode(String code);
 
 	/**
 	 * 根据父级权限查询下一级权限
 	 * @param parentId  父级权限ID
+	 * @return List<UpmsPermission>
 	 */
 	public List<UpmsPermission> findByParent_Id(Long parentId);
 

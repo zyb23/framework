@@ -3,25 +3,24 @@ package me.zyb.framework.upms.condition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.query.BaseCondition;
-import me.zyb.framework.upms.dict.PermissionType;
 
 /**
- * 权限查询条件
+ * 部门查询条件
  * @author zhangyingbin
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UpmsPermissionCondition extends BaseCondition {
-	/** 父级权限ID */
+public class UpmsDeptCondition extends BaseCondition {
+	/** 上级权限ID */
 	private Long parentId;
-	/** 是否要包含父级权限对象 */
+	/** 是否要包含上级部门对象 */
 	private Boolean needParent = false;
-	/** 是事要包含权子级权限列表 */
+	/** 是事要包含权下级部门列表 */
 	private Boolean needChildren = false;
-
-	/** 类型 */
-	private PermissionType type;
 
 	/** 级别 */
 	private Integer level;
+
+	/** 负责人 */
+	private String principal;
 }

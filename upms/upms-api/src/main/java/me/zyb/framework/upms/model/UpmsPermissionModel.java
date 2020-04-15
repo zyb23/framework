@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +50,18 @@ public class UpmsPermissionModel implements Serializable {
 
 	/** 描述 */
 	private String description;
+
+	/** 创建人ID */
+	protected Long creatorId;
+
+	/** 创建时间 */
+	protected Date createTime;
+
+	/** 修改人ID */
+	protected Long editorId;
+
+	/** 修改时间 */
+	protected Date editTime;
 
 	/** 父级ID */
 	private Long parentId;

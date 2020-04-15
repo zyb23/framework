@@ -76,7 +76,7 @@ public class UpmsPermissionController extends BaseController {
 	 * @return Object
 	 */
 	@RequiresPermissions(UpmsPermissionCode.PERMISSION_DELETE)
-	@PostMapping("delete")
+	@PostMapping("/delete")
 	public Object delete(@RequestBody UpmsPermissionModel model){
 		upmsPermissionService.delete(model.getId());
 		return rtSuccess();
@@ -87,7 +87,7 @@ public class UpmsPermissionController extends BaseController {
 	 * @return Object
 	 */
 	@RequiresPermissions(UpmsPermissionCode.PERMISSION_QUERY)
-	@PostMapping("top")
+	@PostMapping("/top")
 	public Object top(){
 		List<UpmsPermissionModel> permissionModelList = upmsPermissionService.queryByParentId(UpmsPermission.TOP_PARENT_ID);
 		return rtSuccess(permissionModelList);
@@ -99,7 +99,7 @@ public class UpmsPermissionController extends BaseController {
 	 * @return Object
 	 */
 	@RequiresPermissions(UpmsPermissionCode.PERMISSION_QUERY)
-	@PostMapping("children")
+	@PostMapping("/children")
 	public Object children(@RequestBody UpmsPermissionCondition condition){
 		List<UpmsPermissionModel> permissionModelList = upmsPermissionService.queryByParentId(condition.getId());
 		return rtSuccess(permissionModelList);

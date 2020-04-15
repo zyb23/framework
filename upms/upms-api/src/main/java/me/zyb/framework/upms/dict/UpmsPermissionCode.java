@@ -61,4 +61,19 @@ public class UpmsPermissionCode {
 	/** 用户解锁 */
 	public static final String USER_UNLOCK = "user:unlock";
 
+	/** 部门管理 */
+	public static final String DEPT_MANAGEMENT = "dept:management";
+	/** 部门查询 */
+	public static final String DEPT_QUERY = "dept:query";
+	/** 部门新增 */
+	public static final String DEPT_ADD = "dept:add";
+	/** 部门编辑 */
+	public static final String DEPT_EDIT = "dept:edit";
+	/** 部门删除 */
+	public static final String DEPT_DELETE = "dept:delete";
+
+	/** 日志管理 */
+	public static final String LOG_MANAGEMENT = "log:management";
+	/** 日志查询 */
+	public static final String LOG_QUERY = "log:query";
 }

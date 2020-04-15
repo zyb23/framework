@@ -1,9 +1,11 @@
 package me.zyb.framework.upms;
 
+import me.zyb.framework.upms.entity.UpmsDept;
 import me.zyb.framework.upms.entity.UpmsLog;
 import me.zyb.framework.upms.entity.UpmsPermission;
 import me.zyb.framework.upms.entity.UpmsRole;
 import me.zyb.framework.upms.entity.UpmsUser;
+import me.zyb.framework.upms.model.UpmsDeptModel;
 import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.model.UpmsRoleModel;
@@ -81,7 +83,7 @@ public class EntityToModelUtil {
 		BeanUtils.copyProperties(entity, model, "userList", "permissionList");
 		List<UpmsPermission> permissionEntityList = entity.getPermissionList();
 		if(needPermissionList){
-			model.setPermissionList(entityToModel(permissionEntityList, false, false));
+			model.setPermissionList(entityToModel4Permission(permissionEntityList, false, false));
 		}
 		if(needPermissionIdSet){
 			Set<Long> permissionIdSet = permissionEntityList.stream().map(UpmsPermission::getId).collect(Collectors.toSet());
@@ -176,7 +178,7 @@ public class EntityToModelUtil {
 	 * @param needChildren      是事要包含权子级权限列表
 	 * @return List<UpmsPermissionModel>
 	 */
-	public static List<UpmsPermissionModel> entityToModel(List<UpmsPermission> entityList, boolean needParent, boolean needChildren){
+	public static List<UpmsPermissionModel> entityToModel4Permission(List<UpmsPermission> entityList, boolean needParent, boolean needChildren){
 		List<UpmsPermissionModel> modelList = new ArrayList<UpmsPermissionModel>();
 		for(UpmsPermission entity : entityList){
 			modelList.add(entityToModel(entity, needParent, needChildren));
@@ -190,7 +192,7 @@ public class EntityToModelUtil {
 	 * @return List<UpmsPermissionModel>
 	 */
 	public static List<UpmsPermissionModel> entityToModel4Permission(List<UpmsPermission> entityList){
-		return entityToModel(entityList, false, false);
+		return entityToModel4Permission(entityList, false, false);
 	}
 
 	/**
@@ -217,4 +219,70 @@ public class EntityToModelUtil {
 		}
 		return modelList;
 	}
+
+	/**
+	 * 将UpmsDept转成UpmsDeptModel
+	 * @param entity            部门实体对象
+	 * @param needParent        是否要包含父级部门对象
+	 * @param needChildren      是事要包含权子级部门列表
+	 * @return UpmsDeptModel
+	 */
+	public static UpmsDeptModel entityToModel(UpmsDept entity, boolean needParent, boolean needChildren){
+		UpmsDeptModel model = new UpmsDeptModel();
+		BeanUtils.copyProperties(entity, model, "parent", "children", "roleList");
+
+		UpmsDept parentEntity = entity.getParent();
+		if(null != parentEntity) {
+			//有父级部门时，父级部门ID默认展示
+			model.setParentId(parentEntity.getId());
+			if(needParent){
+				//父级对象只向下，不再向上，不然会死循环
+				model.setParent(entityToModel(parentEntity, true, false));
+			}
+		}
+		List<UpmsDept> childrenEntity = entity.getChildren();
+		if(needChildren && (null != childrenEntity && childrenEntity.size() > 0)){
+			List<UpmsDeptModel> children = new ArrayList<UpmsDeptModel>();
+			for (UpmsDept child : childrenEntity){
+				children.add(entityToModel(child, needParent, true));
+			}
+			model.setChildren(children);
+		}
+
+		return model;
+	}
+
+	/**
+	 * 将UpmsDept转成UpmsDeptModel
+	 * @param entity            部门实体对象
+	 * @return UpmsDeptModel
+	 */
+	public static UpmsDeptModel entityToModel(UpmsDept entity){
+		return entityToModel(entity, false, false);
+	}
+
+	/**
+	 * 将UpmsDept转成UpmsDeptModel
+	 * @param entityList        部门实体对象列表
+	 * @param needParent        是否要包含父级部门对象
+	 * @param needChildren      是事要包含权子级部门列表
+	 * @return List<UpmsDeptModel>
+	 */
+	public static List<UpmsDeptModel> entityToModel4Dept(List<UpmsDept> entityList, boolean needParent, boolean needChildren){
+		List<UpmsDeptModel> modelList = new ArrayList<UpmsDeptModel>();
+		for(UpmsDept entity : entityList){
+			modelList.add(entityToModel(entity, needParent, needChildren));
+		}
+		return modelList;
+	}
+
+	/**
+	 * 将UpmsDept转成UpmsDeptModel
+	 * @param entityList        部门实体对象列表
+	 * @return List<UpmsDeptModel>
+	 */
+	public static List<UpmsDeptModel> entityToModel4Dept(List<UpmsDept> entityList){
+		return entityToModel4Dept(entityList, false, false);
+	}
+
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +29,18 @@ public class UpmsRoleModel implements Serializable {
 
 	/** 描述 */
 	private String description;
+
+	/** 创建人ID */
+	protected Long creatorId;
+
+	/** 创建时间 */
+	protected Date createTime;
+
+	/** 修改人ID */
+	protected Long editorId;
+
+	/** 修改时间 */
+	protected Date editTime;
 
 	/** 权限列表 */
 	private List<UpmsPermissionModel> permissionList;

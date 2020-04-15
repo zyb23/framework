@@ -28,7 +28,7 @@ public class UpmsLogController extends BaseController {
      * @param condition 查询条件
      * @return Object
      */
-    @RequiresPermissions(UpmsPermissionCode.USER_QUERY)
+    @RequiresPermissions(UpmsPermissionCode.LOG_QUERY)
     @RequestMapping("/queryByCondition")
     public Object queryByCondition(@RequestBody UpmsLogCondition condition) {
         Page<UpmsLogModel> page = upmsLogService.queryByCondition(condition);

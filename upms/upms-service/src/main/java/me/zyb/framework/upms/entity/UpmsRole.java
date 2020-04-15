@@ -42,11 +42,13 @@ public class UpmsRole extends BaseEntity implements Serializable {
 
 	/** 用户列表 */
 	@ToString.Exclude
+	@JsonIgnore
 	@ManyToMany(mappedBy = "roleList")
 	private List<UpmsUser> userList = new ArrayList<UpmsUser>();
 
 	/** 权限列表 */
 	@ToString.Exclude
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "upms_role_permission", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
 	private List<UpmsPermission> permissionList = new ArrayList<UpmsPermission>();

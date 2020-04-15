@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +44,18 @@ public class UpmsUserModel implements Serializable {
 	/** 用户是否有效 */
 	private Boolean isEnable;
 
+	/** 创建人ID */
+	protected Long creatorId;
+
+	/** 创建时间 */
+	protected Date createTime;
+
+	/** 修改人ID */
+	protected Long editorId;
+
+	/** 修改时间 */
+	protected Date editTime;
+
 	/** 角色名（多个逗号隔开） */
 	private String roleNames;
 
@@ -69,4 +82,10 @@ public class UpmsUserModel implements Serializable {
 
 	/** token（sessionId） */
 	private String token;
+
+	/** 部门ID */
+	private Long deptId;
+
+	/** 部门对象 */
+	private UpmsDeptModel dept;
 }
