@@ -5,7 +5,7 @@ import me.zyb.framework.core.util.StringUtil;
 import me.zyb.framework.upms.EntityToModelUtil;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsLogCondition;
-import me.zyb.framework.upms.dict.PermissionType;
+import me.zyb.framework.upms.dict.LogType;
 import me.zyb.framework.upms.entity.UpmsLog;
 import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.repository.UpmsLogRepository;
@@ -104,7 +104,7 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 				predicateList.add(criteriaBuilder.like(root.get("loginName").as(String.class), StringUtil.like(condition.getLoginName())));
 			}
 			if (null != condition.getType()){
-				predicateList.add(criteriaBuilder.equal(root.get("type").as(PermissionType.class), condition.getType()));
+				predicateList.add(criteriaBuilder.equal(root.get("type").as(LogType.class), condition.getType()));
 			}
 			query.where(predicateList.toArray(new Predicate[predicateList.size()]));
 			return query.getRestriction();
