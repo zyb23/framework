@@ -81,7 +81,7 @@ public class CustomizedShiroRealm extends AuthorizingRealm {
 		List<UpmsRoleModel> roleModelList = upmsUserService.queryRole(userEntity.getId());
 		Set<String> roleCodeSet = roleModelList.stream().map(UpmsRoleModel::getCode).collect(Collectors.toSet());
 		saInfo.setRoles(roleCodeSet);
-		List<UpmsPermissionModel> permissionModelList = upmsUserService.queryPermission(userEntity.getId(), null);
+		List<UpmsPermissionModel> permissionModelList = upmsUserService.queryAllPermission(userEntity.getId());
 		Set<String> permissionCodeSet = permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet());
 		saInfo.setStringPermissions(permissionCodeSet);
 

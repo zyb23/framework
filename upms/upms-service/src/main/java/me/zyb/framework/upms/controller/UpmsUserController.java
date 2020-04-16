@@ -311,7 +311,7 @@ public class UpmsUserController extends BaseController {
 	@RequiresPermissions(UpmsPermissionCode.USER_QUERY)
 	@PostMapping("/selfPermissionTree")
 	public Object selfPermissionTree(@RequestBody UpmsPermissionCondition condition) {
-		List<UpmsPermissionModel> result = upmsUserService.queryPermissionTree(ShiroAuthHelper.getCurrentUserId(), condition.getParentId(), condition.getType());
+		List<UpmsPermissionModel> result = upmsUserService.queryPermissionTree(ShiroAuthHelper.getCurrentUserId());
 		return rtSuccess(result);
 	}
 

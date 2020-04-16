@@ -286,26 +286,25 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 	@Override
 	public List<UpmsPermissionModel> queryPermission(Long userId, Long parentPermissionId) {
-		List<UpmsPermission> permissionEntityList;
-		if(null == parentPermissionId){
-			permissionEntityList = upmsPermissionRepository.findByRoleList_UserList_Id(userId);
-		}else {
-			permissionEntityList = upmsPermissionRepository.findByParent_IdAndRoleList_UserList_Id(parentPermissionId, userId);
-		}
+		List<UpmsPermission> permissionEntityList = upmsPermissionRepository.findByParent_IdAndRoleList_UserList_Id(parentPermissionId, userId);
 		return EntityToModelUtil.entityToModel4Permission(permissionEntityList);
 	}
 
 	@Override
 	public List<UpmsPermissionModel> queryTopPermission(Long userId) {
-		List<UpmsPermissionModel> permissionModelList = queryPermission(userId, null);
-		List<UpmsPermissionModel> topPermissionList = permissionModelList.stream().filter(permissionModel -> UpmsPermission.TOP_PARENT_ID.equals(permissionModel.getParentId())).collect(Collectors.toList());
-		return topPermissionList;
+		return queryPermission(userId, UpmsPermission.TOP_PARENT_ID);
 	}
 
 	@Override
-	public List<UpmsPermissionModel> queryPermissionTree(Long userId, Long parentPermissionId, PermissionType permissionType) {
-		List<UpmsPermissionModel> permissionModelList = queryPermission(userId, parentPermissionId);
-		return listToTree(permissionModelList, permissionType);
+	public List<UpmsPermissionModel> queryAllPermission(Long userId) {
+		List<UpmsPermission> permissionEntityList = upmsPermissionRepository.findByRoleList_UserList_Id(userId);
+		return EntityToModelUtil.entityToModel4Permission(permissionEntityList);
+	}
+
+	@Override
+	public List<UpmsPermissionModel> queryPermissionTree(Long userId) {
+		List<UpmsPermissionModel> permissionModelList = queryAllPermission(userId);
+		return listToTree(permissionModelList, null);
 	}
 
 	/**
@@ -354,14 +353,15 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		//userModel.setRoleList(roleModelList);
 
 		//获取登录用户的所有权限数据
-		List<UpmsPermissionModel> permissionModelList = queryPermission(currentUser.getId(), null);
+		List<UpmsPermissionModel> permissionModelList = queryAllPermission(currentUser.getId());
 		userModel.setPermissionIdSet(permissionModelList.stream().map(UpmsPermissionModel::getId).collect(Collectors.toSet()));
 		userModel.setPermissionCodeSet(permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet()));
 		//userModel.setPermissionList(permissionModelList);
 
 		//获取登录用户的所有菜单（树形）
-		List<UpmsPermissionModel> topTree = listToTree(permissionModelList, PermissionType.MENU);
-		userModel.setPermissionTree(topTree);
+		List<UpmsPermissionModel> topMenu = listToTree(permissionModelList, PermissionType.MENU);
+		List<UpmsPermissionModel> menuTree = topMenu.stream().filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
+		userModel.setMenuTree(menuTree);
 
 		//登录返回token
 		userModel.setToken(session.getId().toString());
@@ -396,8 +396,9 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		//userModel.setPermissionList(permissionModelList);
 
 		//获取登录用户的所有菜单（树形）
-		List<UpmsPermissionModel> topTree = listToTree(permissionModelList, PermissionType.MENU);
-		userModel.setPermissionTree(topTree);
+		List<UpmsPermissionModel> topMenu = listToTree(permissionModelList, PermissionType.MENU);
+		List<UpmsPermissionModel> menuTree = topMenu.stream().filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
+		userModel.setMenuTree(menuTree);
 
 		return userModel;
 	}

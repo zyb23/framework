@@ -1,7 +1,6 @@
 package me.zyb.framework.upms.service;
 
 import me.zyb.framework.upms.condition.UpmsUserCondition;
-import me.zyb.framework.upms.dict.PermissionType;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.model.UpmsRoleModel;
 import me.zyb.framework.upms.model.UpmsUserModel;
@@ -87,7 +86,7 @@ public interface UpmsUserService {
 	/**
 	 * 查询用户的权限列表
 	 * @param userId                用户ID
-	 * @param parentPermissionId    父级权限ID（为null时，查询所有）
+	 * @param parentPermissionId    父级权限ID
 	 * @return List<UpmsPermissionModel>
 	 */
 	public List<UpmsPermissionModel> queryPermission(Long userId, Long parentPermissionId);
@@ -100,13 +99,18 @@ public interface UpmsUserService {
 	public List<UpmsPermissionModel> queryTopPermission(Long userId);
 
 	/**
-	 * 查询用户的权限列表，树形展示
-	 * @param userId                用户ID
-	 * @param parentPermissionId    父级权限ID（为null时，从顶级权限开始查询）
-	 * @param permissionType        权限类型（为null时，所有类型）
+	 * 查询用户所有权限
+	 * @param userId    用户ID
 	 * @return List<UpmsPermissionModel>
 	 */
-	public List<UpmsPermissionModel> queryPermissionTree(Long userId, Long parentPermissionId, PermissionType permissionType);
+	public List<UpmsPermissionModel> queryAllPermission(Long userId);
+
+	/**
+	 * 查询用户的权限列表，树形展示
+	 * @param userId                用户ID
+	 * @return List<UpmsPermissionModel>
+	 */
+	public List<UpmsPermissionModel> queryPermissionTree(Long userId);
 
 	/**
 	 * 用户登录，并返回用户相关信息（根据登录名和登录密码查询用户）
