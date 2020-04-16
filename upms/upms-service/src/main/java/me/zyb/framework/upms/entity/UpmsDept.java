@@ -41,7 +41,7 @@ public class UpmsDept extends BaseEntity implements Serializable {
 
 	/** 上级部门 */
 	@ManyToOne
-	@JoinColumn(name = "parent_id", updatable = false)
+	@JoinColumn(name = "parent_id")
 	private UpmsDept parent = null;
 
 	/** 下级部门列表 */

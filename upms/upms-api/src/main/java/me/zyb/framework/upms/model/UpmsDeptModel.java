@@ -1,10 +1,7 @@
 package me.zyb.framework.upms.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import me.zyb.framework.core.base.BaseEntity;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,20 +12,19 @@ import java.util.List;
  * @author zhangyingbin
  */
 @Data
-public class UpmsDeptModel extends BaseEntity implements Serializable {
+public class UpmsDeptModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/** ID主键 */
+	private Long id;
+
 	/** 部门名称 */
-	@Column(name = "name", unique = true, nullable = false)
 	private String name;
 
 	/** 部门级别 */
-	@Column(name = "level", nullable = false)
 	private Integer level = 1;
 
 	/** 部门负责人 */
-	@JsonIgnore
-	@Column(name = "principal", nullable = false)
 	private String principal;
 
 	/** 创建人ID */
