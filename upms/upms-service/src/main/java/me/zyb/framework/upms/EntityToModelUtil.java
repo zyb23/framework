@@ -35,6 +35,15 @@ public class EntityToModelUtil {
 			Set<String> roleNames = entity.getRoleList().stream().map(UpmsRole::getName).collect(Collectors.toSet());
 			model.setRoleNames(StringUtils.join(roleNames, ","));
 		}
+
+		//部门
+		if(null != entity.getDept()) {
+			UpmsDeptModel deptModel = new UpmsDeptModel();
+			BeanUtils.copyProperties(entity.getDept(), deptModel, "parent", "children", "userList");
+			model.setDept(deptModel);
+			model.setDeptId(deptModel.getId());
+		}
+
 		return model;
 	}
 
