@@ -4,9 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.util.AddressUtil;
 import me.zyb.framework.upms.configure.UpmsProperties;
+import me.zyb.framework.upms.dict.LogType;
+import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.model.UpmsUserModel;
 import me.zyb.framework.upms.service.CaptchaService;
+import me.zyb.framework.upms.service.UpmsLogService;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.util.WebUtils;
@@ -29,6 +33,8 @@ public class AuthController extends BaseController {
 	private UpmsUserService upmsUserService;
 	@Autowired
 	private CaptchaService captchaService;
+	@Autowired
+	private UpmsLogService upmsLogService;
 
 	/**
 	 * <pre>
@@ -95,6 +101,13 @@ public class AuthController extends BaseController {
 		}
 		//登录
 		UpmsUserModel userInfo = upmsUserService.login(loginName, loginPassword);
+
+		//记录登录日志
+		UpmsLogModel upmsLogModel = new UpmsLogModel();
+		upmsLogModel.setType(LogType.LOGIN);
+		upmsLogModel.setLoginName(userInfo.getLoginName());
+		upmsLogModel.setIp(AddressUtil.getHttpRequestIPAddress(request));
+		upmsLogService.save(upmsLogModel);
 
 		return rtSuccess(userInfo);
 	}

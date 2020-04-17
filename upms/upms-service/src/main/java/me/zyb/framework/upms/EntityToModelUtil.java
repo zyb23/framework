@@ -35,6 +35,7 @@ public class EntityToModelUtil {
 			Set<String> roleNames = entity.getRoleList().stream().map(UpmsRole::getName).collect(Collectors.toSet());
 			model.setRoleNames(StringUtils.join(roleNames, ","));
 		}
+		model.setRoleIdSet(entity.getRoleList().stream().map(UpmsRole::getId).collect(Collectors.toSet()));
 
 		//部门
 		if(null != entity.getDept()) {

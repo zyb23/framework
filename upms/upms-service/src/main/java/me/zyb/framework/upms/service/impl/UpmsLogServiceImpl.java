@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -103,8 +104,14 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 			if(StringUtils.isNotBlank(condition.getLoginName())){
 				predicateList.add(criteriaBuilder.like(root.get("loginName").as(String.class), StringUtil.like(condition.getLoginName())));
 			}
-			if (null != condition.getType()){
+			if(null != condition.getType()){
 				predicateList.add(criteriaBuilder.equal(root.get("type").as(LogType.class), condition.getType()));
+			}
+			if(null != condition.getCreateTimeStart()){
+				predicateList.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), condition.getCreateTimeStart()));
+			}
+			if(null != condition.getCreateTimeEnd()){
+				predicateList.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), condition.getCreateTimeEnd()));
 			}
 			query.where(predicateList.toArray(new Predicate[predicateList.size()]));
 			return query.getRestriction();

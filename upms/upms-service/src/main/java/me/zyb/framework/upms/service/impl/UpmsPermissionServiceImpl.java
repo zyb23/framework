@@ -8,8 +8,10 @@ import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsPermissionCondition;
 import me.zyb.framework.upms.dict.PermissionType;
 import me.zyb.framework.upms.entity.UpmsPermission;
+import me.zyb.framework.upms.entity.UpmsRole;
 import me.zyb.framework.upms.model.UpmsPermissionModel;
 import me.zyb.framework.upms.repository.UpmsPermissionRepository;
+import me.zyb.framework.upms.repository.UpmsRoleRepository;
 import me.zyb.framework.upms.service.UpmsPermissionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangyingbin
@@ -35,6 +38,8 @@ import java.util.Set;
 public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 	@Autowired
 	private UpmsPermissionRepository upmsPermissionRepository;
+	@Autowired
+	private UpmsRoleRepository upmsRoleRepository;
 
 	@Override
 	public UpmsPermissionModel save(UpmsPermissionModel model) {
@@ -88,9 +93,15 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 		List<UpmsPermission> children = upmsPermissionRepository.findByParent_Id(permissionId);
 		if(null != children && children.size() > 0){
 			throw new UpmsException("拥有子级的权限不能删除");
-		}else {
-			upmsPermissionRepository.deleteById(permissionId);
 		}
+		//是否被角色绑定
+		List<UpmsRole> roleList = upmsRoleRepository.findByPermissionList_Id(permissionId);
+		if(null != roleList && roleList.size() > 0) {
+			Set<Long> roleIdSet = roleList.stream().map(UpmsRole::getId).collect(Collectors.toSet());
+			throw new UpmsException("权限被角色" + roleIdSet.toString() + "绑定，不能删除");
+		}
+
+		upmsPermissionRepository.deleteById(permissionId);
 	}
 
 	@Override
