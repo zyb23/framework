@@ -390,7 +390,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		//userModel.setRoleList(roleModelList);
 
 		//获取登录用户的所有权限数据
-		List<UpmsPermissionModel> permissionModelList = queryPermission(userEntity.getId(), null);
+		List<UpmsPermissionModel> permissionModelList = queryAllPermission(userEntity.getId());
 		userModel.setPermissionIdSet(permissionModelList.stream().map(UpmsPermissionModel::getId).collect(Collectors.toSet()));
 		userModel.setPermissionCodeSet(permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet()));
 		//userModel.setPermissionList(permissionModelList);
