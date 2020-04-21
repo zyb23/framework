@@ -2,7 +2,6 @@ package me.zyb.framework.upms.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.util.StringUtil;
-import me.zyb.framework.core.util.regex.StringRegex;
 import me.zyb.framework.upms.EntityToModelUtil;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsPermissionCondition;
@@ -46,9 +45,9 @@ public class UpmsPermissionServiceImpl implements UpmsPermissionService {
 		UpmsPermission entity = null;
 		if(null == model.getId()){
 			//新增
-			if(!StringRegex.isAlphabetOrNumber(model.getCode())){
-				throw new UpmsException("权限编码只能是英文或数字");
-			}
+//			if(!StringRegex.isAlphabetOrNumber(model.getCode())){
+//				throw new UpmsException("权限编码只能是英文或数字");
+//			}
 			entity = upmsPermissionRepository.findByCode(model.getCode());
 			if(null != entity){
 				throw new UpmsException("权限编码已存在");
