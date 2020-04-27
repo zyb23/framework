@@ -32,8 +32,7 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> {
 		JSONObject jb = null;
 		try {
 			jb = JSON.parseObject(node.toString());
-		} catch (Exception e){
-			log.info("前端传递的是枚举值，不是枚举对象");
+		} catch (Exception ignored){
 		}
 		String value = null == jb ? node.asText() : jb.getString("value");
 
