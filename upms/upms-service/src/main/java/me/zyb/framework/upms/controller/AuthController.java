@@ -105,9 +105,9 @@ public class AuthController extends BaseController {
 		//记录登录日志
 		UpmsLogModel upmsLogModel = new UpmsLogModel();
 		upmsLogModel.setType(LogType.LOGIN);
-		upmsLogModel.setLoginName(userInfo.getLoginName());
+		upmsLogModel.setCreatorName(StringUtils.isBlank(userInfo.getUsername()) ? userInfo.getLoginName() : userInfo.getUsername());
 		upmsLogModel.setIp(AddressUtil.getHttpRequestIPAddress(request));
-		upmsLogModel.setContent("登录");
+		upmsLogModel.setDescription("登录");
 		upmsLogService.save(upmsLogModel);
 
 		return rtSuccess(userInfo);

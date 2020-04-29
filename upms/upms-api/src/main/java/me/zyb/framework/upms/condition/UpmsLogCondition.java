@@ -12,8 +12,14 @@ import me.zyb.framework.upms.dict.LogType;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UpmsLogCondition extends BaseCondition {
-	/** 操作人登录名 */
-	private String loginName;
 	/** 操作类型 */
 	private LogType type;
+	/** 操作描述 */
+	private String description;
+	/** 操作的实体ID */
+	private Long entityId;
+	/** 操作的实体名 */
+	private String entityName;
+	/** 操作人名称 */
+	private String creatorName;
 }

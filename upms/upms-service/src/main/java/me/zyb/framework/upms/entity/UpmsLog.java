@@ -25,10 +25,6 @@ import java.util.Date;
 public class UpmsLog extends BaseIdEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/** 操作人登录名 */
-	@Column(name = "login_name", nullable = false, updatable = false)
-	private String loginName;
-
 	/** 内容 */
 	@Column(name = "content", nullable = false)
 	private String content;
@@ -38,6 +34,18 @@ public class UpmsLog extends BaseIdEntity implements Serializable {
 	@Convert(converter = LogType.Converter.class)
 	private LogType type;
 
+	/** 操作描述 */
+	@Column(name = "description")
+	private String description;
+
+	/** 操作的实体ID */
+	@Column(name = "entity_id")
+	private Long entityId;
+
+	/** 操作的实体名 */
+	@Column(name = "entity_name")
+	private String entityName;
+
 	/** IP */
 	@Column(name = "ip")
 	private String ip;
@@ -46,6 +54,10 @@ public class UpmsLog extends BaseIdEntity implements Serializable {
 	@CreatedBy
 	@Column(name = "creator_id", nullable = false, updatable = false)
 	protected Long creatorId = -1L;
+
+	/** 操作人名称 */
+	@Column(name = "creator_name", nullable = false, updatable = false)
+	private String creatorName;
 
 	/** 创建时间 */
 	@CreatedDate

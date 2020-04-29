@@ -17,20 +17,29 @@ public class UpmsLogModel implements Serializable {
 	/** ID主键 */
 	private Long id;
 
-	/** 操作人登录名 */
-	private String loginName;
-
 	/** 内容 */
 	private String content;
 
 	/** 操作类型 */
 	private LogType type;
 
+	/** 操作描述 */
+	private String description;
+
+	/** 操作的实体ID */
+	private Long entityId;
+
+	/** 操作的实体名 */
+	private String entityName;
+
 	/** IP */
 	private String ip;
 
 	/** 创建人ID */
 	protected Long creatorId;
+
+	/** 操作人名称 */
+	private String creatorName;
 
 	/** 创建时间 */
 	protected Date createTime;

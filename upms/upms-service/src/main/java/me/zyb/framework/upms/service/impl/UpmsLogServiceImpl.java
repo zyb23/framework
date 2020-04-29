@@ -44,7 +44,7 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 		if(null == model.getId()){
 			//新增
 			entity = new UpmsLog();
-			entity.setLoginName(model.getLoginName());
+			entity.setCreatorName(model.getCreatorName());
 		}else {
 			//修改
 			Optional<UpmsLog> optional = upmsLogRepository.findById(model.getId());
@@ -101,11 +101,20 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 			if(null != condition.getId()){
 				predicateList.add(criteriaBuilder.equal(root.get("id").as(Long.class), condition.getId()));
 			}
-			if(StringUtils.isNotBlank(condition.getLoginName())){
-				predicateList.add(criteriaBuilder.like(root.get("loginName").as(String.class), StringUtil.like(condition.getLoginName())));
+			if(StringUtils.isNotBlank(condition.getCreatorName())){
+				predicateList.add(criteriaBuilder.like(root.get("loginName").as(String.class), StringUtil.like(condition.getCreatorName())));
 			}
 			if(null != condition.getType()){
 				predicateList.add(criteriaBuilder.equal(root.get("type").as(LogType.class), condition.getType()));
+			}
+			if(null != condition.getDescription()) {
+				predicateList.add(criteriaBuilder.like(root.get("description").as(String.class), StringUtil.like(condition.getDescription())));
+			}
+			if(null != condition.getEntityId()) {
+				predicateList.add(criteriaBuilder.equal(root.get("entityId").as(Long.class), condition.getEntityId()));
+			}
+			if(null != condition.getEntityName()) {
+				predicateList.add(criteriaBuilder.like(root.get("entityName").as(String.class), StringUtil.like(condition.getEntityName())));
 			}
 			if(null != condition.getCreateTimeStart()){
 				predicateList.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), condition.getCreateTimeStart()));
