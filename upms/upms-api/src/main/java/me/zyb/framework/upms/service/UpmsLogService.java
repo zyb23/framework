@@ -42,4 +42,12 @@ public interface UpmsLogService {
 	 * @return Page<UpmsLogModel>
 	 */
 	public Page<UpmsLogModel> queryByCondition(UpmsLogCondition condition);
+
+	/**
+	 * 查询某个实体的日志记录
+	 * @param entityId      实体ID
+	 * @param entityName    实体名称
+	 * @return List<UpmsLogModel>
+	 */
+	public List<UpmsLogModel> queryByEntity(Long entityId, String entityName);
 }

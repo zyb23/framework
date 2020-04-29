@@ -130,4 +130,9 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 	private Page<UpmsLog> findByCondition(UpmsLogCondition condition) {
 		return upmsLogRepository.findAll(buildSpecification(condition), condition.getPageable());
 	}
+
+	@Override
+	public List<UpmsLogModel> queryByEntity(Long entityId, String entityName) {
+		return EntityToModelUtil.entityToModel4Log(upmsLogRepository.findByEntityIdAndEntityName(entityId, entityName));
+	}
 }

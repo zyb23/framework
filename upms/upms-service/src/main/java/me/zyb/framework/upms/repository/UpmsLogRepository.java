@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,4 +21,12 @@ public interface UpmsLogRepository extends JpaRepository<UpmsLog, Long>, JpaSpec
 	 * @param logIdSet  日志ID列表
 	 */
 	public void deleteAllByIdIn(Set<Long> logIdSet);
+
+	/**
+	 * 查询某个实体的日志记录
+	 * @param entityId      实体ID
+	 * @param entityName    实体名称
+	 * @return List<UpmsLog>
+	 */
+	public List<UpmsLog> findByEntityIdAndEntityName(Long entityId, String entityName);
 }
