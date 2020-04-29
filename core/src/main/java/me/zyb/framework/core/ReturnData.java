@@ -1,9 +1,11 @@
 package me.zyb.framework.core;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Controller返回对象
@@ -53,5 +55,27 @@ public class ReturnData<T> implements Serializable{
 	@JsonIgnore
 	public Boolean isSuccess(){
 		return ReturnCode.SUCCESS.getValue().equals(this.code);
+	}
+
+	/**
+	 * 微服务之间传递返回值时，将data（Object）转化为对应的JavaObject
+	 * @param data      返回值
+	 * @param tClass    JavaObject类型的class
+	 * @param <T>       JavaObject类型
+	 * @return T
+	 */
+	public static <T> T parseObject(Object data, Class<T> tClass){
+		return JSON.parseObject(JSON.toJSONString(data), tClass);
+	}
+
+	/**
+	 * 微服务之间传递返回值时，将data（Collection）转化为对应的JavaObject
+	 * @param data      返回值
+	 * @param tClass    JavaObject类型的class
+	 * @param <T>       JavaObject类型
+	 * @return Collection<T>
+	 */
+	public static <T> Collection<T> parseArray(Collection data, Class<T> tClass){
+		return JSON.parseArray(JSON.toJSONString(data), tClass);
 	}
 }
