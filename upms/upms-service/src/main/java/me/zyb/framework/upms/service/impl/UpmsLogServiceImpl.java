@@ -1,12 +1,15 @@
 package me.zyb.framework.upms.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.util.AddressUtil;
 import me.zyb.framework.core.util.StringUtil;
 import me.zyb.framework.upms.EntityToModelUtil;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsLogCondition;
+import me.zyb.framework.upms.configure.ShiroAuthHelper;
 import me.zyb.framework.upms.dict.LogType;
 import me.zyb.framework.upms.entity.UpmsLog;
+import me.zyb.framework.upms.entity.UpmsUser;
 import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.repository.UpmsLogRepository;
 import me.zyb.framework.upms.service.UpmsLogService;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,12 +43,32 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 	private UpmsLogRepository upmsLogRepository;
 
 	@Override
-	public UpmsLogModel save(UpmsLogModel model) {
+	public UpmsLogModel save(UpmsLogModel model, HttpServletRequest request) {
 		UpmsLog entity = null;
 		if(null == model.getId()){
 			//新增
 			entity = new UpmsLog();
-			entity.setCreatorName(model.getCreatorName());
+			String creatorName = model.getCreatorName();
+			if(StringUtils.isBlank(model.getCreatorName())) {
+				UpmsUser currentUser = ShiroAuthHelper.getCurrentUser();
+				String userName = currentUser.getUsername();
+				creatorName = StringUtils.isNotBlank(userName) ? userName : currentUser.getLoginName();
+			}
+			entity.setCreatorName(creatorName);
+			entity.setEntityId(model.getEntityId());
+			entity.setEntityName(model.getEntityName());
+			entity.setContent(model.getContent());
+			String description = model.getDescription();
+			if(StringUtils.isBlank(description)) {
+				description = model.getType().getName();
+			}
+			entity.setDescription(description);
+			String ip = model.getIp();
+			if(StringUtils.isBlank(ip)) {
+				ip = AddressUtil.getHttpRequestIPAddress(request);
+			}
+			entity.setIp(ip);
+			entity.setType(model.getType());
 		}else {
 			//修改
 			Optional<UpmsLog> optional = upmsLogRepository.findById(model.getId());
@@ -55,9 +79,6 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 				throw new UpmsException("日志不存在");
 			}
 		}
-		entity.setContent(model.getContent());
-		entity.setIp(model.getIp());
-		entity.setType(model.getType());
 
 		upmsLogRepository.save(entity);
 

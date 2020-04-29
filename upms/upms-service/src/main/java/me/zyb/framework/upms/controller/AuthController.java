@@ -108,7 +108,7 @@ public class AuthController extends BaseController {
 		upmsLogModel.setCreatorName(StringUtils.isBlank(userInfo.getUsername()) ? userInfo.getLoginName() : userInfo.getUsername());
 		upmsLogModel.setIp(AddressUtil.getHttpRequestIPAddress(request));
 		upmsLogModel.setDescription("登录");
-		upmsLogService.save(upmsLogModel);
+		upmsLogService.save(upmsLogModel, request);
 
 		return rtSuccess(userInfo);
 	}

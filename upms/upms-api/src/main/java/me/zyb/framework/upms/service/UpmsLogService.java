@@ -4,6 +4,7 @@ import me.zyb.framework.upms.condition.UpmsLogCondition;
 import me.zyb.framework.upms.model.UpmsLogModel;
 import org.springframework.data.domain.Page;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -15,8 +16,9 @@ public interface UpmsLogService {
 	/**
 	 * <p>新增/修改日志</p>
 	 * @param model 数据模型
+	 * @param request http请求对象
 	 */
-	public UpmsLogModel save(UpmsLogModel model);
+	public UpmsLogModel save(UpmsLogModel model, HttpServletRequest request);
 
 	/**
 	 * <p>删除日志</p>
