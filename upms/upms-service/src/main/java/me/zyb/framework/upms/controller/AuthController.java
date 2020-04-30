@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.core.dict.ConstString;
-import me.zyb.framework.core.util.AddressUtil;
 import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.dict.LogType;
 import me.zyb.framework.upms.model.UpmsLogModel;
@@ -105,9 +104,6 @@ public class AuthController extends BaseController {
 		//记录登录日志
 		UpmsLogModel upmsLogModel = new UpmsLogModel();
 		upmsLogModel.setType(LogType.LOGIN);
-		upmsLogModel.setCreatorName(StringUtils.isBlank(userInfo.getUsername()) ? userInfo.getLoginName() : userInfo.getUsername());
-		upmsLogModel.setIp(AddressUtil.getHttpRequestIPAddress(request));
-		upmsLogModel.setDescription("登录");
 		upmsLogService.save(upmsLogModel, request);
 
 		return rtSuccess(userInfo);

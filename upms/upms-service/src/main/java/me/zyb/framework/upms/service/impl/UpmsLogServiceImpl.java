@@ -49,7 +49,7 @@ public class UpmsLogServiceImpl implements UpmsLogService {
 			//新增
 			entity = new UpmsLog();
 			String creatorName = model.getCreatorName();
-			if(StringUtils.isBlank(model.getCreatorName())) {
+			if(StringUtils.isBlank(creatorName)) {
 				UpmsUser currentUser = ShiroAuthHelper.getCurrentUser();
 				String userName = currentUser.getUsername();
 				creatorName = StringUtils.isNotBlank(userName) ? userName : currentUser.getLoginName();
