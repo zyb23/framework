@@ -2,7 +2,6 @@ package me.zyb.framework.core.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -12,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -469,7 +470,7 @@ public class DateUtil {
 	public class DateJsonSerializer extends JsonSerializer<Date> {
 		@Override
 		public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-				throws IOException, JsonProcessingException {
+				throws IOException {
 			jsonGenerator.writeString(FDF_DATE_TIME.format(date));
 		}
 	}
@@ -482,12 +483,39 @@ public class DateUtil {
 	public class DateJsonDeserializer extends JsonDeserializer<Date>{
 		@Override
 		public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-				throws IOException, JsonProcessingException {
+				throws IOException {
 			try {
 				return FDF_DATE_TIME.parse(jsonParser.getText());
 			} catch (ParseException e) {
 				return new Date(jsonParser.getLongValue());
 			}
 		}		
+	}
+
+	/**
+	 * String转Date
+	 * @param dateStr   时间字符串
+	 * @param format    格式
+	 * @return Date
+	 */
+	public static Date parse(String dateStr, String format) {
+		Date date = null;
+		try {
+			DateFormat dateFormat = new SimpleDateFormat(format);
+			date = dateFormat.parse(dateStr);
+		} catch (Exception ignored) {
+		}
+		return date;
+	}
+
+	/**
+	 * Date转String
+	 * @param date      时间
+	 * @param format    格式
+	 * @return String
+	 */
+	public static String format(Date date, String format) {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		return dateFormat.format(date);
 	}
 }
