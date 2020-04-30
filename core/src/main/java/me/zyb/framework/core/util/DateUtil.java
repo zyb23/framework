@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.convert.DateConverter;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.IOException;
@@ -469,8 +470,7 @@ public class DateUtil {
 	 */
 	public class DateJsonSerializer extends JsonSerializer<Date> {
 		@Override
-		public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-				throws IOException {
+		public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 			jsonGenerator.writeString(FDF_DATE_TIME.format(date));
 		}
 	}
@@ -482,13 +482,8 @@ public class DateUtil {
 	 */
 	public class DateJsonDeserializer extends JsonDeserializer<Date>{
 		@Override
-		public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-				throws IOException {
-			try {
-				return FDF_DATE_TIME.parse(jsonParser.getText());
-			} catch (ParseException e) {
-				return new Date(jsonParser.getLongValue());
-			}
+		public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+			return new DateConverter().convert(jsonParser.getText());
 		}		
 	}
 
