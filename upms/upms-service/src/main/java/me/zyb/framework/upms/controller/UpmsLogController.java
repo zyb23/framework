@@ -44,6 +44,10 @@ public class UpmsLogController extends BaseController {
 	@RabbitListener(queues = UpmsRabbitMqConst.QUEUE_UPMS_LOG)
 	public void queueUpmsLog(UpmsLogModel model) {
     	log.info("接收到日志消息：{}", model.toString());
-    	upmsLogService.save(model, null);
+    	try{
+		    upmsLogService.save(model, null);
+	    }catch (Exception e){
+    		log.error(e.getMessage());
+	    }
     }
 }
