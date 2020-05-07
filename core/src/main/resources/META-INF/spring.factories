@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  me.zyb.framework.core.autoconfigure.AutoConfiguration
+me.zyb.framework.core.autoconfigure.AutoConfiguration,\
+me.zyb.framework.core.autoconfigure.RabbitMqConfig

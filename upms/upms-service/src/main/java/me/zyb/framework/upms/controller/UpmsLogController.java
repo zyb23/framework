@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.base.BaseController;
 import me.zyb.framework.upms.condition.UpmsLogCondition;
 import me.zyb.framework.upms.dict.UpmsPermissionCode;
+import me.zyb.framework.upms.dict.UpmsRabbitMqConst;
 import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.service.UpmsLogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +35,15 @@ public class UpmsLogController extends BaseController {
     public Object queryByCondition(@RequestBody UpmsLogCondition condition) {
         Page<UpmsLogModel> page = upmsLogService.queryByCondition(condition);
         return rtSuccess(page);
+    }
+
+	/**
+	 * 监听日志队列
+	 * @param model 消息模板
+	 */
+	@RabbitListener(queues = UpmsRabbitMqConst.QUEUE_UPMS_LOG)
+	public void queueUpmsLog(UpmsLogModel model) {
+    	log.info("接收到日志消息：{}", model.toString());
+    	upmsLogService.save(model, null);
     }
 }

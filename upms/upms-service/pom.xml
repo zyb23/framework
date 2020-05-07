@@ -17,6 +17,10 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
             <groupId>me.zyb.framework</groupId>
             <artifactId>upms-api</artifactId>
             <version>1.0.0</version>
