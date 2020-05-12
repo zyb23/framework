@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -49,7 +50,7 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> implements 
 			jb = parser.parseObject();
 		} catch (Exception ignored){
 		}
-		String value = null == jb ? String.valueOf(parser.parse()) : jb.getString("value");
+		String value = null == jb ? TypeUtils.castToString(parser.parse()) : jb.getString("value");
 		return (T) BaseEnum.getEnum(value, (Class)type);
 	}
 
