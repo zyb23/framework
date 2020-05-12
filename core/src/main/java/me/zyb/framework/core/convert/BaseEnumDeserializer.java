@@ -2,6 +2,8 @@ package me.zyb.framework.core.convert;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.DefaultJSONParser;
+import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -11,13 +13,14 @@ import me.zyb.framework.core.base.BaseEnum;
 import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 /**
  * json 枚举转化（反序列化）
  * @author zhangyingbin
  */
 @Slf4j
-public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> {
+public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> implements ObjectDeserializer {
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -37,5 +40,21 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> {
 		String value = null == jb ? node.asText() : jb.getString("value");
 
 		return (BaseEnum) BaseEnum.getEnum(value, enumType);
+	}
+
+	@Override
+	public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+		JSONObject jb = null;
+		try {
+			jb = parser.parseObject();
+		} catch (Exception ignored){
+		}
+		String value = null == jb ? parser.parse().toString() : jb.getString("value");
+		return (T) BaseEnum.getEnum(value, (Class)type);
+	}
+
+	@Override
+	public int getFastMatchToken() {
+		return 0;
 	}
 }
