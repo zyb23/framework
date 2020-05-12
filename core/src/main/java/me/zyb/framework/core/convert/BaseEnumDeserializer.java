@@ -49,7 +49,7 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> implements 
 			jb = parser.parseObject();
 		} catch (Exception ignored){
 		}
-		String value = null == jb ? parser.parse().toString() : jb.getString("value");
+		String value = null == jb ? String.valueOf(parser.parse()) : jb.getString("value");
 		return (T) BaseEnum.getEnum(value, (Class)type);
 	}
 
