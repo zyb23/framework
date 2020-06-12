@@ -17,6 +17,7 @@ public interface UpmsLogService {
 	 * <p>新增/修改日志</p>
 	 * @param model 数据模型
 	 * @param request http请求对象
+	 * @return UpmsLogModel
 	 */
 	public UpmsLogModel save(UpmsLogModel model, HttpServletRequest request);
 
