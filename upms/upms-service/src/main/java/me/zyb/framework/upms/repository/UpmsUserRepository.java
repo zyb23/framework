@@ -44,7 +44,7 @@ public interface UpmsUserRepository extends JpaRepository<UpmsUser, Long>, JpaSp
 	 * @param id    用户ID
 	 */
 	@Modifying
-	@Query("update UpmsUser user set user.isEnable = false")
+	@Query("update UpmsUser user set user.isEnable = false where user.id = ?1")
 	public void freezeById(Long id);
 
 	/**
@@ -52,6 +52,6 @@ public interface UpmsUserRepository extends JpaRepository<UpmsUser, Long>, JpaSp
 	 * @param id    用户ID
 	 */
 	@Modifying
-	@Query("update UpmsUser user set user.isEnable = true")
+	@Query("update UpmsUser user set user.isEnable = true where user.id = ?1")
 	public void unfreezeById(Long id);
 }
