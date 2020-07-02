@@ -47,6 +47,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -397,7 +398,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 		//获取登录用户的所有菜单（树形）
 		List<UpmsPermissionModel> topMenu = listToTree(permissionModelList, PermissionType.MENU);
-		List<UpmsPermissionModel> menuTree = topMenu.stream().filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
+		List<UpmsPermissionModel> menuTree = topMenu.stream().sorted(Comparator.comparing(UpmsPermissionModel::getSort)).filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
 		userModel.setMenuTree(menuTree);
 
 		return userModel;
