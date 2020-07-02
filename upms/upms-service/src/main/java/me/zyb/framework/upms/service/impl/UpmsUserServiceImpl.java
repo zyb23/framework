@@ -361,7 +361,7 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 
 		//获取登录用户的所有菜单（树形）
 		List<UpmsPermissionModel> topMenu = listToTree(permissionModelList, PermissionType.MENU);
-		List<UpmsPermissionModel> menuTree = topMenu.stream().filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
+		List<UpmsPermissionModel> menuTree = topMenu.stream().sorted(Comparator.comparing(UpmsPermissionModel::getSort)).filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
 		userModel.setMenuTree(menuTree);
 
 		//登录返回token
