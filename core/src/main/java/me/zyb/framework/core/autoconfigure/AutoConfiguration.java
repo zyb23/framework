@@ -1,15 +1,18 @@
 package me.zyb.framework.core.autoconfigure;
 
 import me.zyb.framework.core.convert.BaseEnumConverterFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import me.zyb.framework.core.util.mail.MailUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.TemplateEngine;
 
 /**
  * @author zhangyingbin
@@ -22,7 +25,6 @@ public class AutoConfiguration implements WebMvcConfigurer {
 		registry.addConverterFactory(new BaseEnumConverterFactory());
 	}
 
-	@ConditionalOnBean(ApplicationContext.class)
 	@Bean
 	public BeanHelper beanHelper(ApplicationContext applicationContext){
 		return new BeanHelper(applicationContext);
@@ -35,7 +37,6 @@ public class AutoConfiguration implements WebMvcConfigurer {
 	}
 
 	@Bean
-	@ConditionalOnBean(MessageSource.class)
 	public MessageSourceHelper messageSourceHelper(MessageSource messageSource){
 		return new MessageSourceHelper(messageSource);
 	}
@@ -43,5 +44,10 @@ public class AutoConfiguration implements WebMvcConfigurer {
 	@Bean
 	public GlobalExceptionHandler globalExceptionHandler(){
 		return new GlobalExceptionHandler();
+	}
+
+	@Bean
+	public MailUtil mailUtil(JavaMailSender javaMailSender, TemplateEngine templateEngine, MailProperties mailProperties){
+		return new MailUtil(javaMailSender, templateEngine, mailProperties);
 	}
 }
