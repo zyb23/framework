@@ -17,6 +17,8 @@ public enum ReturnCode implements BaseEnum<String> {
 	PARAMETER_ERROR("0001", "parameter.error", "参数错误"),
 	/** 请求超时 */
 	REQUEST_TIMEOUT("0002", "request.timeout", "请求超时"),
+	/** 频繁请求 */
+	REQUEST_FREQUENT("0003", "request.frequent", "频繁请求"),
 
 	/** 验证码错误 */
 	CAPTCHA_ERROR("1000", "captcha.error", "验证码错误"),

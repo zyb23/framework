@@ -5,6 +5,12 @@ package me.zyb.framework.core.dict;
  * @author zhangyingbin
  */
 public class ConstNumber {
+	/** 验证码请求频率（秒） */
+	public static final Integer CAPTCHA_FREQUENT = 60;
+	/** 验证码单日请求上限 */
+	public static final Integer CAPTCHA_LIMIT_DAY = 10;
+	/** 验证码单月请求上限 */
+	public static final Integer CAPTCHA_LIMIT_MONTH = 100;
 	/** 验证码字符个数 */
 	public static final Integer CAPTCHA_SIZE = 6;
 	/** 验证码超时时间（秒） */
