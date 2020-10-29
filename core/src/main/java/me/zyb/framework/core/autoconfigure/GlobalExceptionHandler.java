@@ -31,11 +31,11 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 		ModelAndView mav = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
-		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
+		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.INITIAL_CAPACITY);
 
 		log.error("执行异常：", e);
 		attributes.put("code", ReturnCode.SYSTEM_BUSY.getValue());
-		attributes.put("message", e.getMessage());
+		attributes.put("message", StringUtils.isBlank(e.getMessage()) ? e.toString() : e.getMessage());
 		view.setAttributesMap(attributes);
 		mav.setView(view);
 
@@ -50,14 +50,14 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView handleBaseException(BaseException e) {
 		ModelAndView mav = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
-		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
+		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.INITIAL_CAPACITY);
 
 		if(StringUtils.isNotBlank(e.getCode())){
 			attributes.put("code", e.getCode());
 		} else {
 			attributes.put("code", ReturnCode.FAILURE.getValue());
 		}
-		attributes.put("message", e.getMessage());
+		attributes.put("message", StringUtils.isBlank(e.getMessage()) ? e.toString() : e.getMessage());
 		view.setAttributesMap(attributes);
 		mav.setView(view);
 		return mav;
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		ModelAndView mav = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
-		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
+		Map<String, Object> attributes = new HashMap<String, Object>(ConstNumber.INITIAL_CAPACITY);
 		BindingResult bindingResult = e.getBindingResult();
 		List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 		StringBuilder stringBuilder = new StringBuilder(fieldErrors.size() * 16);

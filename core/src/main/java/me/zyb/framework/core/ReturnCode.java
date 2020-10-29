@@ -1,6 +1,7 @@
 package me.zyb.framework.core;
 
 import lombok.Getter;
+import me.zyb.framework.core.autoconfigure.MessageSourceHelper;
 import me.zyb.framework.core.base.BaseEnum;
 
 /**
@@ -39,9 +40,12 @@ public enum ReturnCode implements BaseEnum<String> {
 	FAILURE("9999", "failure", "失败"),
 
 	;
-	
+
+	/** 返回码 {@link ReturnData code}*/
 	private String value;
+	/** 国际化资源中的code（key） */
 	private String code;
+	/** 国际化资源中的value（默认值） */
 	private String name;
 	
 	ReturnCode(String value, String code, String name) {
@@ -50,30 +54,8 @@ public enum ReturnCode implements BaseEnum<String> {
 		this.name = name;
 	}
 
-//	public static ReturnCode getByValue(String value){
-//        for(ReturnCode en : ReturnCode.values()){
-//            if(en.getValue().equals(value)){
-//                return en;
-//            }
-//        }
-//        return  null;
-//    }
-//
-//	public static ReturnCode getByCode(String code) {
-//		for(ReturnCode en : ReturnCode.values()) {
-//			if(en.getCode().equals(code)) {
-//				return en;
-//			}
-//		}
-//		return null;
-//	}
-//
-//	public static ReturnCode getByName(String name) {
-//		for(ReturnCode en : ReturnCode.values()) {
-//			if(en.getName().equals(name)) {
-//				return en;
-//			}
-//		}
-//		return null;
-//	}
+	@Override
+	public String getName(){
+		return MessageSourceHelper.getMessage(code, null, name, null);
+	}
 }

@@ -42,10 +42,10 @@ public class BaseCondition implements Serializable {
 
 	/** 页码 */
 	@NotNull(message = "页码不能为空")
-	protected Integer pageNo = ConstNumber.DEFAULT_PAGE_NO;
+	protected Integer pageNo = ConstNumber.PAGE_NO;
 	/** 每页条数 */
 	@NotNull(message = "每页条数不能为空")
-	protected Integer pageSize = ConstNumber.DEFAULT_PAGE_SIZE;
+	protected Integer pageSize = ConstNumber.PAGE_SIZE;
 	/**
 	 * <p>排序条件</p>
 	 * <p>例：{"code":"asc", "name": "desc"}</p>

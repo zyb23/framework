@@ -6,7 +6,7 @@
     <parent>
         <groupId>me.zyb.framework</groupId>
         <artifactId>framework-all</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <artifactId>core</artifactId>
 
@@ -18,6 +18,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.zxing</groupId>

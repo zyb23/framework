@@ -1,7 +1,7 @@
 package me.zyb.framework.upms.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.builder.CaptchaImage;
+import me.zyb.framework.core.builder.CaptchaBuilder;
 import me.zyb.framework.upms.configure.ShiroAuthHelper;
 import me.zyb.framework.upms.service.CaptchaService;
 import org.apache.shiro.session.Session;
@@ -18,7 +18,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public String[] generateCaptchaImage() {
-        Object[] captchaInfo = CaptchaImage.getCaptchaInfo();
+        Object[] captchaInfo = CaptchaBuilder.getImageCaptchaInfo(4);
         if (null == captchaInfo) {
             return null;
         }

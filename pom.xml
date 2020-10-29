@@ -11,7 +11,7 @@
     </parent>
     <groupId>me.zyb.framework</groupId>
     <artifactId>framework-all</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -23,7 +23,7 @@
     </modules>
 
     <properties>
-        <framework.version>1.0.0</framework.version>
+        <framework.version>1.0.1</framework.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

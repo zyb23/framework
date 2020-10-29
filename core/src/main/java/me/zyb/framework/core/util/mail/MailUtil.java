@@ -15,6 +15,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -23,7 +24,6 @@ import java.io.File;
  *
  */
 @Slf4j
-@SuppressWarnings("deprecation")
 public class MailUtil {
 	private static String from;
 
@@ -31,9 +31,6 @@ public class MailUtil {
 	private static TemplateEngine templateEngine;
 	private static MailProperties mailProperties;
 	private static TaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-	
-	/** 异步发送阈值（收件人数超过此阈值时，异步发送） */
-	private static int asynSize = 5;
 
 	public MailUtil(JavaMailSender javaMailSender, TemplateEngine templateEngine, MailProperties mailProperties){
 		MailUtil.javaMailSender = javaMailSender;
@@ -52,7 +49,9 @@ public class MailUtil {
     	if(mimeMsg == null){
     		return false;
     	}
-    	if(mail.getToEmails().length > asynSize){
+	    /** 异步发送阈值（收件人数超过此阈值时，异步发送） */
+	    int asynSize = 5;
+	    if(mail.getToEmails().length > asynSize){
     		taskExecutor.execute(() -> javaMailSender.send(mimeMsg));
     	} else{
     		javaMailSender.send(mimeMsg);
@@ -108,7 +107,8 @@ public class MailUtil {
 				    }
 				    String fileName = file.getOriginalFilename();
 				    try{
-					    fileName = new String(fileName.getBytes(Mail.CHARSET), "ISO-8859-1");
+					    assert fileName != null;
+					    fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
 				    }
 				    catch (Exception e) {
 					    log.error("file getBytes error");

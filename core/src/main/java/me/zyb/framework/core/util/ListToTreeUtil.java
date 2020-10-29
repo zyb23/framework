@@ -31,7 +31,7 @@ public class ListToTreeUtil {
 	@SuppressWarnings("unchecked")
 	public static <T> List<T> listToTree(List<T> list, Class<T> clazz){
 		try {
-			Map<Object, T> mapTemp = new HashMap<Object, T>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
+			Map<Object, T> mapTemp = new HashMap<Object, T>(ConstNumber.INITIAL_CAPACITY);
 			Method getId = clazz.getMethod(GET_ID);
 			Method getParent = clazz.getMethod(GET_PARENT);
 			Method getParentId = clazz.getMethod(GET_PARENT_ID);

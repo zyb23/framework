@@ -1,6 +1,7 @@
 package me.zyb.framework.core.autoconfigure;
 
 import me.zyb.framework.core.convert.BaseEnumConverterFactory;
+import me.zyb.framework.core.util.cache.RedisUtil;
 import me.zyb.framework.core.util.mail.MailUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
@@ -9,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -49,5 +51,10 @@ public class AutoConfiguration implements WebMvcConfigurer {
 	@Bean
 	public MailUtil mailUtil(JavaMailSender javaMailSender, TemplateEngine templateEngine, MailProperties mailProperties){
 		return new MailUtil(javaMailSender, templateEngine, mailProperties);
+	}
+
+	@Bean
+	public RedisUtil redisUtil(StringRedisTemplate stringRedisTemplate){
+		return new RedisUtil(stringRedisTemplate);
 	}
 }

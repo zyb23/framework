@@ -24,13 +24,13 @@ public interface BaseEnum<Y> extends Serializable {
 	public Y getValue();
 
 	/**
-	 * 获取编码
+	 * 获取编码（常对应国际化资源中的code(key)）
 	 * @return String
 	 */
 	public String getCode();
 
 	/**
-	 * 获取名称
+	 * 获取名称（常对应国际化资源中的value(默认值)）
 	 * @return String
 	 */
 	public String getName();

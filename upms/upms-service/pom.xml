@@ -6,7 +6,7 @@
     <parent>
         <groupId>me.zyb.framework</groupId>
         <artifactId>upms</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <artifactId>upms-service</artifactId>
 
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>me.zyb.framework</groupId>
             <artifactId>upms-api</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>

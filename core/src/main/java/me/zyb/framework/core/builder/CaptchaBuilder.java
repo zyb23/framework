@@ -14,7 +14,7 @@ import java.util.Random;
  * @author zhangyingbin
  */
 @Slf4j
-public class CaptchaImage {
+public class CaptchaBuilder {
 
     /** 验证码字符集 */
     private static final char[] CHARS = {
@@ -34,12 +34,32 @@ public class CaptchaImage {
     /** 字体大小 */
     private static final int FONT_SIZE = 30;
 
+	/**
+	 * 生成纯数字验证码
+	 * @param size  验证码字符个数
+	 * @return String
+	 */
+	public static String getPureNumberCaptcha(int size) {
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		int num = size < 1 ? SIZE : size;
+		for (int i = 0; i < num; i++) {
+			//取随机字符索引
+			int n = random.nextInt(10);
+			//拼接字符成串
+			sb.append(n);
+		}
+		return sb.toString();
+    }
+
     /**
      * <P>生成随机验证码及图片</P>
      * <p>Object[0]：验证码字符串</p>
      * <p>Object[1]：验证码图片字节数组</p>
+     * @param size  验证码字符个数（默认4）
+     * @return Object[]
      */
-    public static Object[] getCaptchaInfo() {
+    public static Object[] getImageCaptchaInfo(int size) {
     	//验证码字符串
 	    StringBuilder sb = new StringBuilder();
         //1.创建空白图片
@@ -51,16 +71,17 @@ public class CaptchaImage {
         //4.填充画框背景色
         graphic.fillRect(0, 0, WIDTH, HEIGHT);
         //5.画随机字符
-        Random ran = new Random();
-        for (int i = 0; i < SIZE; i++) {
+        Random random = new Random();
+        int num = size < 1 ? SIZE : size;
+        for (int i = 0; i < num; i++) {
             //取随机字符索引
-            int n = ran.nextInt(CHARS.length);
+            int n = random.nextInt(CHARS.length);
             //设置验证码颜色
             graphic.setColor(getRandomColor4Captcha());
             //设置字体大小
             graphic.setFont(new Font(null, Font.BOLD + Font.ITALIC, FONT_SIZE));
             //画字符
-            graphic.drawString(CHARS[n] +  "", i * WIDTH / SIZE, HEIGHT * 2 / 3);
+            graphic.drawString(CHARS[n] +  "", i * WIDTH / num, HEIGHT * 2 / 3);
             //拼接字符成串
             sb.append(CHARS[n]);
         }
@@ -69,7 +90,7 @@ public class CaptchaImage {
             //设置干扰线颜色
             graphic.setColor(getRandomColor4Line());
             //随机画线
-            graphic.drawLine(ran.nextInt(WIDTH), ran.nextInt(HEIGHT), ran.nextInt(WIDTH), ran.nextInt(HEIGHT));
+            graphic.drawLine(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(WIDTH), random.nextInt(HEIGHT));
         }
         //7.返回验证码和图片字节
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

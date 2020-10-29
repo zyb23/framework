@@ -1,0 +1,228 @@
+package me.zyb.framework.core.util.cache;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author zhangyingbin
+ */
+@Slf4j
+public class RedisUtil {
+	private static StringRedisTemplate stringRedisTemplate;
+
+	public RedisUtil(StringRedisTemplate stringRedisTemplate){
+		RedisUtil.stringRedisTemplate = stringRedisTemplate;
+	}
+
+	/**
+	 * 添加 key:string 缓存
+	 * @param key       键
+	 * @param value     值
+	 * @param timeout   超时时间（秒）
+	 */
+	public static void cacheValue(String key, String value, long timeout){
+		if(timeout > 0) {
+			stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+		} else {
+			stringRedisTemplate.opsForValue().set(key, value);
+		}
+	}
+
+	/**
+	 * 添加 key:string 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static void cacheValue(String key, String value){
+		stringRedisTemplate.opsForValue().set(key, value);
+	}
+
+	/**
+	 * 查询缓存 key 是否存在
+	 * @param key   键
+	 * @return Boolean
+	 */
+	public static Boolean contains(String key) {
+		return stringRedisTemplate.hasKey(key);
+	}
+
+	/**
+	 * 根据 key 获取 string 缓存数据
+	 * @param key   键
+	 * @return String
+	 */
+	public static String getValue(String key){
+		return stringRedisTemplate.opsForValue().get(key);
+	}
+
+	/**
+	 * 添加 key:set 缓存
+	 * @param key       键
+	 * @param value     值
+	 * @param timeout   超时时间（秒）
+	 */
+	public static synchronized void cacheSet(String key, String value, long timeout){
+		stringRedisTemplate.opsForSet().add(key, value);
+		if(timeout > 0) {
+			stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		}
+	}
+
+	/**
+	 * 添加 key:set 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static void cacheSet(String key, String value){
+		stringRedisTemplate.opsForSet().add(key, value);
+	}
+
+	/**
+	 * 添加 key:set 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static synchronized void cacheSet(String key, Set<String> value, long timeout){
+		stringRedisTemplate.opsForSet().add(key, value.toArray(new String[]{}));
+		if(timeout > 0) {
+			stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		}
+	}
+
+	/**
+	 * 添加 key:set 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static void cacheSet(String key, Set<String> value){
+		stringRedisTemplate.opsForSet().add(key, value.toArray(new String[0]));
+	}
+
+	/**
+	 * 根据 key 获取 set 缓存数据
+	 * @param key   键
+	 * @return Set<String>
+	 */
+	public static Set<String> getSet(String key){
+		return stringRedisTemplate.opsForSet().members(key);
+	}
+
+	/**
+	 * 根据 key 获取 set 缓存数据总条数
+	 * @param key   键
+	 * @return Long
+	 */
+	public static Long getSetSize(String key){
+		return stringRedisTemplate.opsForSet().size(key);
+	}
+
+	/**
+	 * 添加 key:list 缓存
+	 * @param key       键
+	 * @param value     值
+	 * @param timeout   超时时间（秒）
+	 */
+	public static synchronized void cacheList(String key, String value, long timeout){
+		stringRedisTemplate.opsForList().rightPush(key, value);
+		if(timeout > 0) {
+			stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		}
+	}
+
+	/**
+	 * 添加 key:list 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static void cacheList(String key, String value){
+		stringRedisTemplate.opsForList().rightPush(key, value);
+	}
+
+	/**
+	 * 添加 key:list 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static synchronized void cacheList(String key, List<String> value, long timeout){
+		stringRedisTemplate.opsForList().rightPushAll(key, value);
+		if(timeout > 0) {
+			stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		}
+	}
+
+	/**
+	 * 添加 key:list 缓存
+	 * @param key       键
+	 * @param value     值
+	 */
+	public static void cacheList(String key, List<String> value){
+		stringRedisTemplate.opsForList().rightPushAll(key, value);
+	}
+
+	/**
+	 * 根据 key 获取 list 缓存数据
+	 * @param key   键
+	 * @param start 开始
+	 * @param end   结束
+	 * @return List<String>
+	 */
+	public static List<String> getList(String key, long start, long end){
+		return stringRedisTemplate.opsForList().range(key, start, end);
+	}
+
+	/**
+	 * 根据 key 获取 list 缓存数据总条数
+	 * @param key   键
+	 * @return Long
+	 */
+	public static Long getListSize(String key){
+		return stringRedisTemplate.opsForList().size(key);
+	}
+
+	/**
+	 * 根据 key 移除（获取） list 一条缓存数据（头部）
+	 * @param key   键
+	 */
+	public static String removeOneFromList(String key) {
+		return stringRedisTemplate.opsForList().leftPop(key);
+	}
+
+	/**
+	 * 根据 key 删除缓存数据
+	 * @param key   键
+	 */
+	@SuppressWarnings("unchecked")
+	public static void remove(String... key){
+		if(key != null && key.length > 0) {
+			if(key.length == 1){
+				stringRedisTemplate.delete(key[0]);
+			}else {
+				stringRedisTemplate.delete(CollectionUtils.arrayToList(key));
+			}
+		}
+	}
+
+	/**
+	 * 根据 key 获取过期时间
+	 * @param key   键
+	 * @return Long
+	 */
+	public static Long getTimeout(String key, TimeUnit timeUnit){
+		return stringRedisTemplate.getExpire(key, timeUnit);
+	}
+
+	/**
+	 * 计数器
+	 * @param key   键
+	 * @param delta 增量
+	 * @return Long
+	 */
+	public static Long increment(String key, long delta){
+		return stringRedisTemplate.opsForValue().increment(key, delta);
+	}
+}
