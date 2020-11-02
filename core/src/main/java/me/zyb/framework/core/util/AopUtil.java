@@ -17,7 +17,7 @@ import java.util.Map;
 public class AopUtil {
 
 	/**
-	 * 获取参数键/值对
+	 * 获取切点的参数（键/值对）
 	 * @param joinPoint 连接点
 	 * @return Map<String, Object>
 	 */
