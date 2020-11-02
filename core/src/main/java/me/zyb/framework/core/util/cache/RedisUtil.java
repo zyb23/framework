@@ -1,10 +1,13 @@
 package me.zyb.framework.core.util.cache;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.dict.SuppressWarningsKey;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -198,15 +201,99 @@ public class RedisUtil {
 	 * 根据 key 移除（获取） list 一条缓存数据（头部）
 	 * @param key   键
 	 */
-	public static String removeOneFromList(String key) {
+	public static String removeOneFromList(String key){
 		return stringRedisTemplate.opsForList().leftPop(key);
+	}
+
+	/**
+	 * 添加 key:hash 缓存
+	 * @param key       键
+	 * @param hashKey   hash键
+	 * @param value     值
+	 * @param timeout   超时时间（秒）
+	 */
+	public static synchronized void cacheHash(String key, String hashKey, String value, long timeout){
+		stringRedisTemplate.opsForHash().put(key, hashKey, value);
+		if(timeout > 0) {
+			stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		}
+	}
+
+	/**
+	 * 添加 key:hash 缓存
+	 * @param key       键
+	 * @param hashKey   hash键
+	 * @param value     值
+	 */
+	public static synchronized void cacheHash(String key, String hashKey, String value){
+		stringRedisTemplate.opsForHash().put(key, hashKey, value);
+	}
+
+	/**
+	 * 添加 key:hash 缓存
+	 * @param key       键
+	 * @param map       hashKey/value
+	 * @param timeout   超时时间（秒）
+	 */
+	public static synchronized void cacheHash(String key, Map<String, String> map, long timeout){
+		stringRedisTemplate.opsForHash().putAll(key, map);
+		if(timeout > 0) {
+			stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		}
+	}
+
+	/**
+	 * 添加 key:hash 缓存
+	 * @param key       键
+	 * @param map       hashKey/value
+	 */
+	public static synchronized void cacheHash(String key, Map<String, String> map){
+		stringRedisTemplate.opsForHash().putAll(key, map);
+	}
+
+	/**
+	 * 根据 key 和 hashKey 获取缓存数据
+	 * @param key       键
+	 * @param hashKey   hash键
+	 * @return List<String>
+	 */
+	public static String getHash(String key, String hashKey){
+		return JSON.toJSONString(stringRedisTemplate.opsForHash().get(key, hashKey));
+	}
+
+	/**
+	 * 根据 key 获取 hash 所有数据
+	 * @param key   键
+	 * @return Map<Object, Object>
+	 */
+	public static Map<Object, Object> getHashMap(String key){
+		return stringRedisTemplate.opsForHash().entries(key);
+	}
+
+	/**
+	 * 根据 key 获取 hash 缓存数据总条数
+	 * @param key   键
+	 * @return Long
+	 */
+	public static Long getSize4Hash(String key){
+		return stringRedisTemplate.opsForHash().size(key);
+	}
+
+	/**
+	 * 根据 key 和 hashKey 移除 hash 中一条缓存数据
+	 * @param key       键
+	 * @param hashKeys   hash键
+	 * @return Long
+	 */
+	public static Long removeFromHash(String key, String... hashKeys){
+		return stringRedisTemplate.opsForHash().delete(key, hashKeys);
 	}
 
 	/**
 	 * 根据 key 删除缓存数据
 	 * @param key   键
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public static void remove(String... key){
 		if(key != null && key.length > 0) {
 			if(key.length == 1){
@@ -234,5 +321,16 @@ public class RedisUtil {
 	 */
 	public static Long increment(String key, long delta){
 		return stringRedisTemplate.opsForValue().increment(key, delta);
+	}
+
+	/**
+	 * Hash计数器
+	 * @param key       键
+	 * @param hashKey   hash键
+	 * @param delta     增量
+	 * @return Long
+	 */
+	public static Long incrementHash(String key, String hashKey, long delta){
+		return stringRedisTemplate.opsForHash().increment(key, hashKey, delta);
 	}
 }
