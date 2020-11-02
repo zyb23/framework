@@ -19,25 +19,23 @@ public enum ReturnCode implements BaseEnum<String> {
 	REQUEST_TIMEOUT("0002", "request.timeout", "请求超时"),
 	/** 频繁请求 */
 	REQUEST_FREQUENT("0003", "request.frequent", "频繁请求"),
-
 	/** 验证码错误 */
-	CAPTCHA_ERROR("1000", "captcha.error", "验证码错误"),
+	CAPTCHA_ERROR("0004", "captcha.error", "验证码错误"),
 	/** 未登录/登录超时 */
-	LOGIN_TIMEOUT("1001", "login.not", "未登录/登录超时"),
+	LOGIN_TIMEOUT("0005", "login.not", "未登录/登录超时"),
 	/** 权限不足 */
-	PERMISSION_DENIED("1002", "permission.denied", "权限不足"),
+	PERMISSION_DENIED("0006", "permission.denied", "权限不足"),
 	/** 用户名/密码错误 */
-	USERNAME_PASSWORD_ERROR("1003", "username.password.error", "用户名/密码错误"),
-
+	USERNAME_PASSWORD_ERROR("0007", "username.password.error", "用户名/密码错误"),
 	/** 功能未上线 */
-	FUNCTION_NOT_ONLINE("8997", "function.not.online", "功能未上线"),
+	FUNCTION_NOT_ONLINE("0008", "function.not.online", "功能未上线"),
 	/** 功能已下线 */
-	FUNCTION_OFFLINE("8998", "function.offline", "功能已下线"),
+	FUNCTION_OFFLINE("0009", "function.offline", "功能已下线"),
 	/** 系统维护中 */
-	SYSTEM_MAINTAIN("8999", "system.maintain", "系统维护中"),
-
+	SYSTEM_MAINTAIN("0010", "system.maintain", "系统维护中"),
 	/** 系统繁忙 */
-	SYSTEM_BUSY("9998", "system.busy", "系统繁忙"),
+	SYSTEM_BUSY("0011", "system.busy", "系统繁忙"),
+
 	/** 失败 */
 	FAILURE("9999", "failure", "失败"),
 
