@@ -113,11 +113,21 @@ public class RedisUtil {
 	}
 
 	/**
+	 * 根据 key 查看 set 中是否存在指定的 value
+	 * @param key   健
+	 * @param value 值
+	 * @return Boolean
+	 */
+	public static Boolean containsValue4Set(String key, String value){
+		return stringRedisTemplate.opsForSet().isMember(key, value);
+	}
+
+	/**
 	 * 根据 key 获取 set 缓存数据总条数
 	 * @param key   键
 	 * @return Long
 	 */
-	public static Long getSetSize(String key){
+	public static Long getSize4Set(String key){
 		return stringRedisTemplate.opsForSet().size(key);
 	}
 
@@ -180,7 +190,7 @@ public class RedisUtil {
 	 * @param key   键
 	 * @return Long
 	 */
-	public static Long getListSize(String key){
+	public static Long getSize4List(String key){
 		return stringRedisTemplate.opsForList().size(key);
 	}
 
