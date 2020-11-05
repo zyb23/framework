@@ -3,7 +3,7 @@ package me.zyb.framework.upms.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.builder.CaptchaBuilder;
 import me.zyb.framework.upms.configure.ShiroAuthHelper;
-import me.zyb.framework.upms.service.CaptchaService;
+import me.zyb.framework.upms.service.UpmsCaptchaService;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.Base64;
  */
 @Slf4j
 @Service
-public class CaptchaServiceImpl implements CaptchaService {
+public class UpmsCaptchaServiceImpl implements UpmsCaptchaService {
 
     @Override
     public String[] generateCaptchaImage() {

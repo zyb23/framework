@@ -1,6 +1,6 @@
 package me.zyb.framework.core.util;
 
-import me.zyb.framework.core.dict.ConstNumber;
+import me.zyb.framework.core.constant.ConstNumber;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.DefaultParameterNameDiscoverer;

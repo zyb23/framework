@@ -5,7 +5,8 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,7 +20,7 @@ import java.util.Random;
 /**
  * @author zhangyingbin
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({SuppressWarningsKey.RAWTYPES, SuppressWarningsKey.UNCHECKED})
 public class QRCode {
 	/** 二维码尺寸 宽度 */
 	private static final int QR_CODE_WIDTH = 300;

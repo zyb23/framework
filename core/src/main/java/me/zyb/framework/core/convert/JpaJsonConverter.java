@@ -2,6 +2,7 @@ package me.zyb.framework.core.convert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;
@@ -21,7 +22,7 @@ public class JpaJsonConverter<T> implements AttributeConverter<T, String> {
 		OBJECT_MAPPER.setDateFormat(sdf);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public Class<T> getTClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}

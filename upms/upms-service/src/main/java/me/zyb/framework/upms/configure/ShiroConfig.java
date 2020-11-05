@@ -1,6 +1,6 @@
 package me.zyb.framework.upms.configure;
 
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;

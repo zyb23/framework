@@ -1,6 +1,7 @@
 package me.zyb.framework.core.convert;
 
 import me.zyb.framework.core.base.BaseEnum;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
@@ -19,7 +20,7 @@ import java.util.WeakHashMap;
 public class BaseEnumConverterFactory implements ConverterFactory<String, BaseEnum> {
 	private static final Map<Class, Converter> CLASS_CONVERTER_MAP = new WeakHashMap<Class, Converter>();
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	@Override
 	public <T extends BaseEnum> Converter<String, T> getConverter(Class<T> targetType) {
 		Converter converter = CLASS_CONVERTER_MAP.get(targetType);
@@ -39,7 +40,7 @@ public class BaseEnumConverterFactory implements ConverterFactory<String, BaseEn
 			this.enumType = enumType;
 		}
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 		@Override
 		public T convert(String source) {
 			return BaseEnum.getEnum(source, this.enumType);

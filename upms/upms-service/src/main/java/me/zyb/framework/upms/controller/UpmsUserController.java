@@ -3,7 +3,7 @@ package me.zyb.framework.upms.controller;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseController;
-import me.zyb.framework.core.dict.ConstNumber;
+import me.zyb.framework.core.constant.ConstNumber;
 import me.zyb.framework.core.util.regex.StringRegex;
 import me.zyb.framework.upms.UpmsException;
 import me.zyb.framework.upms.condition.UpmsPermissionCondition;
@@ -327,7 +327,7 @@ public class UpmsUserController extends BaseController {
 		Set<Long> userRoleIdSet = userRoleList.stream().map(UpmsRoleModel::getId).collect(Collectors.toSet());
     	List<UpmsRoleModel> allRoleList = upmsRoleService.queryAll();
 
-    	Map<String, Object> retMap = new HashMap<>(ConstNumber.DEFAULT_INITIAL_CAPACITY);
+    	Map<String, Object> retMap = new HashMap<>(ConstNumber.INITIAL_CAPACITY);
     	retMap.put("userRoleList", userRoleList);
     	retMap.put("userRoleIdSet", userRoleIdSet);
     	retMap.put("allRoleList", allRoleList);

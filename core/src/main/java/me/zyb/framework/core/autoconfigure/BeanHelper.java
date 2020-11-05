@@ -1,6 +1,7 @@
 package me.zyb.framework.core.autoconfigure;
 
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.ApplicationContext;
 
@@ -28,7 +29,7 @@ public class BeanHelper {
 	 * @param beanName  bean的名称
 	 * @return bean的类型
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public static <T> T getBean(String beanName){
 		if(applicationContext.containsBean(beanName)){
 			return (T) applicationContext.getBean(beanName);

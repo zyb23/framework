@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.base.BaseEnum;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.lang.reflect.Type;
 @Slf4j
 public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> implements ObjectDeserializer {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	@Override
 	public BaseEnum deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
 		JsonNode node = jp.getCodec().readTree(jp);
@@ -43,6 +44,7 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum> implements 
 		return (BaseEnum) BaseEnum.getEnum(value, enumType);
 	}
 
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	@Override
 	public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
 		JSONObject jb = null;

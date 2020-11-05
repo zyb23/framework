@@ -1,7 +1,7 @@
 package me.zyb.framework.upms.configure;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;

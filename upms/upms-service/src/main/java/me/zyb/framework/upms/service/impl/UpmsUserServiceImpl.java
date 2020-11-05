@@ -347,19 +347,22 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		//返回Data
 		UpmsUserModel userModel = EntityToModelUtil.entityToModel(currentUser, true);
 
-		//获取登录用户的所有角色数据
+		//角色数据
 		List<UpmsRoleModel> roleModelList = queryRole(currentUser.getId());
 		userModel.setRoleIdSet(roleModelList.stream().map(UpmsRoleModel::getId).collect(Collectors.toSet()));
 		userModel.setRoleCodeSet(roleModelList.stream().map(UpmsRoleModel::getCode).collect(Collectors.toSet()));
-		//userModel.setRoleList(roleModelList);
 
-		//获取登录用户的所有权限数据
+		//权限数据
 		List<UpmsPermissionModel> permissionModelList = queryAllPermission(currentUser.getId());
 		userModel.setPermissionIdSet(permissionModelList.stream().map(UpmsPermissionModel::getId).collect(Collectors.toSet()));
 		userModel.setPermissionCodeSet(permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet()));
-		//userModel.setPermissionList(permissionModelList);
 
-		//获取登录用户的所有菜单（树形）
+		//目录/导航栏（树形）
+		List<UpmsPermissionModel> topCatalog = listToTree(permissionModelList, PermissionType.CATALOG);
+		List<UpmsPermissionModel> catalogTree = topCatalog.stream().sorted(Comparator.comparing(UpmsPermissionModel::getSort)).filter(catalog -> catalog.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
+		userModel.setCatalogTree(catalogTree);
+
+		//菜单（树形）
 		List<UpmsPermissionModel> topMenu = listToTree(permissionModelList, PermissionType.MENU);
 		List<UpmsPermissionModel> menuTree = topMenu.stream().sorted(Comparator.comparing(UpmsPermissionModel::getSort)).filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
 		userModel.setMenuTree(menuTree);
@@ -384,19 +387,22 @@ public class UpmsUserServiceImpl implements UpmsUserService {
 		//返回Data
 		UpmsUserModel userModel = EntityToModelUtil.entityToModel(userEntity, true);
 
-		//获取登录用户的所有角色数据
+		//角色数据
 		List<UpmsRoleModel> roleModelList = queryRole(userEntity.getId());
 		userModel.setRoleIdSet(roleModelList.stream().map(UpmsRoleModel::getId).collect(Collectors.toSet()));
 		userModel.setRoleCodeSet(roleModelList.stream().map(UpmsRoleModel::getCode).collect(Collectors.toSet()));
-		//userModel.setRoleList(roleModelList);
 
-		//获取登录用户的所有权限数据
+		//权限数据
 		List<UpmsPermissionModel> permissionModelList = queryAllPermission(userEntity.getId());
 		userModel.setPermissionIdSet(permissionModelList.stream().map(UpmsPermissionModel::getId).collect(Collectors.toSet()));
 		userModel.setPermissionCodeSet(permissionModelList.stream().map(UpmsPermissionModel::getCode).collect(Collectors.toSet()));
-		//userModel.setPermissionList(permissionModelList);
 
-		//获取登录用户的所有菜单（树形）
+		//目录/导航栏（树形）
+		List<UpmsPermissionModel> topCatalog = listToTree(permissionModelList, PermissionType.CATALOG);
+		List<UpmsPermissionModel> catalogTree = topCatalog.stream().sorted(Comparator.comparing(UpmsPermissionModel::getSort)).filter(catalog -> catalog.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
+		userModel.setCatalogTree(catalogTree);
+
+		//菜单（树形）
 		List<UpmsPermissionModel> topMenu = listToTree(permissionModelList, PermissionType.MENU);
 		List<UpmsPermissionModel> menuTree = topMenu.stream().sorted(Comparator.comparing(UpmsPermissionModel::getSort)).filter(menu -> menu.getParentId() == UpmsPermission.TOP_PARENT_ID).collect(Collectors.toList());
 		userModel.setMenuTree(menuTree);

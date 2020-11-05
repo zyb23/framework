@@ -1,4 +1,4 @@
-package me.zyb.framework.core.dict;
+package me.zyb.framework.core.constant;
 
 /**
  * 数值常量

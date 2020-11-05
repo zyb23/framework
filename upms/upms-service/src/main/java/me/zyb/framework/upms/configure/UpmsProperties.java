@@ -1,7 +1,7 @@
 package me.zyb.framework.upms.configure;
 
 import lombok.Data;
-import me.zyb.framework.core.dict.ConstNumber;
+import me.zyb.framework.core.constant.ConstNumber;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class UpmsProperties {
 	private int passwordPolicyShortest = 8;
 
 	/** session超时 */
-	private long sessionTimeout = ConstNumber.DEFAULT_SESSION_TIMEOUT;
+	private long sessionTimeout = ConstNumber.SESSION_TIMEOUT;
 
 	/** shiro不拦截路径，多个用逗号隔开 */
 	private String shiroAnon;

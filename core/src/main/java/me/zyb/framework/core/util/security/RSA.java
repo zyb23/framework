@@ -1,7 +1,9 @@
 package me.zyb.framework.core.util.security;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstNumber;
+import me.zyb.framework.core.constant.ConstString;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
@@ -25,7 +27,7 @@ import java.util.Map;
  *
  */
 @Slf4j
-@SuppressWarnings("restriction")
+@SuppressWarnings(SuppressWarningsKey.RESTRICTION)
 public class RSA {
 	private static final String KEY_PAIR_PUBLIC = "KeyPairPublic";
 	private static final String KEY_PAIR_PRIVATE = "KeyPairPrivate";
@@ -37,19 +39,24 @@ public class RSA {
 	/**
 	 * 生成密钥对
 	 */
-	public static Map<String, Object> generateKeyPair() throws Exception {
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ConstString.ALGORIGHM_RSA);
-        keyPairGen.initialize(1024);
-        KeyPair keyPair = keyPairGen.generateKeyPair();
-        
-        RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();
-        
-        Map<String, Object> keyMap = new HashMap<String, Object>(2);
-        keyMap.put(KEY_PAIR_PUBLIC, publicKey);
-        keyMap.put(KEY_PAIR_PRIVATE, privateKey);
-        
-        return keyMap;
+	public static Map<String, Object> generateKeyPair() {
+		try {
+			KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ConstString.ALGORIGHM_RSA);
+			keyPairGen.initialize(1024);
+			KeyPair keyPair = keyPairGen.generateKeyPair();
+
+			RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
+			RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();
+
+			Map<String, Object> keyMap = new HashMap<String, Object>(ConstNumber.INITIAL_CAPACITY);
+			keyMap.put(KEY_PAIR_PUBLIC, publicKey);
+			keyMap.put(KEY_PAIR_PRIVATE, privateKey);
+			return keyMap;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
     }
 	
 	/**
@@ -57,7 +64,7 @@ public class RSA {
 	 * @param keyMap    密钥对
 	 * @return String
 	 */
-	public static String getPublicKey(Map<String, Object> keyMap) throws Exception {
+	public static String getPublicKey(Map<String, Object> keyMap){
 		Key key = (Key)keyMap.get(KEY_PAIR_PUBLIC);
 		byte[] publicKey = key.getEncoded();
 		return encryptBASE64(publicKey);
@@ -69,7 +76,7 @@ public class RSA {
 	 * @param keyMap    密钥对
 	 * @return String
 	 */
-	public static String getPrivateKey(Map<String, Object> keyMap) throws Exception {
+	public static String getPrivateKey(Map<String, Object> keyMap){
 		Key key = (Key)keyMap.get(KEY_PAIR_PRIVATE);
 		byte[] privateKey = key.getEncoded();
 		return encryptBASE64(privateKey);
@@ -100,21 +107,27 @@ public class RSA {
 	 * @param key 加密公钥（BASE64编码）
 	 * @return String
 	 */
-	public static String encrypt(String str, String key) throws Exception {
-		//对公钥解码
-		byte[] keyBytes = decryptBASE64(key);
-		
-		//取得公钥
-		X509EncodedKeySpec x509 = new X509EncodedKeySpec(keyBytes);
-		KeyFactory factory = KeyFactory.getInstance(ConstString.ALGORIGHM_RSA);
-		Key publicKey = factory.generatePublic(x509);
-		
-		//对明文进行加密
-		Cipher cipher = Cipher.getInstance(factory.getAlgorithm());
-		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		byte[] bytes = cipher.doFinal(str.getBytes());
-		
-		return encryptBASE64(bytes);
+	public static String encrypt(String str, String key){
+		try{
+			//对公钥解码
+			byte[] keyBytes = decryptBASE64(key);
+
+			//取得公钥
+			X509EncodedKeySpec x509 = new X509EncodedKeySpec(keyBytes);
+			KeyFactory factory = KeyFactory.getInstance(ConstString.ALGORIGHM_RSA);
+			Key publicKey = factory.generatePublic(x509);
+
+			//对明文进行加密
+			Cipher cipher = Cipher.getInstance(factory.getAlgorithm());
+			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+			byte[] bytes = cipher.doFinal(str.getBytes());
+
+			return encryptBASE64(bytes);
+		} catch (Exception e){
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
     }
 	
 	/**
@@ -124,22 +137,28 @@ public class RSA {
 	 * @param key 解密私钥（BASE64编码）
 	 * @return String
 	 */
-    public static String decrypt(String str, String key) throws Exception {
-    	//对私钥解码
-    	byte[] keyBytes = decryptBASE64(key);
-    	
-    	//取得私钥
-    	PKCS8EncodedKeySpec pkcs8 = new PKCS8EncodedKeySpec(keyBytes);
-    	KeyFactory factory = KeyFactory.getInstance(ConstString.ALGORIGHM_RSA);
-    	Key privateKey = factory.generatePrivate(pkcs8);
-    	
-    	//对密文进行解密
-    	Cipher cipher = Cipher.getInstance(factory.getAlgorithm());
-    	cipher.init(Cipher.DECRYPT_MODE, privateKey);
-    	byte[] bytes = decode(str);
-    	byte[] code = cipher.doFinal(bytes);
-        
-    	return new String(code);
+    public static String decrypt(String str, String key){
+    	try {
+			//对私钥解码
+		    byte[] keyBytes = decryptBASE64(key);
+
+		    //取得私钥
+		    PKCS8EncodedKeySpec pkcs8 = new PKCS8EncodedKeySpec(keyBytes);
+		    KeyFactory factory = KeyFactory.getInstance(ConstString.ALGORIGHM_RSA);
+		    Key privateKey = factory.generatePrivate(pkcs8);
+
+		    //对密文进行解密
+		    Cipher cipher = Cipher.getInstance(factory.getAlgorithm());
+		    cipher.init(Cipher.DECRYPT_MODE, privateKey);
+		    byte[] bytes = decode(str);
+		    byte[] code = cipher.doFinal(bytes);
+
+		    return new String(code);
+	    } catch (Exception e){
+		    log.error(e.getMessage());
+		    e.printStackTrace();
+	    }
+    	return null;
     }
 
     public static byte[] decode(String s) {
@@ -209,7 +228,7 @@ public class RSA {
 	 * @param str 明文
 	 * @return String
 	 */
-	public static String encrypt(String str) throws Exception{
+	public static String encrypt(String str){
 		return RSA.encrypt(str, PUBLIC_KEY);
 	}
 	
@@ -219,7 +238,7 @@ public class RSA {
 	 * @param str 密文
 	 * @return String
 	 */
-	public static String decrypt(String str) throws Exception{
+	public static String decrypt(String str){
 		return RSA.decrypt(str, PRIVATE_KEY);
 	}
 }

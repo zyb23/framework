@@ -4,7 +4,7 @@ import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseException;
-import me.zyb.framework.core.dict.ConstNumber;
+import me.zyb.framework.core.constant.ConstNumber;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

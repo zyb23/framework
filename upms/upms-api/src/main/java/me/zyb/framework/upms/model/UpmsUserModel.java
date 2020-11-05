@@ -80,6 +80,9 @@ public class UpmsUserModel implements Serializable {
 	/** 树形权限列表 */
 	private List<UpmsPermissionModel> permissionTree;
 
+	/** 树型目录/导航栏 */
+	private List<UpmsPermissionModel> catalogTree;
+
 	/**
 	 * 用户菜单树（从顶级菜单开始加载）
 	 * 注：如果用户有子级菜单，但没有父级菜单，则不会加载出来

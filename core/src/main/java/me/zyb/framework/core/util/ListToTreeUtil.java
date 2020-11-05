@@ -1,7 +1,8 @@
 package me.zyb.framework.core.util;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.dict.ConstNumber;
+import me.zyb.framework.core.constant.ConstNumber;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ListToTreeUtil {
 	 * @param <T>   范型
 	 * @return List<T>
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public static <T> List<T> listToTree(List<T> list, Class<T> clazz){
 		try {
 			Map<Object, T> mapTemp = new HashMap<Object, T>(ConstNumber.INITIAL_CAPACITY);

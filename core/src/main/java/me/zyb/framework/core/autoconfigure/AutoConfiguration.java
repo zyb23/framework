@@ -4,6 +4,7 @@ import me.zyb.framework.core.convert.BaseEnumConverterFactory;
 import me.zyb.framework.core.util.cache.RedisUtil;
 import me.zyb.framework.core.util.mail.MailUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
@@ -32,8 +33,8 @@ public class AutoConfiguration implements WebMvcConfigurer {
 		return new BeanHelper(applicationContext);
 	}
 
-	@ConditionalOnMissingBean(AuditorAware.class)
 	@Bean
+	@ConditionalOnMissingBean(AuditorAware.class)
 	public DefaultAuditor defaultAuditor(){
 		return new DefaultAuditor();
 	}
@@ -49,11 +50,14 @@ public class AutoConfiguration implements WebMvcConfigurer {
 	}
 
 	@Bean
+	@ConditionalOnProperty(prefix = "spring.mail", value = {"host", "port", "username", "password"})
 	public MailUtil mailUtil(JavaMailSender javaMailSender, TemplateEngine templateEngine, MailProperties mailProperties){
 		return new MailUtil(javaMailSender, templateEngine, mailProperties);
 	}
 
+
 	@Bean
+	@ConditionalOnProperty(prefix = "spring.redis", value = "host")
 	public RedisUtil redisUtil(StringRedisTemplate stringRedisTemplate){
 		return new RedisUtil(stringRedisTemplate);
 	}

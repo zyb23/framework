@@ -1,7 +1,7 @@
 package me.zyb.framework.upms.controller;
 
 import me.zyb.framework.core.base.BaseController;
-import me.zyb.framework.upms.service.CaptchaService;
+import me.zyb.framework.upms.service.UpmsCaptchaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +16,14 @@ import java.util.Map;
  * @author zhangyingbin
  */
 @RestController
-@RequestMapping("/captcha")
-public class CaptchaController extends BaseController {
+@RequestMapping("/upmsCaptcha")
+public class UpmsCaptchaController extends BaseController {
 
 	@Value("${spring.profiles.active: prod}")
 	private String active;
 
     @Autowired
-    private CaptchaService captchaService;
+    private UpmsCaptchaService upmsCaptchaService;
 
     /**
      * 生成验证码图片
@@ -31,7 +31,7 @@ public class CaptchaController extends BaseController {
      */
     @RequestMapping("/image")
     public Object image() {
-        String[] captchaImage = captchaService.generateCaptchaImage();
+        String[] captchaImage = upmsCaptchaService.generateCaptchaImage();
         Map<String, Object> retMap = new HashMap<String, Object>(16);
         retMap.put("code", "prod".equals(active) ?  "****" : captchaImage[0]);
         retMap.put("image", captchaImage[1]);

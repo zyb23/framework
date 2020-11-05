@@ -1,8 +1,7 @@
 package me.zyb.framework.core.util.cache;
 
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.dict.SuppressWarningsKey;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -257,8 +256,8 @@ public class RedisUtil {
 	 * @param hashKey   hash键
 	 * @return List<String>
 	 */
-	public static String getHash(String key, String hashKey){
-		return JSON.toJSONString(stringRedisTemplate.opsForHash().get(key, hashKey));
+	public static Object getHash(String key, String hashKey){
+		return stringRedisTemplate.opsForHash().get(key, hashKey);
 	}
 
 	/**

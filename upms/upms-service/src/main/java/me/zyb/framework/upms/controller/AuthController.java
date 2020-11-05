@@ -3,12 +3,12 @@ package me.zyb.framework.upms.controller;
 import lombok.extern.slf4j.Slf4j;
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.base.BaseController;
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
 import me.zyb.framework.upms.configure.UpmsProperties;
 import me.zyb.framework.upms.dict.LogType;
 import me.zyb.framework.upms.model.UpmsLogModel;
 import me.zyb.framework.upms.model.UpmsUserModel;
-import me.zyb.framework.upms.service.CaptchaService;
+import me.zyb.framework.upms.service.UpmsCaptchaService;
 import me.zyb.framework.upms.service.UpmsLogService;
 import me.zyb.framework.upms.service.UpmsUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +31,7 @@ public class AuthController extends BaseController {
 	@Autowired
 	private UpmsUserService upmsUserService;
 	@Autowired
-	private CaptchaService captchaService;
+	private UpmsCaptchaService upmsCaptchaService;
 	@Autowired
 	private UpmsLogService upmsLogService;
 
@@ -94,7 +94,7 @@ public class AuthController extends BaseController {
 				log.error("参数错误：captcha");
 				return rt(ReturnCode.CAPTCHA_ERROR);
 			}
-			if(!captchaService.checkCaptcha(captcha)){
+			if(!upmsCaptchaService.checkCaptcha(captcha)){
 				return rt(ReturnCode.CAPTCHA_ERROR);
 			}
 		}

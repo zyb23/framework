@@ -1,7 +1,7 @@
 package me.zyb.framework.core.util.security;
 
 import lombok.extern.slf4j.Slf4j;
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
 import me.zyb.framework.core.util.StringUtil;
 
 import java.security.MessageDigest;

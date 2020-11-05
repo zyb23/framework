@@ -2,6 +2,7 @@ package me.zyb.framework.core.base;
 
 import me.zyb.framework.core.ReturnCode;
 import me.zyb.framework.core.ReturnData;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -12,7 +13,7 @@ import java.util.Locale;
 /**
  * @author zhangyingbin
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({SuppressWarningsKey.RAWTYPES, SuppressWarningsKey.UNCHECKED})
 public class BaseController {
 	@Autowired
 	protected HttpServletRequest request;

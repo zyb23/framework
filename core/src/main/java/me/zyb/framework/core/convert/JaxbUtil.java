@@ -1,6 +1,7 @@
 package me.zyb.framework.core.convert;
 
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -51,7 +52,7 @@ public class JaxbUtil {
 	 * @param clazz         JavaBean的class
 	 * @return T
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public static <T> T convertToJavaBean(InputStream inputStream, Class<T> clazz) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -65,7 +66,7 @@ public class JaxbUtil {
 	 * @param clazz JavaBean的class
 	 * @return T
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public static <T> T convertToJavaBean(String xml, Class<T> clazz) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -79,7 +80,7 @@ public class JaxbUtil {
 	 * @param clazz JavaBean的class
 	 * @return T
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public static <T> T convertToJavaBean(File file, Class<T> clazz) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 		Unmarshaller unmarshaller = context.createUnmarshaller();

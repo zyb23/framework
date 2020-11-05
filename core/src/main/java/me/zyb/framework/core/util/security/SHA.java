@@ -1,6 +1,6 @@
 package me.zyb.framework.core.util.security;
 
-import me.zyb.framework.core.dict.ConstString;
+import me.zyb.framework.core.constant.ConstString;
 import me.zyb.framework.core.util.StringUtil;
 
 import java.nio.charset.StandardCharsets;

@@ -15,27 +15,31 @@ public enum ReturnCode implements BaseEnum<String> {
 	SUCCESS("0000", "success", "成功"),
 	/** 参数错误 */
 	PARAMETER_ERROR("0001", "parameter.error", "参数错误"),
+	/** 数据不存在 */
+	DATA_NOT_EXIST("0002", "data.not.exist", "数据不存在"),
 	/** 请求超时 */
-	REQUEST_TIMEOUT("0002", "request.timeout", "请求超时"),
+	REQUEST_TIMEOUT("0003", "request.timeout", "请求超时"),
 	/** 频繁请求 */
-	REQUEST_FREQUENT("0003", "request.frequent", "频繁请求"),
+	REQUEST_FREQUENT("0004", "request.frequent", "频繁请求"),
 	/** 验证码错误 */
-	CAPTCHA_ERROR("0004", "captcha.error", "验证码错误"),
+	CAPTCHA_ERROR("0005", "captcha.error", "验证码错误"),
 	/** 未登录/登录超时 */
-	LOGIN_TIMEOUT("0005", "login.not", "未登录/登录超时"),
+	LOGIN_TIMEOUT("0006", "login.not", "未登录/登录超时"),
 	/** 权限不足 */
-	PERMISSION_DENIED("0006", "permission.denied", "权限不足"),
+	PERMISSION_DENIED("0007", "permission.denied", "权限不足"),
 	/** 用户名/密码错误 */
-	USERNAME_PASSWORD_ERROR("0007", "username.password.error", "用户名/密码错误"),
-	/** 功能未上线 */
-	FUNCTION_NOT_ONLINE("0008", "function.not.online", "功能未上线"),
-	/** 功能已下线 */
-	FUNCTION_OFFLINE("0009", "function.offline", "功能已下线"),
-	/** 系统维护中 */
-	SYSTEM_MAINTAIN("0010", "system.maintain", "系统维护中"),
-	/** 系统繁忙 */
-	SYSTEM_BUSY("0011", "system.busy", "系统繁忙"),
+	USERNAME_PASSWORD_ERROR("0008", "username.password.error", "用户名/密码错误"),
+	/** 用户已冻结 */
+	USER_FREEZE("0009", "user.freeze", "用户已冻结"),
 
+	/** 功能未上线 */
+	FUNCTION_NOT_ONLINE("9995", "function.not.online", "功能未上线"),
+	/** 功能已下线 */
+	FUNCTION_OFFLINE("9996", "function.offline", "功能已下线"),
+	/** 系统维护中 */
+	SYSTEM_MAINTAIN("9997", "system.maintain", "系统维护中"),
+	/** 系统繁忙 */
+	SYSTEM_BUSY("9998", "system.busy", "系统繁忙"),
 	/** 失败 */
 	FAILURE("9999", "failure", "失败"),
 

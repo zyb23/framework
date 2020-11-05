@@ -14,7 +14,7 @@ import java.util.Map;
  * @param <K>
  * @param <V>
  */
-public class MapComparator<K extends Object, V extends Object> implements Comparator<Map<K, V>> {
+public class MapComparator<K, V> implements Comparator<Map<K, V>> {
 	/** 是否降序（默认升序） */
     private boolean[] isDesc;
     /** 排序字段 */

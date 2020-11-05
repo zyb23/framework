@@ -8,4 +8,4 @@ CREATE TABLE `upms_user_role` (
   CONSTRAINT `FKb40xxfch70f5qnyfw8yme1n1s` FOREIGN KEY (`user_id`) REFERENCES `upms_user` (`id`),
   CONSTRAINT `FKhh52n8vd4ny9ff4x9fb8v65qx` FOREIGN KEY (`role_id`) REFERENCES `upms_role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-INSERT INTO `upms_user_role`(`id`, `user_id`, `role_id`) VALUES (1, 0, 0);
+INSERT INTO `upms_user_role`(`id`, `user_id`, `role_id`) VALUES (1, 1, 1);

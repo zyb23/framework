@@ -1,6 +1,7 @@
 package me.zyb.framework.core.convert;
 
 import com.alibaba.fastjson.JSON;
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class JpaJsonListConverter<T> implements AttributeConverter<List<T>, String> {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public Class<T> getTClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}

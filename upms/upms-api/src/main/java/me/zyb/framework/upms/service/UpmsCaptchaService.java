@@ -4,7 +4,7 @@ package me.zyb.framework.upms.service;
 /**
  * @author zhangyingbin
  */
-public interface CaptchaService {
+public interface UpmsCaptchaService {
 	/**
 	 * <pre>
 	 *     生成随机验证码及图片，并保存验证码到shiro:session中

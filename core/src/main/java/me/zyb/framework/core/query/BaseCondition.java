@@ -2,7 +2,7 @@ package me.zyb.framework.core.query;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import me.zyb.framework.core.dict.ConstNumber;
+import me.zyb.framework.core.constant.ConstNumber;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
