@@ -10,10 +10,10 @@ import me.zyb.framework.core.convert.JpaEnumConverter;
  */
 @Getter
 public enum Gender implements BaseEnum<Integer> {
+	/** 女 */
+	WOMAN(0, "woman", "女"),
     /** 男 */
-    MAN(0, "man", "男"),
-    /** 女 */
-    WOMAN(1, "woman", "女"),
+    MAN(1, "man", "男"),
 	/** 其他 */
 	OTHER(2, "other", "其他")
     ;
