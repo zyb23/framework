@@ -42,7 +42,7 @@ public class DateUtil {
 	/** yyyy-MM-dd HH:mm:ss.S */
 	public static final String FORMAT_TIMESTAMP = "yyyy-MM-dd HH:mm:ss.S";
 	/** HH:mm:ss */
-	public static final String FORMAT_TIME = "HH:mm:ss";
+	public static final String FORMAT_TIME = " HH:mm:ss";
 	/** GMT+08:00 */
 	public static final String TIMEZONE = "GMT+08:00";
 	/** 00:00:00*/
@@ -71,7 +71,7 @@ public class DateUtil {
 	 * 某一周的所有日期
 	 */
 	@Data
-	class Week {
+	public class Week {
 		/**
 		 * 星期一
 		 */
@@ -103,7 +103,7 @@ public class DateUtil {
 	}
 
 	@Data
-	class Month {
+	public class Month {
 		/**
 		 * 月头（1号）
 		 */

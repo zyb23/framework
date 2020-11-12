@@ -31,6 +31,8 @@ public enum ReturnCode implements BaseEnum<String> {
 	USERNAME_PASSWORD_ERROR("0008", "username.password.error", "用户名/密码错误"),
 	/** 用户已冻结 */
 	USER_FREEZE("0009", "user.freeze", "用户已冻结"),
+	/** 非法操作 */
+	ILLEGAL_OPERATION("0010", "illegal.operation", "非法操作"),
 
 	/** 功能未上线 */
 	FUNCTION_NOT_ONLINE("9995", "function.not.online", "功能未上线"),
