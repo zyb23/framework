@@ -23,16 +23,24 @@ public enum ReturnCode implements BaseEnum<String> {
 	REQUEST_FREQUENT("0004", "request.frequent", "频繁请求"),
 	/** 验证码错误 */
 	CAPTCHA_ERROR("0005", "captcha.error", "验证码错误"),
+	/** 验证码超时 */
+	CAPTCHA_TIMEOUT("0006", "captcha.timeout", "验证码超时"),
+	/** 邮箱已注册 */
+	REGISTERED_EMAIL("0007", "registered.email", "邮箱已注册"),
+	/** 手机号已注册 */
+	REGISTERED_MOBILE("0008", "registered.mobile", "手机号已注册"),
+	/** 用户名已注册 */
+	REGISTERED_USERNAME("0009", "registered.mobile", "用户名已注册"),
 	/** 未登录/登录超时 */
-	LOGIN_TIMEOUT("0006", "login.not", "未登录/登录超时"),
+	LOGIN_TIMEOUT("0010", "login.not", "未登录/登录超时"),
 	/** 权限不足 */
-	PERMISSION_DENIED("0007", "permission.denied", "权限不足"),
+	PERMISSION_DENIED("0011", "permission.denied", "权限不足"),
 	/** 用户名/密码错误 */
-	USERNAME_PASSWORD_ERROR("0008", "username.password.error", "用户名/密码错误"),
+	USERNAME_PASSWORD_ERROR("0012", "username.password.error", "用户名/密码错误"),
 	/** 用户已冻结 */
-	USER_FREEZE("0009", "user.freeze", "用户已冻结"),
+	USER_FREEZE("0013", "user.freeze", "用户已冻结"),
 	/** 非法操作 */
-	ILLEGAL_OPERATION("0010", "illegal.operation", "非法操作"),
+	ILLEGAL_OPERATION("0014", "illegal.operation", "非法操作"),
 
 	/** 功能未上线 */
 	FUNCTION_NOT_ONLINE("9995", "function.not.online", "功能未上线"),
