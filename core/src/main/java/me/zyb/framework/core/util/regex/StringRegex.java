@@ -14,7 +14,15 @@ import java.util.regex.Pattern;
 public class StringRegex {
 	private static Pattern pattern;
 	private static Matcher matcher;
-	
+
+	/** 数字 */
+	private static final String REGEX_NUMBER = "[0-9]+";
+	/** 字母 */
+	private static final String REGEX_ALPHABET = "[A-Za-z]+";
+	/** 小写字母 */
+	private static final String REGEX_ALPHABET_LOWER_CASE = "[a-z]+";
+	/** 大写字母 */
+	private static final String REGEX_ALPHABET_UPPER_CASE = "[A-Z]+";
 	/** 字母/数字/混合 */
 	private static final String REGEX_ALPHABET_OR_NUMBER = "[A-Za-z0-9]+";
 	/** 必须是字母数字的混合 */
@@ -34,6 +42,66 @@ public class StringRegex {
 		pattern = Pattern.compile(regex);
 		matcher = pattern.matcher(str);
 		
+		return matcher.matches();
+	}
+
+	/**
+	 * 数字
+	 * @author zhangyingbin
+	 * @param str 待校验串
+	 * @return boolean
+	 */
+	public static boolean isNumber(String str){
+		log.debug("matcher pattern : " + REGEX_NUMBER + ", source : " + str);
+
+		pattern = Pattern.compile(REGEX_NUMBER);
+		matcher = pattern.matcher(str);
+
+		return matcher.matches();
+	}
+
+	/**
+	 * 字母
+	 * @author zhangyingbin
+	 * @param str 待校验串
+	 * @return boolean
+	 */
+	public static boolean isAlphabet(String str){
+		log.debug("matcher pattern : " + REGEX_ALPHABET + ", source : " + str);
+
+		pattern = Pattern.compile(REGEX_ALPHABET);
+		matcher = pattern.matcher(str);
+
+		return matcher.matches();
+	}
+
+	/**
+	 * 小写字母
+	 * @author zhangyingbin
+	 * @param str 待校验串
+	 * @return boolean
+	 */
+	public static boolean isAlphabetLowerCase(String str){
+		log.debug("matcher pattern : " + REGEX_ALPHABET_LOWER_CASE + ", source : " + str);
+
+		pattern = Pattern.compile(REGEX_ALPHABET_LOWER_CASE);
+		matcher = pattern.matcher(str);
+
+		return matcher.matches();
+	}
+
+	/**
+	 * 大写字母
+	 * @author zhangyingbin
+	 * @param str 待校验串
+	 * @return boolean
+	 */
+	public static boolean isAlphabetUpperCase(String str){
+		log.debug("matcher pattern : " + REGEX_ALPHABET_UPPER_CASE + ", source : " + str);
+
+		pattern = Pattern.compile(REGEX_ALPHABET_UPPER_CASE);
+		matcher = pattern.matcher(str);
+
 		return matcher.matches();
 	}
 	
