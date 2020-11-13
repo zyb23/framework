@@ -1,5 +1,6 @@
 package me.zyb.framework.upms.configure;
 
+import me.zyb.framework.core.constant.SuppressWarningsKey;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 	 * 跨域处理
 	 */
 	@Bean
+	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public FilterRegistrationBean corsFilter(){
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
