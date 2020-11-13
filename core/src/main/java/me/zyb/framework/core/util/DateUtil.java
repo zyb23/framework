@@ -130,6 +130,27 @@ public class DateUtil {
 		
 		return false;
 	}
+
+	/**
+	 * 判断一个日期是星期几
+	 * @param date  日期
+	 * @return int
+	 */
+	public static int dayOfWeek(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		switch (day){
+			case Calendar.MONDAY: return 1;
+			case Calendar.TUESDAY: return 2;
+			case Calendar.WEDNESDAY: return 3;
+			case Calendar.THURSDAY: return 4;
+			case Calendar.FRIDAY: return 5;
+			case Calendar.SATURDAY: return 6;
+			case Calendar.SUNDAY: return 7;
+			default: return day;
+		}
+	}
 	
 	/**
 	 * 指定时间间隔second秒后的时间（负数向前，正数向后）
