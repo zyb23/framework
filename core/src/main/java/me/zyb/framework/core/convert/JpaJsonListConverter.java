@@ -5,13 +5,13 @@ import me.zyb.framework.core.constant.SuppressWarningsKey;
 
 import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * 数据库（Json数组）-实体（List）转换类
  * @author zhangyingbin
  */
-public class JpaJsonCollectionConverter<T> implements AttributeConverter<Collection<T>, String> {
+public class JpaJsonListConverter<T> implements AttributeConverter<List<T>, String> {
 
 	@SuppressWarnings(SuppressWarningsKey.UNCHECKED)
 	public Class<T> getTClass() {
@@ -19,12 +19,12 @@ public class JpaJsonCollectionConverter<T> implements AttributeConverter<Collect
 	}
 
 	@Override
-	public String convertToDatabaseColumn(Collection<T> attribute) {
+	public String convertToDatabaseColumn(List<T> attribute) {
 		return JSON.toJSONString(attribute);
 	}
 
 	@Override
-	public Collection<T> convertToEntityAttribute(String dbData) {
+	public List<T> convertToEntityAttribute(String dbData) {
 		return JSON.parseArray(dbData, getTClass());
 	}
 }
