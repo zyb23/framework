@@ -3,13 +3,14 @@ package me.zyb.framework.gecs.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.base.BaseEntity;
-import me.zyb.framework.core.convert.StringListConverter;
+import me.zyb.framework.core.convert.StringCollectionConverter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 标准产品单位（Standard Product Unit）
@@ -60,12 +61,12 @@ public class GecsSpu extends BaseEntity implements Serializable {
 
 	/** 全部规格参数 */
 	@Column(name = "spec")
-	@Convert(converter = StringListConverter.class)
-	private String spec;
+	@Convert(converter = StringCollectionConverter.class)
+	private List<String> spec;
 
 	/** 特有规格参数及可选值信息 */
 	@Column(name = "spec_template")
-	@Convert(converter = StringListConverter.class)
+	@Convert(converter = StringCollectionConverter.class)
 	private String specTemplate;
 
 	/** 包装清单 */

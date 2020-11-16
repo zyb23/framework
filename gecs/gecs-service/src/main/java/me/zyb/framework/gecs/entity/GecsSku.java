@@ -3,7 +3,7 @@ package me.zyb.framework.gecs.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.zyb.framework.core.base.BaseEntity;
-import me.zyb.framework.core.convert.StringListConverter;
+import me.zyb.framework.core.convert.StringCollectionConverter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -35,7 +35,7 @@ public class GecsSku extends BaseEntity implements Serializable {
 
 	/** 商品的图片 */
 	@Column(name = "image")
-	@Convert(converter = StringListConverter.class)
+	@Convert(converter = StringCollectionConverter.class)
 	private Set<String> imageSet;
 
 	/** 销售价格 */
