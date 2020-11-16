@@ -6,7 +6,6 @@ import me.zyb.framework.core.constant.SuppressWarningsKey;
 import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 数据库（Json数组）-实体（List）转换类
@@ -25,7 +24,7 @@ public class JpaJsonCollectionConverter<T> implements AttributeConverter<Collect
 	}
 
 	@Override
-	public List<T> convertToEntityAttribute(String dbData) {
+	public Collection<T> convertToEntityAttribute(String dbData) {
 		return JSON.parseArray(dbData, getTClass());
 	}
 }
