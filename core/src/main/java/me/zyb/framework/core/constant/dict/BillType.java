@@ -25,7 +25,11 @@ public enum BillType implements BaseEnum<Integer> {
 	/** 结息 */
 	INTEREST(6, "interest", "结息"),
 	/** 手续费 */
-	COMMISSION(7, "commission", "手续费"),
+	FEE(7, "commission", "手续费"),
+	/** 佣金 */
+	COMMISSION(8, "commission", "佣金"),
+	/** 奖金 */
+	REWARD(9, "reward", "奖金"),
 	;
 
 	private Integer value;
