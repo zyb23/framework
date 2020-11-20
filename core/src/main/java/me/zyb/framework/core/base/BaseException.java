@@ -3,6 +3,9 @@ package me.zyb.framework.core.base;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
+import me.zyb.framework.core.autoconfigure.MessageSourceHelper;
+
+import java.util.Locale;
 
 /**
  * 基础异常类
@@ -23,10 +26,22 @@ public class BaseException extends RuntimeException {
 		log.error(this.getMessage());
 	}
 
+	public BaseException(BaseEnum<String> baseEnum, Locale locale){
+		super(MessageSourceHelper.getMessage(baseEnum.getCode(), locale));
+		this.code = baseEnum.getValue();
+		log.error("code:{}, message:{}", this.code, super.getMessage());
+	}
+
+	public BaseException(BaseEnum<String> baseEnum, Object[] args, Locale locale){
+		super(MessageSourceHelper.getMessage(baseEnum.getCode(), args, locale));
+		this.code = baseEnum.getValue();
+		log.error("code:{}, message:{}", this.code, super.getMessage());
+	}
+
 	public BaseException(BaseEnum<String> baseEnum, String... message){
 		super((message != null && message.length > 0) ? message[0] : baseEnum.getName());
 		this.code = baseEnum.getValue();
-		log.error("code:{}, message:{}", this.code, (message != null && message.length > 0) ? message[0] : baseEnum.getName());
+		log.error("code:{}, message:{}", this.code, super.getMessage());
 	}
 
 	public BaseException(String code, String message){

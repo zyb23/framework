@@ -25,6 +25,10 @@ public class MessageSourceHelper {
 	public static String getMessage(String code, Object[] args) {
 		return messageSource.getMessage(code, args, null);
 	}
+
+	public static String getMessage(String code, Locale locale) {
+		return messageSource.getMessage(code, null, null, locale);
+	}
 	
 	public static String getMessage(String code, Object[] args, Locale locale) {
 		return messageSource.getMessage(code, args, locale);
