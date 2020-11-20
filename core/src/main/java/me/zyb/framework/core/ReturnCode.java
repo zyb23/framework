@@ -30,7 +30,7 @@ public enum ReturnCode implements BaseEnum<String> {
 	/** 手机号已注册 */
 	REGISTERED_MOBILE("0008", "registered.mobile", "手机号已注册"),
 	/** 用户名已注册 */
-	REGISTERED_USERNAME("0009", "registered.mobile", "用户名已注册"),
+	REGISTERED_USERNAME("0009", "registered.username", "用户名已注册"),
 	/** 未登录/登录超时 */
 	LOGIN_TIMEOUT("0010", "login.not", "未登录/登录超时"),
 	/** 权限不足 */
