@@ -27,13 +27,13 @@ public class BaseException extends RuntimeException {
 	}
 
 	public BaseException(BaseEnum<String> baseEnum, Locale locale){
-		super(MessageSourceHelper.getMessage(baseEnum.getCode(), locale));
+		super(MessageSourceHelper.getMessage(baseEnum.getCode(), null, baseEnum.getName(), locale));
 		this.code = baseEnum.getValue();
 		log.error("code:{}, message:{}", this.code, super.getMessage());
 	}
 
 	public BaseException(BaseEnum<String> baseEnum, Object[] args, Locale locale){
-		super(MessageSourceHelper.getMessage(baseEnum.getCode(), args, locale));
+		super(MessageSourceHelper.getMessage(baseEnum.getCode(), args, baseEnum.getName(), locale));
 		this.code = baseEnum.getValue();
 		log.error("code:{}, message:{}", this.code, super.getMessage());
 	}
