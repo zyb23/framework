@@ -1,13 +1,15 @@
 package me.zyb.framework.core.math;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Random;
 
-public class Arith {
-	private static final Logger logger = LoggerFactory.getLogger(Arith.class);
-	
+/**
+ * 算术
+ * @author zhangyingbin
+ */
+@Slf4j
+public class Arithmetic {
 	/**
 	 * 计算一个数的各位相加之和
 	 * @author zhangyingbin
@@ -15,7 +17,7 @@ public class Arith {
 	 * @return Integer
 	 */
 	public static Integer combine(String number){
-		logger.debug("求" + number + "各位相加之和！");
+		log.debug("求" + number + "各位相加之和！");
 		Long lNumber = Long.valueOf(number);
 		int length = lNumber.toString().length();
 		Long combineSum = 0L;
@@ -41,7 +43,6 @@ public class Arith {
 	 */
 	public static Integer random(int min, int max){
 		Random random = new Random();
-		int s = random.nextInt(max - min + 1) + min;
-		return s;
+		return random.nextInt(max - min + 1) + min;
 	}
 }

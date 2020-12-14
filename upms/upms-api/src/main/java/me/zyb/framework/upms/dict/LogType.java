@@ -5,7 +5,7 @@ import me.zyb.framework.core.base.BaseEnum;
 import me.zyb.framework.core.convert.JpaEnumConverter;
 
 /**
- * 权限类型
+ * 日志类型
  * @author zhangyingbin
  */
 @Getter
